@@ -31,10 +31,11 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useMainStore } from '@/store'
 import bus from '../../bus'
 import MarkTextLogo from '../../assets/images/logo.png'
+import { t } from '../../i18n'
 
 const name = 'MarkText'
-const copyright = `Copyright © 2017-${new Date().getFullYear()} Luo Ran`
-const copyrightContributors = `Copyright © 2018-${new Date().getFullYear()} MarkText Contributors`
+const copyright = t('about.copyright', { year: new Date().getFullYear() })
+const copyrightContributors = t('about.copyrightContributors', { year: new Date().getFullYear() })
 const showAboutDialog = ref(false)
 
 const store = useMainStore()

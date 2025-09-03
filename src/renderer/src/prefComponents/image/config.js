@@ -1,10 +1,12 @@
-export const imageActions = [{
-  label: 'Upload image to cloud using selected uploader (must be configured below)',
+import { t } from '../../i18n'
+
+export const getImageActions = () => [{
+  label: t('preferences.image.actions.upload'),
   value: 'upload'
 }, {
-  label: 'Copy image to designated relative assets or global local folder',
+  label: t('preferences.image.actions.folder'),
   value: 'folder'
 }, {
-  label: 'Keep original location',
+  label: t('preferences.image.actions.path'),
   value: 'path'
 }]

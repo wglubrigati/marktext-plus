@@ -144,13 +144,13 @@ const setupDragDropHandler = () => {
     false
   )
 }
-onMounted(() => {
+onMounted(async () => {
   if (global.marktext.initialState) {
     preferencesStore.SET_USER_PREFERENCE(global.marktext.initialState)
   }
 
   mainStore.LISTEN_WIN_STATUS()
-  commandCenterStore.LISTEN_COMMAND_CENTER_BUS()
+  await commandCenterStore.LISTEN_COMMAND_CENTER_BUS()
   tweetStore.LISTEN_FOR_TWEET()
   layoutStore.LISTEN_FOR_LAYOUT()
   listenForMainStore.LISTEN_FOR_EDIT()

@@ -67,7 +67,6 @@ export const registerKeyboardListeners = () => {
     fsPromises
       .writeFile(dumpPath, content, 'utf8')
       .then(() => {
-        console.log(`Keyboard information written to "${dumpPath}".`)
         shell.openPath(dumpPath)
       })
       .catch((error) => {

@@ -11,6 +11,8 @@ import setupEnvironment from './app/env'
 import { getLogLevel } from './utils'
 import Accessor from './app/accessor'
 import App from './app'
+import { t } from './i18n'
+import setupI18nErrorHandling from './i18nErrorHandler'
 
 // Set version strings into global and process.versions
 process.env.MARKTEXT_VERSION = MARKTEXT_VERSION
@@ -43,6 +45,10 @@ const initializeLogger = (env) => {
 }
 
 initializeLogger(appEnvironment)
+
+// Setup i18n error handling and validation
+setupI18nErrorHandling()
+
 // Handles native level crashes
 crashReporter.start({
   companyName: '',
@@ -67,7 +73,7 @@ if (args['--disable-gpu']) {
 if (!process.mas && process.env.NODE_ENV !== 'development') {
   const gotLock = app.requestSingleInstanceLock()
   if (!gotLock) {
-    process.stdout.write('Other instance detected: exiting...\n')
+    process.stdout.write(t('error.otherInstanceDetected'))
     process.exit(0)
   }
 }
@@ -89,14 +95,14 @@ try {
   accessor = new Accessor(appEnvironment)
 } catch (err) {
   const msgHint = err.message.includes('Config schema violation')
-    ? 'This seems to be an issue with your configuration file(s). '
+    ? t('error.configSchemaViolation')
     : ''
-  log.error(`Initialization failed! ${msgHint}`, err)
+  log.error(t('error.initializationFailed', { hint: msgHint }), err)
 
   const EXIT_ON_ERROR = !!process.env.MARKTEXT_EXIT_ON_ERROR
   const SHOW_ERROR_DIALOG = !process.env.MARKTEXT_ERROR_INTERACTION
   if (!EXIT_ON_ERROR && SHOW_ERROR_DIALOG) {
-    dialog.showErrorBox('Error during startup', `${msgHint}${err.message}\n\n${err.stack}`)
+    dialog.showErrorBox(t('error.startupError'), `${msgHint}${err.message}\n\n${err.stack}`)
   }
   process.exit(1)
 }

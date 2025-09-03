@@ -3,6 +3,7 @@ import { shell } from 'electron'
 import { isFile } from 'common/filesystem'
 import * as actions from '../actions/help'
 import { checkUpdates } from '../actions/marktext'
+import { t } from '../../i18n'
 
 /// Check whether the package is updatable at runtime.
 const isUpdatable = () => {
@@ -29,11 +30,11 @@ const isUpdatable = () => {
 
 export default function () {
   const helpMenu = {
-    label: '&Help',
+    label: t('menu.help.help'),
     role: 'help',
     submenu: [
       {
-        label: 'Markdown Reference...',
+        label: t('menu.help.markdownReference'),
         click() {
           shell.openExternal(
             'https://github.com/Tkaixiang/marktext/blob/trunk/docs/MARKDOWN_SYNTAX.md'
@@ -41,7 +42,7 @@ export default function () {
         }
       },
       {
-        label: 'Changelog...',
+        label: t('menu.help.changelog'),
         click() {
           shell.openExternal(
             'https://github.com/Tkaixiang/marktext/blob/trunk/.github/CHANGELOG.md'
@@ -52,19 +53,19 @@ export default function () {
         type: 'separator'
       },
       {
-        label: 'Ask a Question About MarkText...',
+        label: t('menu.help.askQuestion'),
         click() {
           shell.openExternal('https://github.com/Tkaixiang/marktext/discussions')
         }
       },
       {
-        label: 'Report Bug or Request Feature...',
+        label: t('menu.help.reportBug'),
         click() {
           shell.openExternal('https://github.com/Tkaixiang/marktext/issues')
         }
       },
       {
-        label: 'View Source on GitHub...',
+        label: t('menu.help.viewSource'),
         click() {
           shell.openExternal('https://github.com/Tkaixiang/marktext')
         }
@@ -73,7 +74,7 @@ export default function () {
         type: 'separator'
       },
       {
-        label: 'License...',
+        label: t('menu.help.license'),
         click() {
           shell.openExternal('https://github.com/Tkaixiang/marktext/blob/trunk/LICENSE')
         }
@@ -87,7 +88,7 @@ export default function () {
         type: 'separator'
       },
       {
-        label: 'Check for Updates...',
+        label: t('menu.help.checkUpdates'),
         click(menuItem, browserWindow) {
           checkUpdates(browserWindow)
         }
@@ -101,7 +102,7 @@ export default function () {
         type: 'separator'
       },
       {
-        label: 'About MarkText...',
+        label: t('menu.help.about'),
         click(menuItem, browserWindow) {
           actions.showAboutDialog(browserWindow)
         }

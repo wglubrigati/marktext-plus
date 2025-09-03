@@ -136,10 +136,12 @@ class Selection {
           if (trailingImageCount === selectionState.trailingImageCount) {
             // Find which index the image is in its parent's children
             let endIndex = 0
-            while (node.parentNode.childNodes[endIndex] !== node) {
-              endIndex++
+            if (node && node.parentNode) {
+              while (node.parentNode.childNodes[endIndex] !== node) {
+                endIndex++
+              }
+              range.setEnd(node.parentNode, endIndex + 1)
             }
-            range.setEnd(node.parentNode, endIndex + 1)
             stop = true
           }
         }
@@ -201,7 +203,7 @@ class Selection {
           currentNode = currentNode.parentNode
         }
       }
-      if (currentNode !== null && currentNode.nodeName.toLowerCase() === 'a') {
+      if (currentNode !== null && currentNode.nodeName.toLowerCase() === 'a' && currentNode.parentNode) {
         let currentNodeIndex = null
         for (
           let i = 0;
@@ -546,8 +548,11 @@ class Selection {
       focusNode = anchorNode
       focusOffset = anchorOffset
     } else if (!isAnchorValid && !isFocusValid) {
-      const editor = document.querySelector('#ag-editor-id').parentNode
-      editor.blur()
+      const editorElement = document.querySelector('#ag-editor-id')
+      if (editorElement && editorElement.parentNode) {
+        const editor = editorElement.parentNode
+        editor.blur()
+      }
 
       return new Cursor({
         start: null,
@@ -577,6 +582,8 @@ class Selection {
     if (
       anchorNode === focusNode &&
       anchorOffset === focusOffset &&
+      anchorNode &&
+      anchorNode.parentNode &&
       anchorNode.parentNode.classList.contains('ag-image-container') &&
       anchorNode.previousElementSibling &&
       anchorNode.previousElementSibling.nodeName === 'IMG'
@@ -600,8 +607,10 @@ class Selection {
 
     if (
       anchorNode === focusNode &&
+      anchorNode &&
       anchorNode.nodeType === 1 &&
-      anchorNode.classList.contains('ag-image-container')
+      anchorNode.classList.contains('ag-image-container') &&
+      anchorNode.parentNode
     ) {
       const imageWrapper = anchorNode.parentNode
       const preElement = imageWrapper.previousElementSibling

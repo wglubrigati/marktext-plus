@@ -1,6 +1,6 @@
 <template>
   <div class="pref-theme">
-    <h4>Theme</h4>
+    <h4>{{ t('preferences.theme.title') }}</h4>
     <section class="offcial-themes">
       <div
         v-for="t of themes"
@@ -14,13 +14,13 @@
     </section>
     <separator></separator>
     <cur-select
-      description="Automatically adjust application theme according to system settings"
+      :description="t('preferences.theme.autoSwitch')"
       :value="autoSwitchTheme"
-      :options="autoSwitchThemeOptions"
+      :options="getAutoSwitchThemeOptions()"
       :on-change="(value) => onSelectChange('autoSwitchTheme', value)"
     ></cur-select>
     <div>
-      <div style="font-size: smaller; color: var(--editorColor)">Custom CSS</div>
+      <div style="font-size: smaller; color: var(--editorColor)">{{ t('preferences.theme.customCss') }}</div>
       <textarea
         style="
           width: 100%;
@@ -36,13 +36,13 @@
     <separator v-show="false"></separator>
     <section v-show="false" class="import-themes ag-underdevelop">
       <div>
-        <span>Open the themes folder</span>
-        <el-button size="small">Open Folder</el-button>
+        <span>{{ t('preferences.theme.openThemesFolder') }}</span>
+        <el-button size="small">{{ t('preferences.theme.openFolder') }}</el-button>
       </div>
 
       <div>
-        <span>Import custom themes</span>
-        <el-button size="small">Import Theme</el-button>
+        <span>{{ t('preferences.theme.importCustomThemes') }}</span>
+        <el-button size="small">{{ t('preferences.theme.importTheme') }}</el-button>
       </div>
     </section>
   </div>
@@ -52,14 +52,16 @@
 import { ref, onMounted } from 'vue'
 import { usePreferencesStore } from '@/store/preferences'
 import { storeToRefs } from 'pinia'
+import { useI18n } from 'vue-i18n'
 import themeMd from './theme.md?raw'
-import { autoSwitchThemeOptions, themes as configThemes } from './config'
+import { getAutoSwitchThemeOptions, themes as configThemes } from './config'
 import markdownToHtml from '@/util/markdownToHtml'
 import CurSelect from '../common/select'
 import Separator from '../common/separator'
 
 const themes = ref([])
 
+const { t } = useI18n()
 const preferenceStore = usePreferencesStore()
 
 const { autoSwitchTheme, theme, customCss } = storeToRefs(preferenceStore)

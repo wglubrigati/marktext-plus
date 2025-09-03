@@ -10,8 +10,8 @@
         <li
           v-for="(c, index) of sideBarIcons"
           :key="index"
-          :class="{ active: c.name === rightColumn }"
-          @click="handleLeftIconClick(c.name)"
+          :class="{ active: c.id === rightColumn }"
+          @click="handleLeftIconClick(c.id)"
         >
           <component :is="c.icon" />
         </li>
@@ -20,7 +20,7 @@
         <li
           v-for="(c, index) of sideBarBottomIcons"
           :key="index"
-          @click="handleLeftBottomClick(c.name)"
+          @click="handleLeftBottomClick(c.id)"
         >
           <component :is="c.icon" />
         </li>
@@ -139,11 +139,10 @@ const handleLeftBottomClick = (name) => {
   user-select: none;
   background: var(--sideBarBgColor);
   border-right: 1px solid var(--itemBgColor);
-  & .left-column {
-    & svg {
-      fill: var(--iconColor);
-    }
-  }
+}
+
+.side-bar .left-column svg {
+  fill: var(--iconColor);
 }
 
 .left-column {
@@ -154,9 +153,10 @@ const handleLeftBottomClick = (name) => {
   justify-content: space-between;
   padding-top: 40px;
   box-sizing: border-box;
-  & > ul {
-    opacity: 1;
-  }
+}
+
+.left-column > ul {
+  opacity: 1;
 }
 
 .left-column ul {
@@ -165,36 +165,41 @@ const handleLeftBottomClick = (name) => {
   flex-direction: column;
   margin: 0;
   padding: 0;
-  & > li {
-    width: 45px;
-    height: 45px;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    cursor: pointer;
-    & > svg {
-      width: 18px;
-      height: 18px;
-      fill: var(--sideBarIconColor);
-      opacity: 1;
-      transition: transform 0.25s ease-in-out;
-    }
-    &.active > svg {
-      fill: var(--themeColor);
-    }
-  }
+}
+
+.left-column ul > li {
+  width: 45px;
+  height: 45px;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  cursor: pointer;
+}
+
+.left-column ul > li > svg {
+  width: 18px;
+  height: 18px;
+  fill: var(--sideBarIconColor);
+  opacity: 1;
+  transition: transform 0.25s ease-in-out;
+}
+
+.left-column ul > li.active > svg {
+  fill: var(--themeColor);
 }
 
 .side-bar:hover .left-column ul li svg {
   opacity: 1;
 }
+
 .right-column {
   flex: 1;
   width: calc(100% - 50px);
   overflow: hidden;
 }
+
 .drag-bar {
   position: absolute;
   top: 0;
@@ -203,8 +208,9 @@ const handleLeftBottomClick = (name) => {
   height: 100%;
   width: 3px;
   cursor: col-resize;
-  &:hover {
-    border-right: 2px solid var(--iconColor);
-  }
+}
+
+.drag-bar:hover {
+  border-right: 2px solid var(--iconColor);
 }
 </style>

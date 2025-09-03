@@ -25,11 +25,11 @@
             />
           </div>
           <div class="footer">
-            <div class="descriptions">Press Enter to continue or ESC to exit.</div>
-            <div v-show="!isKeybindingValid" class="invalid-keybinding">
-              Current key combination cannot be bound!
+              <div class="descriptions">{{ t('preferences.keybindings.keyInputDialog.instructions') }}</div>
+              <div v-show="!isKeybindingValid" class="invalid-keybinding">
+                {{ t('preferences.keybindings.keyInputDialog.invalidKeybinding') }}
+              </div>
             </div>
-          </div>
         </div>
       </template>
     </el-dialog>
@@ -43,6 +43,9 @@ import {
   getAcceleratorFromKeyboardEvent
 } from '@hfelix/electron-localshortcut'
 import { ref, watch, useTemplateRef, nextTick } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const props = defineProps({
   onCommit: Function,
@@ -54,7 +57,7 @@ const props = defineProps({
 
 let needCommitOnClose = true
 let currentKeybinding = null
-const defaultPlaceholderText = 'Press a key combination'
+const defaultPlaceholderText = t('preferences.keybindings.keyInputDialog.placeholder')
 
 const showKeyInputDialog = ref(false)
 const placeholderText = ref(defaultPlaceholderText)

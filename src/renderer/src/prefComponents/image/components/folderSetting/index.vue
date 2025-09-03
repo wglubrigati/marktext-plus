@@ -1,21 +1,21 @@
 <template>
   <section class="image-folder">
-    <h5>Global or relative image folder</h5>
+    <h5>{{ t('preferences.image.folderSetting.title') }}</h5>
     <text-box
-      description="Global image folder"
+      :description="t('preferences.image.folderSetting.globalFolder')"
       :input="imageFolderPath"
       :regex-validator="/^(?:$|([a-zA-Z]:)?[\/\\].*$)/"
       :default-value="folderPathPlaceholder"
       :on-change="(value) => modifyImageFolderPath(value)"
     ></text-box>
     <div>
-      <el-button size="mini" @click="modifyImageFolderPath(undefined)">Open...</el-button>
-      <el-button size="mini" @click="openImageFolder">Show in Folder</el-button>
+      <el-button size="mini" @click="modifyImageFolderPath(undefined)">{{ t('preferences.image.folderSetting.open') }}</el-button>
+      <el-button size="mini" @click="openImageFolder">{{ t('preferences.image.folderSetting.showInFolder') }}</el-button>
     </div>
     <compound>
       <template #head>
         <bool
-          description="Prefer relative assets folder"
+          :description="t('preferences.image.folderSetting.preferRelative')"
           more="https://github.com/marktext/marktext/blob/develop/docs/IMAGES.md"
           :bool="imagePreferRelativeDirectory"
           :on-change="(value) => onSelectChange('imagePreferRelativeDirectory', value)"
@@ -23,15 +23,14 @@
       </template>
       <template #children>
         <text-box
-          description="Relative image folder name"
+          :description="t('preferences.image.folderSetting.relativeFolderName')"
           :input="imageRelativeDirectoryName"
           :regex-validator="/^(?:$|(?![a-zA-Z]:)[^\/\\].*$)/"
           :default-value="relativeDirectoryNamePlaceholder"
           :on-change="(value) => onSelectChange('imageRelativeDirectoryName', value)"
         ></text-box>
         <div class="footnote">
-          Include <code>${filename}</code> in the text-box above to automatically insert the
-          document file name.
+          {{ t('preferences.image.folderSetting.filenameNote') }}
         </div>
       </template>
     </compound>
@@ -41,10 +40,13 @@
 <script setup>
 import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
+import { useI18n } from 'vue-i18n'
 import { usePreferencesStore } from '@/store/preferences'
 import Bool from '@/prefComponents/common/bool/index.vue'
 import Compound from '@/prefComponents/common/compound/index.vue'
 import TextBox from '@/prefComponents/common/textBox'
+
+const { t } = useI18n()
 
 const preferenceStore = usePreferencesStore()
 

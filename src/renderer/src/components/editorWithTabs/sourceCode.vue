@@ -4,6 +4,7 @@
 
 <script setup>
 import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useEditorStore } from '@/store/editor'
 import { usePreferencesStore } from '@/store/preferences'
 import { storeToRefs } from 'pinia'
@@ -22,6 +23,7 @@ const props = defineProps({
   }
 })
 
+const { t } = useI18n()
 const editorStore = useEditorStore()
 const preferencesStore = usePreferencesStore()
 
@@ -96,8 +98,7 @@ const handleFileChange = ({ id, markdown: newMarkdown, cursor, scrollTop }) => {
     editor.value.setValue(newMarkdown)
   }
 
-  // Cursor is null when loading a file
-  // or creating a new tab in source code mode.
+  // t('editor.sourceCode.cursorNullComment')
 
   if (cursor) {
     const { anchor, focus } = cursor
@@ -129,7 +130,9 @@ const handleSelectAll = () => {
     const activeElement = document.activeElement
     const nodeName = activeElement.nodeName
     if (nodeName === 'INPUT' || nodeName === 'TEXTAREA') {
-      activeElement.select()
+      if (typeof activeElement.select === 'function') {
+        activeElement.select()
+      }
     }
   }
 }
@@ -148,7 +151,7 @@ const handleImageAction = ({ id, result, alt }) => {
     editor.value.setValue(newValue)
     const match = /(!\[.*\]\(.*\))/.exec(oldLine)
     if (!match) {
-      // User maybe delete `![]()` structure, and the match is null.
+      // t('editor.sourceCode.imageStructureDeletedComment')
       return
     }
     const range = {

@@ -1,5 +1,4 @@
 import { contextBridge, shell, clipboard } from 'electron'
-import log from 'electron-log'
 import fs from 'fs-extra'
 import { isFile, isDirectory, ensureDirSync } from 'common/filesystem'
 import { electronAPI } from '@electron-toolkit/preload'
@@ -12,11 +11,32 @@ import {
 } from 'common/filesystem/paths'
 import { rgPath } from '@vscode/ripgrep'
 import path from 'path'
+import commandExists from 'command-exists'
 
 const customElectronAPI = {
   shell,
-  log,
-  clipboard
+  clipboard,
+  process: {
+    platform: process.platform,
+    env: {
+      MARKTEXT_VERSION_STRING: process.env.MARKTEXT_VERSION_STRING || '0.17.1'
+    }
+  },
+  logToConsole: (message) => {
+    console.log(message)
+    // log.info(message) // 注释掉因为 log 未定义
+  },
+  writeLogFile: async (filename, content) => {
+    try {
+      const logPath = path.join(process.cwd(), filename)
+      await fs.writeFile(logPath, content, 'utf8')
+      // log.info(`Log file written to: ${logPath}`) // 注释掉因为 log 未定义
+      return logPath
+    } catch (error) {
+      // log.error('Error writing log file:', error) // 注释掉因为 log 未定义
+      throw error
+    }
+  }
 }
 
 const fileUtilsAPI = {
@@ -39,6 +59,40 @@ const fileUtilsAPI = {
   isImageFile: (filepath) => isImageFile(filepath)
 }
 
+const commandAPI = {
+  exists: (command) => {
+    try {
+      // 先尝试使用 command-exists 检查
+      if (commandExists.sync(command)) {
+        return true
+      }
+      
+      // 对于 picgo，额外检查常见安装路径
+      if (command === 'picgo' && process.platform === 'darwin') {
+        const commonPaths = [
+          '/usr/local/bin/picgo',
+          '/opt/homebrew/bin/picgo',
+          `${process.env.HOME}/.npm-global/bin/picgo`,
+          `${process.env.HOME}/.npm/bin/picgo`,
+          '/usr/local/lib/node_modules/.bin/picgo'
+        ]
+        
+        for (const picgoPath of commonPaths) {
+          if (fs.pathExistsSync(picgoPath)) {
+            console.log(`Found picgo at: ${picgoPath}`)
+            return true
+          }
+        }
+      }
+      
+      return false
+    } catch (error) {
+      console.error('Error checking command existence:', error)
+      return false
+    }
+  }
+}
+
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
 // just add to the DOM global.
@@ -48,15 +102,22 @@ if (process.contextIsolated) {
       ...electronAPI,
       ...customElectronAPI
     })
+    contextBridge.exposeInMainWorld('electronAPI', {
+      ...electronAPI,
+      ...customElectronAPI
+    })
     contextBridge.exposeInMainWorld('rgPath', rgPath)
     contextBridge.exposeInMainWorld('fileUtils', fileUtilsAPI)
     contextBridge.exposeInMainWorld('path', path)
+    contextBridge.exposeInMainWorld('commandExists', commandAPI)
   } catch (error) {
     console.error(error)
   }
 } else {
   window.electron = { ...electronAPI, ...customElectronAPI }
+  window.electronAPI = { ...electronAPI, ...customElectronAPI }
   window.rgPath = rgPath
   window.fileUtils = fileUtilsAPI
   window.path = path
+  window.commandExists = commandAPI
 }

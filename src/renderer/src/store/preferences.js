@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import bus from '../bus'
+import { setLanguage } from '../i18n'
 
 export const usePreferencesStore = defineStore('preferences', {
   state: () => ({
@@ -105,11 +106,18 @@ export const usePreferencesStore = defineStore('preferences', {
 
   actions: {
     SET_USER_PREFERENCE(preference) {
+      const oldLanguage = this.language
+      
       Object.keys(preference).forEach((key) => {
         if (typeof preference[key] !== 'undefined' && typeof this[key] !== 'undefined') {
           this[key] = preference[key]
         }
       })
+      
+      // Update i18n language if language preference changed
+      if (preference.language && preference.language !== oldLanguage) {
+        setLanguage(preference.language)
+      }
     },
     SET_MODE({ type, checked }) {
       this[type] = checked
@@ -127,6 +135,14 @@ export const usePreferencesStore = defineStore('preferences', {
     },
 
     SET_SINGLE_PREFERENCE({ type, value }) {
+      // Update local state
+      this[type] = value
+      
+      // Update i18n language if language preference changed
+      if (type === 'language') {
+        setLanguage(value)
+      }
+      
       // save to electron-store
       window.electron.ipcRenderer.send('mt::set-user-preference', { [type]: value })
     },

@@ -42,7 +42,7 @@
         </li>
       </ul>
       <div v-if="!allMatchesShown">
-        <div class="button tiny" @click="handleShowMoreMatches">Show more matches</div>
+        <div class="button tiny" @click="handleShowMoreMatches">{{ translate('sideBar.search.showMoreMatches') }}</div>
       </div>
     </div>
   </div>
@@ -53,6 +53,10 @@ import { ref, computed } from 'vue'
 import { useEditorStore } from '@/store/editor'
 import { storeToRefs } from 'pinia'
 import bus from '../../bus'
+import { t } from '../../i18n'
+
+// 确保翻译函数在模板中可用
+const translate = t
 
 const props = defineProps({
   searchResult: {
@@ -156,64 +160,62 @@ const handleSearchResultClick = (searchMatch) => {
   padding: 0 10px 8px 10px;
   color: var(--sideBarColor);
   font-size: 14px;
-  & > .search-result {
-    display: flex;
-    align-items: center;
-    & > svg:first-child {
-      margin-right: 3px;
-    }
-    & > .file-info {
-      flex: 1;
-      overflow: hidden;
-    }
-  }
-  & .title .filename {
-    font-size: 14px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    padding-right: 8px;
-  }
-  & .matches {
-    & ul {
-      padding-left: 0;
-      list-style-type: none;
-      & li {
-        display: block;
-        padding: 2px 16px;
-        padding-right: 0;
-        cursor: pointer;
-        /* Hide space between inline spans */
-        font-size: 0;
-        & .highlight {
-          background: var(--highlightColor);
-          line-height: 16px;
-          height: 16px;
-          display: inline-block;
-          color: var(--sideBarTextColor);
-          border-radius: 1px;
-        }
-        &:hover {
-          background: var(--sideBarItemHoverBgColor);
-        }
-        & span {
-          font-size: 13px;
-          white-space: pre;
-        }
-      }
-    }
-    & .button {
-      width: 130px;
-      margin: 0 auto;
-      text-align: center;
-    }
-  }
+}
+.search-result-item > .search-result {
+  display: flex;
+  align-items: center;
+}
+.search-result-item > .search-result > svg:first-child {
+  margin-right: 3px;
+}
+.search-result-item > .search-result > .file-info {
+  flex: 1;
+  overflow: hidden;
+}
+.search-result-item .title .filename {
+  font-size: 14px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  padding-right: 8px;
+}
+.search-result-item .matches ul {
+  padding-left: 0;
+  list-style-type: none;
+}
+.search-result-item .matches ul li {
+  display: block;
+  padding: 2px 16px;
+  padding-right: 0;
+  cursor: pointer;
+  /* Hide space between inline spans */
+  font-size: 0;
+}
+.search-result-item .matches ul li .highlight {
+  background: var(--highlightColor);
+  line-height: 16px;
+  height: 16px;
+  display: inline-block;
+  color: var(--sideBarTextColor);
+  border-radius: 1px;
+}
+.search-result-item .matches ul li:hover {
+  background: var(--sideBarItemHoverBgColor);
+}
+.search-result-item .matches ul li span {
+  font-size: 13px;
+  white-space: pre;
+}
+.search-result-item .matches .button {
+  width: 130px;
+  margin: 0 auto;
+  text-align: center;
 }
 .search-result-item.active {
   font-weight: 600;
-  .title {
-    color: var(--themeColor);
-  }
+}
+.search-result-item.active .title {
+  color: var(--themeColor);
 }
 .search-result-item.active::before {
   height: 100%;
@@ -221,28 +223,28 @@ const handleSearchResultClick = (searchMatch) => {
 .title {
   display: flex;
   color: var(--sideBarTextColor);
-  & .filename {
-    flex: 1;
-    & .name {
-      font-weight: 600;
-    }
-    & .extension {
-      color: var(--sideBarTextColor);
-      font-size: 12px;
-    }
-  }
-  & .match-count {
-    display: inline-block;
-    font-size: 12px;
-    line-height: 18px;
-    text-align: center;
-    min-width: 18px;
-    height: 18px;
-    border-radius: 9px;
-    flex-shrink: 0;
-    background: var(--itemBgColor);
-    color: var(--sideBarTextColor);
-  }
+}
+.title .filename {
+  flex: 1;
+}
+.title .filename .name {
+  font-weight: 600;
+}
+.title .filename .extension {
+  color: var(--sideBarTextColor);
+  font-size: 12px;
+}
+.title .match-count {
+  display: inline-block;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  flex-shrink: 0;
+  background: var(--itemBgColor);
+  color: var(--sideBarTextColor);
 }
 
 .folder-path {

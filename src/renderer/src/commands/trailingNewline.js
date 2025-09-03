@@ -1,14 +1,15 @@
 import { delay } from '@/util'
 import bus from '../bus'
+import getCommandDescriptionById from './descriptions'
+import { t } from '../../i18n'
 
 const descriptions = ['Trim all trailing newlines', 'Ensure single newline', 'Disabled']
 
 class TrailingNewlineCommand {
   constructor(editorState) {
     this.id = 'file.trailing-newline'
-    this.description = 'File: Trailing Newline'
-    this.placeholder = 'Select an option'
-
+    this.description = getCommandDescriptionById('file.trailing-newline')
+    this.placeholder = t('commandPalette.placeholders.selectOption')
     this.subcommands = []
     this.subcommandSelectedIndex = -1
 

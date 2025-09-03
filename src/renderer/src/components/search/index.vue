@@ -12,13 +12,13 @@
             ref="search"
             v-model="searchValue"
             type="text"
-            placeholder="Search"
+            :placeholder="t('search.searchPlaceholder')"
             @keyup="searchFn($event)"
           />
           <div class="controls">
-            <span class="search-result">{{ `${highlightIndex + 1} / ${highlightCount}` }}</span>
+            <span class="search-result">{{ t('search.searchResultCount', { current: highlightIndex + 1, total: highlightCount }) }}</span>
             <span
-              title="Case Sensitive"
+              :title="t('search.caseSensitive')"
               class="is-case-sensitive"
               :class="{ active: isCaseSensitive }"
               @click.stop="toggleCtrl('isCaseSensitive')"
@@ -26,7 +26,7 @@
               <FindCaseIcon aria-hidden="true" />
             </span>
             <span
-              title="Select whole word"
+              :title="t('search.wholeWord')"
               class="is-whole-word"
               :class="{ active: isWholeWord }"
               @click.stop="toggleCtrl('isWholeWord')"
@@ -34,7 +34,7 @@
               <FindWordIcon aria-hidden="true" />
             </span>
             <span
-              title="Use query as RegEx"
+              :title="t('search.useRegex')"
               class="is-regex"
               :class="{ active: isRegexp }"
               @click.stop="toggleCtrl('isRegexp')"
@@ -61,13 +61,13 @@
       </section>
       <section v-if="type === 'replace'" class="replace">
         <div class="input-wrapper replace-input">
-          <input v-model="replaceValue" type="text" placeholder="Replacement" />
+          <input v-model="replaceValue" type="text" :placeholder="t('search.replacementPlaceholder')" />
         </div>
         <div class="button-group">
           <el-tooltip
             class="item"
             effect="dark"
-            content="Replace All"
+            :content="t('search.replaceAll')"
             placement="top"
             :visible-arrow="false"
             :open-delay="1000"
@@ -81,7 +81,7 @@
           <el-tooltip
             class="item"
             effect="dark"
-            content="Replace Single"
+            :content="t('search.replaceSingle')"
             placement="top"
             :visible-arrow="false"
             :open-delay="1000"
@@ -106,6 +106,7 @@ import FindWordIcon from '@/assets/icons/searchIcons/iconWord.svg'
 import FindRegexIcon from '@/assets/icons/searchIcons/iconRegex.svg'
 import { useEditorStore } from '@/store/editor'
 import { storeToRefs } from 'pinia'
+import { t } from '../../../i18n'
 
 const editorStore = useEditorStore()
 
@@ -255,7 +256,7 @@ const searchFn = (event) => {
       new RegExp(searchValue.value)
       searchErrorMsg.value = ''
     } catch {
-      searchErrorMsg.value = `Invalid regular expression: /${searchValue.value}/.`
+      searchErrorMsg.value = t('search.invalidRegex', { pattern: searchValue.value })
       return
     }
     // Handle match empty string, no need to search.
@@ -266,7 +267,7 @@ const searchFn = (event) => {
       }
       searchErrorMsg.value = ''
     } catch {
-      searchErrorMsg.value = `RegExp: /${searchValue.value}/ match empty string.`
+      searchErrorMsg.value = t('search.regexMatchEmpty', { pattern: searchValue.value })
       return
     }
   }

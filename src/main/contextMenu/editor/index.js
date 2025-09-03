@@ -1,18 +1,31 @@
 import { Menu, MenuItem } from 'electron'
 import {
-  CUT,
-  COPY,
-  PASTE,
-  COPY_AS_MARKDOWN,
-  COPY_AS_HTML,
-  PASTE_AS_PLAIN_TEXT,
+  getCUT,
+  getCOPY,
+  getPASTE,
+  getCOPY_AS_MARKDOWN,
+  getCOPY_AS_HTML,
+  getPASTE_AS_PLAIN_TEXT,
   SEPARATOR,
-  INSERT_BEFORE,
-  INSERT_AFTER
+  getINSERT_BEFORE,
+  getINSERT_AFTER
 } from './menuItems'
 import spellcheckMenuBuilder from './spellcheck'
+import { t } from '../../i18n'
 
-const CONTEXT_ITEMS = [INSERT_BEFORE, INSERT_AFTER, SEPARATOR, CUT, COPY, PASTE, SEPARATOR, COPY_AS_MARKDOWN, COPY_AS_HTML, PASTE_AS_PLAIN_TEXT]
+// 动态获取菜单项以确保翻译正确
+const getContextItems = () => [
+  getINSERT_BEFORE(),
+  getINSERT_AFTER(),
+  SEPARATOR,
+  getCUT(),
+  getCOPY(),
+  getPASTE(),
+  SEPARATOR,
+  getCOPY_AS_MARKDOWN(),
+  getCOPY_AS_HTML(),
+  getPASTE_AS_PLAIN_TEXT()
+]
 
 const isInsideEditor = params => {
   const { isEditable, editFlags, inputFieldType } = params
@@ -37,16 +50,18 @@ export const showEditorContextMenu = (win, event, params, isSpellcheckerEnabled)
     if (isSpellcheckerEnabled) {
       const spellingSubmenu = spellcheckMenuBuilder(isMisspelled, misspelledWord, dictionarySuggestions)
       menu.append(new MenuItem({
-        label: 'Spelling...',
+        label: t('contextMenu.spelling'),
         submenu: spellingSubmenu
       }))
       menu.append(new MenuItem(SEPARATOR))
     }
 
-    [CUT, COPY, COPY_AS_HTML, COPY_AS_MARKDOWN].forEach(item => {
+    const contextItems = getContextItems()
+    const copyItems = [contextItems[3], contextItems[4], contextItems[8], contextItems[7]] // CUT, COPY, COPY_AS_HTML, COPY_AS_MARKDOWN
+    copyItems.forEach(item => {
       item.enabled = canCopy
     })
-    CONTEXT_ITEMS.forEach(item => {
+    contextItems.forEach(item => {
       menu.append(new MenuItem(item))
     })
     menu.popup([{ window: win, x: event.clientX, y: event.clientY }])

@@ -46,11 +46,11 @@ mark::after {
 }
 
 mark::before {
-  content: ' [highlight start] ';
+  content: var(--i18n-highlight-start, ' [highlight start] ');
 }
 
 mark::after {
-  content: ' [highlight end] ';
+  content: var(--i18n-highlight-end, ' [highlight end] ');
 }
 
 #ag-editor-id summary {
@@ -66,7 +66,7 @@ mark::after {
 div.ag-show-quick-insert-hint
   p.ag-paragraph.ag-active
   > span.ag-paragraph-content:first-of-type:empty::after {
-  content: 'Type @ to insert';
+  content: var(--i18n-type-at-to-insert, 'Type @ to insert');
   color: var(--editorColor10);
 }
 
@@ -200,7 +200,7 @@ figure[data-role='FOOTNOTE'] {
 }
 
 figure[data-role='FOOTNOTE'] > p:first-of-type .ag-paragraph-content:empty::after {
-  content: 'Input the footnote definition...';
+  content: var(--i18n-input-footnote-definition, 'Input the footnote definition...');
   color: var(--editorColor30);
 }
 
@@ -284,6 +284,7 @@ span.ag-math {
   position: absolute;
   top: 100%;
   left: 0;
+  -webkit-user-select: none;
   user-select: none;
   z-index: 1;
 }
@@ -351,7 +352,8 @@ span.ag-math > .ag-math-render.ag-math-error {
   box-shadow: var(--floatShadow);
 }
 
-.ag-gray.ag-ruby > .ag-ruby-render::before .ag-gray.ag-math > .ag-math-render::before {
+.ag-gray.ag-ruby > .ag-ruby-render::before,
+.ag-gray.ag-math > .ag-math-render::before {
   border-width: 5px;
   border-style: solid;
   border-color: transparent;
@@ -362,7 +364,8 @@ span.ag-math > .ag-math-render.ag-math-error {
   content: '';
 }
 
-.ag-hide.ag-ruby > .ag-ruby-render::before .ag-hide.ag-math > .ag-math-render::before {
+.ag-hide.ag-ruby > .ag-ruby-render::before,
+.ag-hide.ag-math > .ag-math-render::before {
   content: none;
 }
 
@@ -375,6 +378,7 @@ figure {
 
 .ag-tool-bar {
   width: 100%;
+  -webkit-user-select: none;
   user-select: none;
   position: absolute;
   top: -22px;
@@ -594,17 +598,17 @@ pre.ag-front-matter {
 }
 
 pre.ag-front-matter span.ag-code-content:first-of-type:empty::after {
-  content: 'Input YAML Front Matter...';
+  content: var(--i18n-input-yaml-front-matter, 'Input YAML Front Matter...');
   color: var(--editorColor10);
 }
 
 pre[data-role$='code'] span.ag-language-input:empty::after {
-  content: 'Input Language Identifier...';
+  content: var(--i18n-input-language-identifier, 'Input Language Identifier...');
   color: var(--editorColor10);
 }
 
 pre.ag-multiple-math span.ag-code-content:first-of-type:empty::after {
-  content: 'Input Mathematical Formula...';
+  content: var(--i18n-input-mathematical-formula, 'Input Mathematical Formula...');
   color: var(--editorColor10);
 }
 
@@ -645,11 +649,11 @@ pre.ag-fence-code > code::before {
 }
 
 pre.ag-active.ag-fence-code > code::before {
-  content: 'fence';
+  content: var(--i18n-fence, 'fence');
 }
 
 pre.ag-active.ag-indent-code > code::before {
-  content: 'indent';
+  content: var(--i18n-indent, 'indent');
 }
 
 pre > code {
@@ -659,32 +663,32 @@ pre > code {
 
 pre.ag-active.ag-front-matter::before,
 pre.ag-active.ag-front-matter::after {
-  content: '---';
+  content: var(--i18n-front-matter-delimiter, '---');
 }
 
 pre.ag-active.ag-multiple-math::before,
 pre.ag-active.ag-multiple-math::after {
-  content: '$$';
+  content: var(--i18n-math-delimiter, '$$');
 }
 
 pre.ag-active[data-role='mermaid']::before {
-  content: '``` mermaid';
+  content: var(--i18n-mermaid-start, '``` mermaid');
 }
 
 pre.ag-active[data-role='flowchart']::before {
-  content: '``` flowchart';
+  content: var(--i18n-flowchart-start, '``` flowchart');
 }
 
 pre.ag-active[data-role='sequence']::before {
-  content: '``` sequence';
+  content: var(--i18n-sequence-start, '``` sequence');
 }
 
 pre.ag-active[data-role='plantuml']::before {
-  content: '``` plantuml';
+  content: var(--i18n-plantuml-start, '``` plantuml');
 }
 
 pre.ag-active[data-role='vega-lite']::before {
-  content: '``` vega-lite';
+  content: var(--i18n-vega-lite-start, '``` vega-lite');
 }
 
 pre.ag-active.ag-fence-code::before,
@@ -694,7 +698,7 @@ pre.ag-active[data-role='flowchart']::after,
 pre.ag-active[data-role='sequence']::after,
 pre.ag-active[data-role='plantuml']::after,
 pre.ag-active[data-role='vega-lite']::after {
-  content: '```';
+  content: var(--i18n-code-fence, '```');
 }
 
 pre.ag-active.ag-front-matter::before,
@@ -1013,11 +1017,11 @@ span.ag-warn.ag-emoji-marked-text {
 }
 
 .ag-inline-image.ag-empty-image::before {
-  content: 'Click to add an image';
+  content: var(--i18n-click-to-add-image, 'Click to add an image');
 }
 
 .ag-inline-image.ag-image-fail::before {
-  content: 'Load image failed';
+  content: var(--i18n-load-image-failed, 'Load image failed');
 }
 
 .ag-inline-image.ag-image-loading a.ag-image-icon-success,
@@ -1168,6 +1172,7 @@ span.ag-reference-link {
 }
 
 .ag-ruby-render {
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -1240,6 +1245,7 @@ figure:not(.ag-active) pre.ag-paragraph.line-numbers {
   width: 2.5em; /* works for line-numbers below 1000 lines */
   letter-spacing: -1px;
 
+  -webkit-user-select: none;
   user-select: none;
 }
 

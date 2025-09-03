@@ -1,4 +1,5 @@
 import { ENCODING_NAME_MAP } from 'common/encoding'
+import { t } from '../../i18n'
 
 export const tabSizeOptions = [{
   label: '1',
@@ -14,36 +15,36 @@ export const tabSizeOptions = [{
   value: 4
 }]
 
-export const endOfLineOptions = [{
-  label: 'Default',
+export const getEndOfLineOptions = () => [{
+  label: t('preferences.editor.fileRepresentation.endOfLine.default'),
   value: 'default'
 }, {
-  label: 'Carriage return and line feed (CRLF)',
+  label: t('preferences.editor.fileRepresentation.endOfLine.crlf'),
   value: 'crlf'
 }, {
-  label: 'Line feed (LF)',
+  label: t('preferences.editor.fileRepresentation.endOfLine.lf'),
   value: 'lf'
 }]
 
-export const trimTrailingNewlineOptions = [{
-  label: 'Trim all trailing',
+export const getTrimTrailingNewlineOptions = () => [{
+  label: t('preferences.editor.fileRepresentation.trailingNewlines.trimAll'),
   value: 0
 }, {
-  label: 'Ensure exactly one trailing',
+  label: t('preferences.editor.fileRepresentation.trailingNewlines.ensureOne'),
   value: 1
 }, {
-  label: 'Preserve style of original document',
+  label: t('preferences.editor.fileRepresentation.trailingNewlines.preserve'),
   value: 2
 }, {
-  label: 'Do nothing',
+  label: t('preferences.editor.fileRepresentation.trailingNewlines.doNothing'),
   value: 3
 }]
 
-export const textDirectionOptions = [{
-  label: 'Left to Right',
+export const getTextDirectionOptions = () => [{
+  label: t('preferences.editor.misc.textDirection.ltr'),
   value: 'ltr'
 }, {
-  label: 'Right to Left',
+  label: t('preferences.editor.misc.textDirection.rtl'),
   value: 'rtl'
 }]
 

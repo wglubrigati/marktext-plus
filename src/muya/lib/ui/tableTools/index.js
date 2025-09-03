@@ -1,6 +1,6 @@
 import BaseFloat from '../baseFloat'
 import { patch, h } from '../../parser/render/snabbdom'
-import { toolList } from './config'
+import { getToolList } from './config'
 
 import './index.css'
 
@@ -46,6 +46,9 @@ class TableBarTools extends BaseFloat {
 
   render () {
     const { tableInfo, oldVnode, tableBarContainer } = this
+    const { muya } = this
+    const t = muya.options.t || (key => key)
+    const toolList = getToolList(t)
     const renderArray = toolList[tableInfo.barType]
     const children = renderArray.map((item) => {
       const { label } = item

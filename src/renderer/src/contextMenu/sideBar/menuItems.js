@@ -1,4 +1,5 @@
 import * as contextMenu from './actions'
+import { t } from '../../i18n'
 
 // NOTE: This are mutable fields that may change at runtime.
 
@@ -6,66 +7,77 @@ export const SEPARATOR = {
   type: 'separator'
 }
 
-export const NEW_FILE = {
-  label: 'New File',
+// 使用函数形式避免模块加载时调用翻译函数
+export const getNEW_FILE = () => ({
+  label: t('contextMenu.sideBar.newFile'),
   id: 'newFileMenuItem',
   click (menuItem, browserWindow) {
     contextMenu.newFile()
   }
-}
+})
 
-export const NEW_DIRECTORY = {
-  label: 'New Directory',
+export const getNEW_DIRECTORY = () => ({
+  label: t('contextMenu.sideBar.newDirectory'),
   id: 'newDirectoryMenuItem',
   click (menuItem, browserWindow) {
     contextMenu.newDirectory()
   }
-}
+})
 
-export const COPY = {
-  label: 'Copy',
+export const getCOPY = () => ({
+  label: t('contextMenu.sideBar.copy'),
   id: 'copyMenuItem',
   click (menuItem, browserWindow) {
     contextMenu.copy()
   }
-}
+})
 
-export const CUT = {
-  label: 'Cut',
+export const getCUT = () => ({
+  label: t('contextMenu.sideBar.cut'),
   id: 'cutMenuItem',
   click (menuItem, browserWindow) {
     contextMenu.cut()
   }
-}
+})
 
-export const PASTE = {
-  label: 'Paste',
+export const getPASTE = () => ({
+  label: t('contextMenu.sideBar.paste'),
   id: 'pasteMenuItem',
   click (menuItem, browserWindow) {
     contextMenu.paste()
   }
-}
+})
 
-export const RENAME = {
-  label: 'Rename',
+export const getRENAME = () => ({
+  label: t('contextMenu.sideBar.rename'),
   id: 'renameMenuItem',
   click (menuItem, browserWindow) {
     contextMenu.rename()
   }
-}
+})
 
-export const DELETE = {
-  label: 'Move To Trash',
+export const getDELETE = () => ({
+  label: t('contextMenu.sideBar.moveToTrash'),
   id: 'deleteMenuItem',
   click (menuItem, browserWindow) {
     contextMenu.remove()
   }
-}
+})
 
-export const SHOW_IN_FOLDER = {
-  label: 'Show In Folder',
+export const getSHOW_IN_FOLDER = () => ({
+  label: t('contextMenu.sideBar.showInFolder'),
   id: 'showInFolderMenuItem',
   click (menuItem, browserWindow) {
     contextMenu.showInFolder()
   }
-}
+})
+
+// 为了向后兼容，保留原有的导出
+export const NEW_FILE = getNEW_FILE()
+export const NEW_DIRECTORY = getNEW_DIRECTORY()
+export const COPY = getCOPY()
+export const CUT = getCUT()
+export const PASTE = getPASTE()
+export const RENAME = getRENAME()
+export const DELETE = getDELETE()
+export const SHOW_IN_FOLDER = getSHOW_IN_FOLDER()

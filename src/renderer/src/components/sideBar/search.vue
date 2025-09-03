@@ -5,12 +5,12 @@
         ref="searchEl"
         v-model="keyword"
         type="text"
-        placeholder="Search in folder..."
+        :placeholder="t('sideBar.search.searchInFolder')"
         @keyup="search"
       />
       <div class="controls">
         <span
-          title="Case Sensitive"
+          :title="t('search.caseSensitive')"
           class="is-case-sensitive"
           :class="{ active: isCaseSensitive }"
           @click.stop="caseSensitiveClicked()"
@@ -18,7 +18,7 @@
           <FindCaseIcon aria-hidden="true" />
         </span>
         <span
-          title="Select whole word"
+          :title="t('search.wholeWord')"
           class="is-whole-word"
           :class="{ active: isWholeWord }"
           @click.stop="wholeWordClicked()"
@@ -26,7 +26,7 @@
           <FindWordIcon aria-hidden="true" />
         </span>
         <span
-          title="Use query as RegEx"
+          :title="t('search.useRegex')"
           class="is-regex"
           :class="{ active: isRegexp }"
           @click.stop="regexpClicked()"
@@ -37,14 +37,14 @@
     </div>
 
     <div v-if="showNoFolderOpenedMessage" class="search-message-section">
-      <span>No folder open</span>
+      <span>{{ t('sideBar.search.noFolderOpen') }}</span>
     </div>
-    <div v-if="showNoResultFoundMessage" class="search-message-section">No results found.</div>
+    <div v-if="showNoResultFoundMessage" class="search-message-section">{{ t('sideBar.search.noResultsFound') }}</div>
     <div v-if="searchErrorString" class="search-message-section">{{ searchErrorString }}</div>
 
     <div v-show="showSearchCancelArea" class="cancel-area">
       <el-button type="primary" size="mini" @click="cancelSearcher">
-        Cancel <VideoPause />
+        {{ t('sideBar.search.cancel') }} <VideoPause />
       </el-button>
     </div>
     <div v-if="searchResult.length" class="search-result-info">{{ searchResultInfo }}</div>
@@ -58,7 +58,7 @@
     <div v-else class="empty">
       <div class="no-data">
         <button v-if="showNoFolderOpenedMessage" class="button-primary" @click="openFolder">
-          Open Folder
+          {{ t('sideBar.search.openFolder') }}
         </button>
       </div>
     </div>
@@ -66,6 +66,7 @@
 </template>
 
 <script setup>
+import { t } from '../../i18n'
 import { ref, computed, watch, onMounted, nextTick } from 'vue'
 import { useLayoutStore } from '@/store/layout'
 import { useProjectStore } from '@/store/project'
@@ -118,7 +119,7 @@ const searchResultInfo = computed(() => {
     return acc + item.matches.length
   }, 0)
 
-  return `${matchCount} ${matchCount > 1 ? 'matches' : 'match'} in ${fileCount} ${fileCount > 1 ? 'files' : 'file'}`
+  return t('search.searchResultInfo', { matchCount, fileCount })
 })
 
 const showNoFolderOpenedMessage = computed(() => {
@@ -170,7 +171,7 @@ const search = () => {
           if (promises.cancel) {
             promises.cancel()
           }
-          searchErrorString.value = 'Search was limited to 100 files.'
+          searchErrorString.value = t('sideBar.search.searchLimited', { count: 100 })
         }
       },
 
@@ -307,52 +308,51 @@ onMounted(() => {
   background: var(--inputBgColor);
   box-sizing: border-box;
   align-items: center;
-  & > input {
-    color: var(--sideBarColor);
-    background: transparent;
-    height: 100%;
-    flex: 1;
-    border: none;
-    outline: none;
-    padding: 0 8px;
-    font-size: 13px;
-    width: 50%;
-  }
-  & > .controls {
-    display: flex;
-    flex-shrink: 0;
-    margin-top: 3px;
-    & > span {
-      cursor: pointer;
-      width: 20px;
-      height: 20px;
-      margin-left: 2px;
-      margin-right: 2px;
-      &:hover {
-        color: var(--sideBarIconColor);
-      }
-      & > svg {
-        fill: var(--sideBarIconColor);
-        &:hover {
-          fill: var(--highlightThemeColor);
-        }
-      }
-      &.active svg {
-        fill: var(--highlightThemeColor);
-      }
-    }
-  }
-
-  & > svg {
-    cursor: pointer;
-    flex-shrink: 0;
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-    &:hover {
-      color: var(--sideBarIconColor);
-    }
-  }
+}
+.search-input > input {
+  color: var(--sideBarColor);
+  background: transparent;
+  height: 100%;
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0 8px;
+  font-size: 13px;
+  width: 50%;
+}
+.search-input > .controls {
+  display: flex;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.search-input > .controls > span {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+.search-input > .controls > span:hover {
+  color: var(--sideBarIconColor);
+}
+.search-input > .controls > span > svg {
+  fill: var(--sideBarIconColor);
+}
+.search-input > .controls > span > svg:hover {
+  fill: var(--highlightThemeColor);
+}
+.search-input > .controls > span.active svg {
+  fill: var(--highlightThemeColor);
+}
+.search-input > svg {
+  cursor: pointer;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+.search-input > svg:hover {
+  color: var(--sideBarIconColor);
 }
 .cancel-area {
   text-align: center;
@@ -373,9 +373,10 @@ onMounted(() => {
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  &::-webkit-scrollbar:vertical {
-    width: 8px;
-  }
+}
+.empty::-webkit-scrollbar:vertical,
+.search-result::-webkit-scrollbar:vertical {
+  width: 8px;
 }
 .empty {
   font-size: 14px;
@@ -384,14 +385,14 @@ onMounted(() => {
   flex-direction: column;
   justify-content: space-around;
   padding-bottom: 100px;
-  & .no-data {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-  }
-  & .no-data .button-primary {
-    display: block;
-    margin-top: 20px;
-  }
+}
+.empty .no-data {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.empty .no-data .button-primary {
+  display: block;
+  margin-top: 20px;
 }
 </style>

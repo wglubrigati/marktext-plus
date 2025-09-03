@@ -51,20 +51,27 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, nextTick, onBeforeUpdate } from 'vue'
+import { ref, onMounted, onBeforeUnmount, nextTick, onBeforeUpdate, computed } from 'vue'
 import { useCommandCenterStore } from '@/store/commandCenter'
 import log from 'electron-log'
 import bus from '../../bus'
 import loading from '../loading'
-
+import { t } from '../../i18n'
 const searchInput = ref(null)
 let commandItems = []
 
 const currentCommand = ref(null)
-const defaultPlaceholderText = 'Type a command to execute'
+const defaultPlaceholderText = computed(() => {
+  try {
+    return t('commandPalette.placeholder')
+  } catch (error) {
+    console.warn('i18n not ready, using fallback placeholder')
+    return 'Search commands...'
+  }
+})
 
 const showCommandPalette = ref(false)
-const placeholderText = ref(defaultPlaceholderText)
+const placeholderText = ref('')
 const query = ref('')
 const selectedCommandIndex = ref(-1)
 const availableCommands = ref([])
@@ -83,7 +90,7 @@ const handleShow = (command) => {
     .then(() => {
       availableCommands.value = currentCommand.value.subcommands
       selectedCommandIndex.value = currentCommand.value.subcommandSelectedIndex
-      placeholderText.value = currentCommand.value.placeholder || defaultPlaceholderText
+      placeholderText.value = currentCommand.value.placeholder || defaultPlaceholderText.value
       query.value = ''
       showCommandPalette.value = true
       bus.emit('editor-blur')
@@ -241,7 +248,7 @@ const updateCommands = () => {
 const executeCommand = (commandId) => {
   const command = availableCommands.value.find((c) => c.id === commandId)
   if (!command) {
-    log.error(`Cannot find command "${commandId}".`)
+    log.error(`Command not found: ${commandId}`)
     return
   }
 
@@ -269,10 +276,22 @@ const executeCommand = (commandId) => {
 
 onMounted(() => {
   bus.on('show-command-palette', handleShow)
+  
+  // 监听语言变化事件，重新获取命令列表
+  bus.on('language-changed', () => {
+    // 如果命令面板当前是打开状态，重新加载命令
+    if (showCommandPalette.value && currentCommand.value) {
+      currentCommand.value.run().then(() => {
+        availableCommands.value = currentCommand.value.subcommands
+        updateCommands()
+      })
+    }
+  })
 })
 
 onBeforeUnmount(() => {
   bus.off('show-command-palette', handleShow)
+  bus.off('language-changed')
 })
 </script>
 
@@ -371,9 +390,9 @@ ul.commands li span {
 ul.commands li span.shortcut {
   font-size: 12px;
   line-height: 20px;
-  & > kbd {
-    margin-left: 2px;
-  }
+}
+ul.commands li span.shortcut > kbd {
+  margin-left: 2px;
 }
 
 .fade-enter-active,

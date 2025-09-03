@@ -56,7 +56,7 @@ win:
       arch: [x64]
     - target: 'zip'
       arch: [x64]
-  icon: icons/icon.ico
+  icon: static/icon.ico
 nsis:
   artifactName: 'marktext-win-${arch}-${version}-setup.${ext}'
   shortcutName: ${productName}
@@ -74,7 +74,7 @@ mac:
     - NSCameraUsageDescription: Application requests access to the device's camera.
     - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
     - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
-  icon: icons/icon.ico
+  icon: static/icon.icns
   notarize: false
   target:
     - target: dmg
@@ -99,17 +99,13 @@ linux:
   category: 'Office;TextEditor;Utility'
   mimeTypes:
     - 'text/markdown'
-  icon: 'icons'
+  icon: 'static/icon.png'
   desktop:
     entry:
       StartupWMClass: 'marktext'
       Keywords: 'marktext;'
   target:
     - AppImage
-    - snap
-    - deb
-    - rpm
-    - tar.gz
   fileAssociations:
     - ext: 'md'
       name: 'Markdown'

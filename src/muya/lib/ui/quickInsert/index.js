@@ -2,7 +2,7 @@ import { filter } from 'fuzzaldrin'
 import { patch, h } from '../../parser/render/snabbdom'
 import { deepCopy } from '../../utils'
 import BaseScrollFloat from '../baseScrollFloat'
-import { quickInsertObj } from './config'
+import { createQuickInsertObj } from './config'
 import './index.css'
 
 class QuickInsert extends BaseScrollFloat {
@@ -17,7 +17,9 @@ class QuickInsert extends BaseScrollFloat {
     this.renderArray = null
     this.activeItem = null
     this.block = null
-    this.renderObj = quickInsertObj
+    // 从muya.options中获取翻译函数，如果没有则使用默认配置
+    const translateFn = muya.options && muya.options.t ? muya.options.t : null
+    this.renderObj = createQuickInsertObj(translateFn)
     this.render()
     this.listen()
   }
@@ -108,9 +110,20 @@ class QuickInsert extends BaseScrollFloat {
   search (text) {
     const { contentState } = this.muya
     const canInserFrontMatter = contentState.canInserFrontMatter(this.block)
-    const obj = deepCopy(quickInsertObj)
+    const obj = deepCopy(this.renderObj)
     if (!canInserFrontMatter) {
-      obj['basic block'].splice(2, 1)
+      // 查找包含 front-matter 的基础块分组
+      const basicBlockKey = Object.keys(obj).find(key => {
+        const items = obj[key]
+        return Array.isArray(items) && items.some(item => item.label === 'front-matter')
+      })
+      if (basicBlockKey && obj[basicBlockKey]) {
+        // 找到 front-matter 项的索引并移除
+        const frontMatterIndex = obj[basicBlockKey].findIndex(item => item.label === 'front-matter')
+        if (frontMatterIndex !== -1) {
+          obj[basicBlockKey].splice(frontMatterIndex, 1)
+        }
+      }
     }
     let result = obj
     if (text !== '') {
@@ -125,6 +138,12 @@ class QuickInsert extends BaseScrollFloat {
 
   selectItem (item) {
     const { contentState } = this.muya
+    // 检查 block 是否存在，避免 null 引用错误
+    if (!this.block) {
+      console.warn('QuickInsert: block is null, cannot select item')
+      this.hide()
+      return
+    }
     this.block.text = ''
     const { key } = this.block
     const offset = 0

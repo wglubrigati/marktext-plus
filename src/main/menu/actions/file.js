@@ -12,6 +12,7 @@ import { normalizeAndResolvePath, writeFile } from '../../filesystem'
 import { writeMarkdownFile } from '../../filesystem/markdown'
 import { getPath, getRecommendTitleFromMarkdownString } from '../../utils'
 import pandoc from '../../utils/pandoc'
+import { t } from '../../i18n'
 
 // TODO(refactor): "save" and "save as" should be moved to the editor window (editor.js) and
 // the renderer should communicate only with the editor window for file relevant stuff.
@@ -165,10 +166,10 @@ const handleResponseForSave = async (e, id, filename, pathname, markdown, option
 const showUnsavedFilesMessage = async (win, files) => {
   const { response } = await dialog.showMessageBox(win, {
     type: 'warning',
-    buttons: ['Save', "Don't save", 'Cancel'],
+    buttons: [t('dialog.save'), t('dialog.dontSave'), t('dialog.cancel')],
     defaultId: 0,
-    message: `Do you want to save the changes you made to ${files.length} ${files.length === 1 ? 'file' : 'files'}?\n\n${files.map((f) => f.filename).join('\n')}`,
-    detail: "Your changes will be lost if you don't save them.",
+    message: t('dialog.saveChanges', { count: files.length, type: files.length === 1 ? t('dialog.file') : t('dialog.files'), files: files.map((f) => f.filename).join('\n') }),
+    detail: t('dialog.changesWillBeLost'),
     cancelId: 2,
     noLink: true
   })
@@ -189,9 +190,9 @@ const showUnsavedFilesMessage = async (win, files) => {
 
 const noticePandocNotFound = (win) => {
   return win.webContents.send('mt::pandoc-not-exists', {
-    title: 'Import Warning',
+    title: t('dialog.importWarning'),
     type: 'warning',
-    message: 'Install pandoc before you want to import files.',
+    message: t('dialog.installPandoc'),
     time: 10000
   })
 }
@@ -308,8 +309,8 @@ ipcMain.on('mt::close-window-confirm', async (e, unsavedFiles) => {
         dialog
           .showMessageBox(win, {
             type: 'error',
-            buttons: ['Close', 'Keep It Open'],
-            message: 'Failure while saving files',
+            buttons: [t('dialog.close'), t('dialog.keepOpen')],
+            message: t('dialog.saveFailure'),
             detail: err.message
           })
           .then(({ response }) => {
@@ -375,9 +376,9 @@ ipcMain.on('mt::rename', async (e, { id, pathname, newPathname }) => {
   } else {
     const { response } = await dialog.showMessageBox(win, {
       type: 'warning',
-      buttons: ['Replace', 'Cancel'],
+      buttons: [t('dialog.replace'), t('dialog.cancel')],
       defaultId: 1,
-      message: `The file "${path.basename(newPathname)}" already exists. Do you want to replace it?`,
+      message: t('dialog.fileExists', { filename: path.basename(newPathname) }),
       cancelId: 1,
       noLink: true
     })

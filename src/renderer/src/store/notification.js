@@ -1,15 +1,16 @@
 import { defineStore } from 'pinia'
 import notice from '../services/notification'
+import { t } from '../i18n'
 
 export const useNotificationStore = defineStore('notification', {
   state: () => ({}),
   actions: {
     listenForNotification() {
       const DEFAULT_OPTS = {
-        title: 'Infomation',
+        title: t('notifications.defaultTitle'),
         type: 'primary',
         time: 10000,
-        message: 'You should never see this message'
+        message: t('notifications.defaultMessage')
       }
 
       window.electron.ipcRenderer.on('mt::show-notification', (e, opts) => {

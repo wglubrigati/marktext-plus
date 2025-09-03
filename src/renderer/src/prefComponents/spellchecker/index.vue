@@ -1,30 +1,30 @@
 <template>
   <div class="pref-spellchecker">
-    <h4>Spelling</h4>
+    <h4>{{ t('preferences.spellchecker.title') }}</h4>
     <compound>
       <template #head>
         <bool
-          description="Enable spell checking"
+          :description="t('preferences.spellchecker.enableSpellChecking')"
           :bool="spellcheckerEnabled"
           :on-change="handleSpellcheckerEnabled"
         ></bool>
       </template>
       <template #children>
         <bool
-          description="Hide marks for spelling errors"
+          :description="t('preferences.spellchecker.hideMarksForErrors')"
           :bool="spellcheckerNoUnderline"
           :disable="!spellcheckerEnabled"
           :on-change="(value) => onSelectChange('spellcheckerNoUnderline', value)"
         ></bool>
         <bool
           v-show="isOsx"
-          description="Automatically detect document language"
+          :description="t('preferences.spellchecker.autoDetectLanguage')"
           :bool="true"
           :disable="true"
         ></bool>
         <cur-select
           v-show="!isOsx"
-          description="Default language for spell checking"
+          :description="t('preferences.spellchecker.defaultLanguage')"
           :value="spellcheckerLanguage"
           :options="availableDictionaries"
           :disable="!spellcheckerEnabled"
@@ -34,22 +34,21 @@
     </compound>
 
     <div v-if="isOsx && spellcheckerEnabled" class="description">
-      The used language will be detected automatically while typing. Additional languages may be
-      added through "Language & Region" in your system preferences pane.
+      {{ t('preferences.spellchecker.autoDetectDescription') }}
     </div>
 
     <div v-if="!isOsx && spellcheckerEnabled">
-      <h6 class="title">Custom dictionary:</h6>
-      <div class="description">Edit words in custom dictionary.</div>
-      <el-table :data="wordsInCustomDictionary" empty-text="No words available" style="width: 100%">
-        <el-table-column prop="word" label="Word"> </el-table-column>
+      <h6 class="title">{{ t('preferences.spellchecker.customDictionary.title') }}</h6>
+      <div class="description">{{ t('preferences.spellchecker.customDictionary.description') }}</div>
+      <el-table :data="wordsInCustomDictionary" :empty-text="t('preferences.spellchecker.customDictionary.noWordsAvailable')" style="width: 100%">
+        <el-table-column prop="word" :label="t('preferences.spellchecker.customDictionary.word')"> </el-table-column>
 
-        <el-table-column fixed="right" label="Options" width="90">
+        <el-table-column fixed="right" :label="t('preferences.spellchecker.customDictionary.options')" width="90">
           <template #default="scope">
             <el-button
               type="text"
               size="small"
-              title="Delete"
+              :title="t('preferences.spellchecker.customDictionary.delete')"
               @click="handleDeleteClick(scope.row)"
             >
               <Delete width="16" height="16" />
@@ -73,8 +72,10 @@ import { isOsx as checkIsOsx } from '@/util'
 import { SpellChecker } from '@/spellchecker'
 import { getLanguageName } from '@/spellchecker/languageMap'
 import notice from '@/services/notification'
+import { useI18n } from 'vue-i18n'
 import { Delete } from '@element-plus/icons-vue'
 
+const { t } = useI18n()
 const isOsx = checkIsOsx
 const availableDictionaries = ref([])
 const wordsInCustomDictionary = ref([])
@@ -103,7 +104,12 @@ onMounted(() => {
 
 const getAvailableDictionaries = async () => {
   const dictionaries = await SpellChecker.getAvailableDictionaries()
-  return dictionaries.map((selectedItem) => {
+  // 只显示英语拼写检查选项
+  const englishDictionaries = dictionaries.filter(dict => dict.startsWith('en'))
+  // 如果没有英语选项，提供默认的 en-US
+  const finalDictionaries = englishDictionaries.length > 0 ? englishDictionaries : ['en-US']
+  
+  return finalDictionaries.map((selectedItem) => {
     return {
       value: selectedItem,
       label: getLanguageName(selectedItem)
@@ -115,7 +121,8 @@ const ensureDictLanguage = async (lang) => {
   if (!spellchecker.value) {
     spellchecker.value = new SpellChecker(true, 'en-US')
   }
-  await spellchecker.value.switchLanguage(lang)
+  // 强制使用英语作为拼写检查语言
+  await spellchecker.value.switchLanguage('en-US')
 }
 
 const handleSpellcheckerLanguage = (languageCode) => {
@@ -126,7 +133,7 @@ const handleSpellcheckerLanguage = (languageCode) => {
     .catch((error) => {
       log.error(error)
       notice.notify({
-        title: 'Failed to switch language',
+        title: t('spellchecker.failedToSwitchLanguage'),
         type: 'error',
         message: error.message
       })
@@ -152,9 +159,9 @@ const handleDeleteClick = (selectedItem) => {
           )
         } else {
           notice.notify({
-            title: 'Failed to remove custom word',
+            title: t('spellchecker.failedToRemoveWord'),
             type: 'error',
-            message: 'An unexpected error occurred while saving.'
+            message: t('spellchecker.unexpectedError')
           })
         }
       })

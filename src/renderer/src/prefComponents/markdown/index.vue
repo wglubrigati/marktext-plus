@@ -1,35 +1,35 @@
 <template>
   <div class="pref-markdown">
-    <h4>Markdown</h4>
+    <h4>{{ t('preferences.markdown.title') }}</h4>
     <compound>
       <template #head>
-        <h6 class="title">Lists:</h6>
+        <h6 class="title">{{ t('preferences.markdown.lists.title') }}</h6>
       </template>
       <template #children>
         <bool
-          description="Prefer loose list items"
+          :description="t('preferences.markdown.lists.preferLooseListItem')"
           :bool="preferLooseListItem"
           :on-change="(value) => onSelectChange('preferLooseListItem', value)"
           more="https://spec.commonmark.org/0.29/#loose"
         ></bool>
         <cur-select
-          description="Preferred marker for bullet lists"
+          :description="t('preferences.markdown.lists.bulletListMarker')"
           :value="bulletListMarker"
           :options="bulletListMarkerOptions"
           :on-change="(value) => onSelectChange('bulletListMarker', value)"
           more="https://spec.commonmark.org/0.29/#bullet-list-marker"
         ></cur-select>
         <cur-select
-          description="Preferred marker for ordered lists"
+          :description="t('preferences.markdown.lists.orderListDelimiter')"
           :value="orderListDelimiter"
           :options="orderListDelimiterOptions"
           :on-change="(value) => onSelectChange('orderListDelimiter', value)"
           more="https://spec.commonmark.org/0.29/#ordered-list"
         ></cur-select>
         <cur-select
-          description="Preferred list indentation"
+          :description="t('preferences.markdown.lists.listIndentation.title')"
           :value="listIndentation"
-          :options="listIndentationOptions"
+          :options="getListIndentationOptions()"
           :on-change="(value) => onSelectChange('listIndentation', value)"
         ></cur-select>
       </template>
@@ -37,24 +37,24 @@
 
     <compound>
       <template #head>
-        <h6 class="title">Markdown extensions:</h6>
+        <h6 class="title">{{ t('preferences.markdown.extensions.title') }}</h6>
       </template>
       <template #children>
         <cur-select
-          description="Front matter format"
+          :description="t('preferences.markdown.extensions.frontmatterType.title')"
           :value="frontmatterType"
-          :options="frontmatterTypeOptions"
+          :options="getFrontmatterTypeOptions()"
           :on-change="(value) => onSelectChange('frontmatterType', value)"
         ></cur-select>
         <bool
-          description="Enable Pandoc-style superscript and subscript"
+          :description="t('preferences.markdown.extensions.superSubScript')"
           :bool="superSubScript"
           :on-change="(value) => onSelectChange('superSubScript', value)"
           more="https://pandoc.org/MANUAL.html#superscripts-and-subscripts"
         ></bool>
         <bool
-          description="Enable Pandoc-style footnotes"
-          notes="Requires restart."
+          :description="t('preferences.markdown.extensions.footnote')"
+          :notes="t('preferences.markdown.extensions.footnoteNotes')"
           :bool="footnote"
           :on-change="(value) => onSelectChange('footnote', value)"
           more="https://pandoc.org/MANUAL.html#footnotes"
@@ -64,16 +64,16 @@
 
     <compound>
       <template #head>
-        <h6 class="title">Compatibility:</h6>
+        <h6 class="title">{{ t('preferences.markdown.compatibility.title') }}</h6>
       </template>
       <template #children>
         <bool
-          description="Enable HTML rendering"
+          :description="t('preferences.markdown.compatibility.enableHtml')"
           :bool="isHtmlEnabled"
           :on-change="(value) => onSelectChange('isHtmlEnabled', value)"
         ></bool>
         <bool
-          description="Enable GitLab compatibility mode"
+          :description="t('preferences.markdown.compatibility.enableGitlab')"
           :bool="isGitlabCompatibilityEnabled"
           :on-change="(value) => onSelectChange('isGitlabCompatibilityEnabled', value)"
         ></bool>
@@ -82,13 +82,13 @@
 
     <compound>
       <template #head>
-        <h6 class="title">Diagrams:</h6>
+        <h6 class="title">{{ t('preferences.markdown.diagrams.title') }}</h6>
       </template>
       <template #children>
         <cur-select
-          description="Sequence diagram theme"
+          :description="t('preferences.markdown.diagrams.sequenceTheme.title')"
           :value="sequenceTheme"
-          :options="sequenceThemeOptions"
+          :options="getSequenceThemeOptions()"
           :on-change="(value) => onSelectChange('sequenceTheme', value)"
           more="https://bramp.github.io/js-sequence-diagrams/"
         ></cur-select>
@@ -97,13 +97,13 @@
 
     <compound>
       <template #head>
-        <h6 class="title">Misc:</h6>
+        <h6 class="title">{{ t('preferences.markdown.misc.title') }}</h6>
       </template>
       <template #children>
         <cur-select
-          description="Preferred heading style"
+          :description="t('preferences.markdown.misc.preferHeadingStyle.title')"
           :value="preferHeadingStyle"
-          :options="preferHeadingStyleOptions"
+          :options="getPreferHeadingStyleOptions()"
           :on-change="(value) => onSelectChange('preferHeadingStyle', value)"
           :disable="true"
         ></cur-select>
@@ -113,6 +113,7 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
 import Compound from '../common/compound'
 import { usePreferencesStore } from '@/store/preferences'
 import Bool from '../common/bool'
@@ -120,12 +121,14 @@ import CurSelect from '../common/select'
 import {
   bulletListMarkerOptions,
   orderListDelimiterOptions,
-  preferHeadingStyleOptions,
-  listIndentationOptions,
-  frontmatterTypeOptions,
-  sequenceThemeOptions
+  getPreferHeadingStyleOptions,
+  getListIndentationOptions,
+  getFrontmatterTypeOptions,
+  getSequenceThemeOptions
 } from './config'
 import { storeToRefs } from 'pinia'
+
+const { t } = useI18n()
 
 const preferenceStore = usePreferencesStore()
 

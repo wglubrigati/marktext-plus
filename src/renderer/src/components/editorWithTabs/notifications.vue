@@ -15,7 +15,7 @@
           class="inline-button"
           @click.stop="handleClick(true)"
         >
-          Ok
+          {{ t('common.ok') }}
         </span>
         <span class="inline-button" @click.stop="handleClick(false)">
           <svg class="close-icon icon" aria-hidden="true">
@@ -32,6 +32,7 @@ import { computed } from 'vue'
 import { useEditorStore } from '@/store/editor'
 import { useLayoutStore } from '@/store/layout'
 import { storeToRefs } from 'pinia'
+import { t } from '../../i18n'
 
 const editorStore = useEditorStore()
 const layoutStore = useLayoutStore()
@@ -50,7 +51,7 @@ const currentNotification = computed(() => {
 const handleClick = (status) => {
   const notifications = currentFile.value.notifications
   if (!notifications || notifications.length === 0) {
-    console.error('notifications::handleClick: Cannot find notification on stack.')
+    console.error(t('editor.notifications.notificationNotFound'))
     return
   }
 

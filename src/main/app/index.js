@@ -17,6 +17,7 @@ import { watchers } from '../utils/imagePathAutoComplement'
 import { WindowType } from '../windows/base'
 import EditorWindow from '../windows/editor'
 import SettingWindow from '../windows/setting'
+import { setLanguage } from '../i18n'
 
 class App {
   /**
@@ -32,6 +33,8 @@ class App {
     // this.launchScreenshotWin = null // The window which call the screenshot.
     // this.shortcutCapture = null
 
+    // Initialize main process language
+    this._initializeLanguage()
     this._listenForIpcMain()
   }
 
@@ -115,6 +118,67 @@ class App {
     })
   }
 
+  /**
+   * Initialize main process language from preferences
+   */
+  async _initializeLanguage() {
+    try {
+      let currentLanguage = this._accessor.preferences.getItem('language')
+      
+      // 如果没有设置语言，则根据系统语言自动设置
+      if (!currentLanguage) {
+        const systemLanguage = app.getLocale()
+        console.log(`System language detected: ${systemLanguage}`)
+        
+        // 支持的语言列表（根据项目实际支持的语言）
+        const supportedLanguages = ['en', 'zh-CN', 'zh-TW', 'ja', 'ko', 'fr', 'de', 'es', 'pt', 'ru']
+        
+        // 语言映射：系统语言代码 -> 应用语言代码
+        const languageMap = {
+          'zh-CN': 'zh-CN',
+          'zh-TW': 'zh-TW', 
+          'zh-HK': 'zh-TW',
+          'zh': 'zh-CN',
+          'en': 'en',
+          'en-US': 'en',
+          'en-GB': 'en',
+          'ja': 'ja',
+          'ja-JP': 'ja',
+          'ko': 'ko',
+          'ko-KR': 'ko',
+          'fr': 'fr',
+          'fr-FR': 'fr',
+          'de': 'de',
+          'de-DE': 'de',
+          'es': 'es',
+          'es-ES': 'es',
+          'pt': 'pt',
+          'pt-BR': 'pt',
+          'ru': 'ru',
+          'ru-RU': 'ru'
+        }
+        
+        currentLanguage = languageMap[systemLanguage] || 'en'
+        
+        // 如果检测到的语言不在支持列表中，使用英语
+        if (!supportedLanguages.includes(currentLanguage)) {
+          currentLanguage = 'en'
+        }
+        
+        // 保存检测到的语言设置
+        this._accessor.preferences.setItem('language', currentLanguage)
+        console.log(`Auto-detected and set language to: ${currentLanguage}`)
+      }
+      
+      setLanguage(currentLanguage)
+      console.log(`Main process language initialized to: ${currentLanguage}`)
+    } catch (error) {
+      console.error('Failed to initialize main process language:', error)
+      // 如果出错，使用英语作为默认语言
+      setLanguage('en')
+    }
+  }
+
   async getScreenshotFileName() {
     const screenshotFolderPath = await this._accessor.dataCenter.getItem('screenshotFolderPath')
     const fileName = `${dayjs().format('YYYY-MM-DD-HH-mm-ss')}-screenshot.png`
@@ -124,6 +188,12 @@ class App {
   ready = () => {
     const { _args: args, _openFilesCache } = this
     const { preferences } = this._accessor
+
+    // 初始化语言设置
+    const { language } = preferences.getAll()
+    if (language) {
+      setLanguage(language)
+    }
 
     if (args._.length) {
       for (const pathname of args._) {
@@ -428,6 +498,12 @@ class App {
   _listenForIpcMain() {
     registerKeyboardListeners()
     registerSpellcheckerListeners()
+
+    // 处理语言设置请求
+    ipcMain.on('mt::get-current-language', (event) => {
+      const { language } = this._accessor.preferences.getAll()
+      event.reply('mt::current-language', language || 'en')
+    })
 
     ipcMain.on('app-create-editor-window', () => {
       this._createEditorWindow()

@@ -59,6 +59,15 @@ export default class KeybindingConfigurator {
     return this.keybindingList
   }
 
+  // 重新构建快捷键列表，用于语言切换时更新描述
+  rebuildKeybindingList() {
+    // 保存当前的用户设置
+    const userKeybindings = this._getUserKeybindingMap()
+    // 重新构建列表
+    this.keybindingList = this._buildUiKeybindingList(this.defaultKeybindings, userKeybindings)
+    return this.keybindingList
+  }
+
   async save() {
     if (!this.isDirty) {
       return true

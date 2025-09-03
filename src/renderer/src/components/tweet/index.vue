@@ -9,12 +9,12 @@
     >
       <template #title>
         <div class="title">
-          <span>Send us feedback via tweet</span>
+          <span>{{ t('tweet.title') }}</span>
         </div>
       </template>
       <div class="body">
         <div class="feeling">
-          <div>What's your experience feelings?</div>
+          <div>{{ t('tweet.feelingsQuestion') }}</div>
           <ul>
             <li :class="{ active: selectedFace === 'smile' }" @click="faceClick('smile')">
               <svg class="icon" aria-hidden="true">
@@ -29,7 +29,7 @@
           </ul>
         </div>
         <div class="feedback">
-          <div>Tell us your feedback?</div>
+          <div>{{ t('tweet.feedbackQuestion') }}</div>
           <textarea ref="textarea" v-model="value" cols="30" rows="10"></textarea>
         </div>
         <div class="buttons">
@@ -37,7 +37,7 @@
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-github"></use>
             </svg>
-            Report bug or feature request via github
+            {{ t('tweet.reportViaGithub') }}
           </a>
           <a
             href="javascript:;"
@@ -48,7 +48,7 @@
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-twitter"></use>
             </svg>
-            Tweet
+            {{ t('tweet.tweet') }}
           </a>
         </div>
       </div>
@@ -59,6 +59,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import bus from '../../bus'
+import { t } from '../../i18n'
 
 const showTweetDialog = ref(false)
 const value = ref('')

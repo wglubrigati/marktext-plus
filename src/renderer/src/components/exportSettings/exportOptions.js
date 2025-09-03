@@ -1,61 +1,69 @@
-export const pageSizeList = [
+import { t } from '@/i18n'
+
+export const getPageSizeList = () => [
   {
-    label: 'A3 (297mm x 420mm)',
+    label: t('exportSettings.options.pageSizes.a3'),
     value: 'A3'
   }, {
-    label: 'A4 (210mm x 297mm)',
+    label: t('exportSettings.options.pageSizes.a4'),
     value: 'A4'
   }, {
-    label: 'A5 (148mm x 210mm)',
+    label: t('exportSettings.options.pageSizes.a5'),
     value: 'A5'
   }, {
-    label: 'US Legal (8.5" x 13")',
+    label: t('exportSettings.options.pageSizes.legal'),
     value: 'Legal'
   }, {
-    label: 'US Letter (8.5" x 11")',
+    label: t('exportSettings.options.pageSizes.letter'),
     value: 'Letter'
   }, {
-    label: 'Tabloid (17" x 11")',
+    label: t('exportSettings.options.pageSizes.tabloid'),
     value: 'Tabloid'
   }, {
-    label: 'Custom',
+    label: t('exportSettings.options.pageSizes.custom'),
     value: 'custom'
   }
 ]
 
-export const headerFooterTypes = [
+export const getHeaderFooterTypes = () => [
   {
-    label: 'None',
+    label: t('exportSettings.options.headerFooterTypes.none'),
     value: 0
   }, {
-    label: 'Single cell',
+    label: t('exportSettings.options.headerFooterTypes.singleCell'),
     value: 1
   }, {
-    label: 'Three cells',
+    label: t('exportSettings.options.headerFooterTypes.threeCells'),
     value: 2
   }
 ]
 
-export const headerFooterStyles = [
+export const getHeaderFooterStyles = () => [
   {
-    label: 'Default',
+    label: t('exportSettings.options.headerFooterStyles.default'),
     value: 0
   }, {
-    label: 'Simple',
+    label: t('exportSettings.options.headerFooterStyles.simple'),
     value: 1
   }, {
-    label: 'Styled',
+    label: t('exportSettings.options.headerFooterStyles.styled'),
     value: 2
   }
 ]
 
-export const exportThemeList = [{
-  label: 'Academic',
+export const getExportThemeList = () => [{
+  label: t('exportSettings.options.themes.academic'),
   value: 'academic'
 }, {
-  label: 'GitHub (Default)',
+  label: t('exportSettings.options.themes.default'),
   value: 'default'
 }, {
-  label: 'Liber',
+  label: t('exportSettings.options.themes.liber'),
   value: 'liber'
 }]
+
+// 为了向后兼容，保留原有的导出
+export const pageSizeList = getPageSizeList()
+export const headerFooterTypes = getHeaderFooterTypes()
+export const headerFooterStyles = getHeaderFooterStyles()
+export const exportThemeList = getExportThemeList()

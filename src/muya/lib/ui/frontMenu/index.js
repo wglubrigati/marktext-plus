@@ -1,6 +1,6 @@
 import BaseFloat from '../baseFloat'
 import { patch, h } from '../../parser/render/snabbdom'
-import { menu, getSubMenu, getLabel } from './config'
+import { createMenu, createGetSubMenu, createGetLabel } from './config'
 
 import './index.css'
 
@@ -31,6 +31,12 @@ class FrontMenu extends BaseFloat {
     this.endBlock = null
     this.options = opts
     this.reference = null
+    // 获取翻译函数
+    this.t = opts.t || muya.options.t || ((key) => key)
+    // 创建菜单和标签函数
+    this.menu = createMenu(this.t)
+    this.getLabel = createGetLabel(this.t)
+    this.getSubMenu = createGetSubMenu(this.t)
     const frontMenuContainer = (this.frontMenuContainer = document.createElement('div'))
     Object.assign(this.container.parentNode.style, {
       overflow: 'visible'
@@ -89,7 +95,7 @@ class FrontMenu extends BaseFloat {
       const textWrapper = h('span', title)
       const shortCutWrapper = h('div.short-cut', [h('span', shortCut)])
       let itemSelector = `li.item.${label}`
-      if (label === getLabel(this.outmostBlock)) {
+      if (label === this.getLabel(this.outmostBlock)) {
         itemSelector += '.active'
       }
       return h(
@@ -114,8 +120,8 @@ class FrontMenu extends BaseFloat {
   render() {
     const { oldVnode, frontMenuContainer, outmostBlock, startBlock, endBlock } = this
     const { type, functionType } = outmostBlock
-    const children = menu.map(({ icon, label, text, shortCut }) => {
-      const subMenu = getSubMenu(outmostBlock, startBlock, endBlock)
+    const children = this.menu.map(({ icon, label, text, shortCut }) => {
+      const subMenu = this.getSubMenu(outmostBlock, startBlock, endBlock)
       const iconWrapperSelector = 'div.icon-wrapper'
       const iconWrapper = h(
         iconWrapperSelector,

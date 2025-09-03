@@ -18,8 +18,8 @@
           <div class="img-wrapper">
             <img :src="`${importIcon.url}`" alt="import file" />
           </div>
-          <div>Import or Open</div>
-          <p>Drop here to get you stuff into MarkText</p>
+          <div>{{ t('import.title') }}</div>
+          <p>{{ t('import.description') }}</p>
         </div>
         <div class="file-list">
           <div>.md</div>
@@ -37,6 +37,7 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import bus from '@/bus'
 import importIconUrl from '@/assets/icons/import_file.svg?url'
+import { t } from '../../i18n'
 
 const importIcon = ref({ url: importIconUrl })
 const showImport = ref(false)

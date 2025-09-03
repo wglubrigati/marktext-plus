@@ -33,6 +33,9 @@ class AppMenu {
     this.isOsxOrWindows = isOsx || isWindows
     this.activeWindowId = -1
     this.windowMenus = new Map()
+    
+    // Initialize main process language from preferences
+    this._initializeLanguage()
 
     this._listenForIpcMain()
   }
@@ -371,6 +374,22 @@ class AppMenu {
     }
   }
 
+  /**
+   * Initialize main process language from preferences
+   */
+  async _initializeLanguage() {
+    try {
+      const currentLanguage = this._preferences.getItem('language')
+      if (currentLanguage) {
+        const { setLanguage } = await import('../i18n.js')
+        setLanguage(currentLanguage)
+        log.info(`Main process language initialized to: ${currentLanguage}`)
+      }
+    } catch (error) {
+      log.error('Failed to initialize main process language:', error)
+    }
+  }
+
   _listenForIpcMain() {
     ipcMain.on('mt::add-recently-used-document', (e, pathname) => {
       this.addRecentlyUsedDocument(pathname)
@@ -414,12 +433,18 @@ class AppMenu {
       this.clearRecentlyUsedDocuments()
     })
 
-    ipcMain.on('broadcast-preferences-changed', (prefs) => {
+    ipcMain.on('broadcast-preferences-changed', async (prefs) => {
       if (prefs.theme !== undefined) {
         this.updateThemeMenu(prefs.theme)
       }
       if (prefs.autoSave !== undefined) {
         this.updateAutoSaveMenu(prefs.autoSave)
+      }
+      if (prefs.language) {
+        // Update main process language and rebuild menu
+        const { setLanguage } = await import('../i18n.js')
+        setLanguage(prefs.language)
+        this.updateAppMenu()
       }
     })
   }

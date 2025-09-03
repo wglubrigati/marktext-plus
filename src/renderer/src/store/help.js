@@ -1,4 +1,5 @@
 import { getUniqueId, deepClone } from '../util'
+import { i18n } from '../i18n'
 
 /**
  * Default internel markdown document with editor options.
@@ -173,6 +174,6 @@ const assertLineEnding = (adjustLineEndingOnSave, lineEnding) => {
     (adjustLineEndingOnSave && lineEnding !== 'crlf') ||
     (!adjustLineEndingOnSave && lineEnding === 'crlf')
   ) {
-    console.error('Assertion failed: Line ending is "CRLF" but document is saved as "LF".')
+    console.error(i18n.global.t('store.help.lineEndingAssertionError'))
   }
 }

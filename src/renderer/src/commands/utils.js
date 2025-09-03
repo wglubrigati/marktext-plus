@@ -1,10 +1,12 @@
+import { i18n } from '../i18n'
+
 /// Check whether the package is updatable at runtime.
 export const isUpdatable = () => {
-  // TODO: If not updatable, allow to check whether there is a new version available.
+  // TODO: t('commands.utils.todoUpdateCheck')
 
   const resFile = window.fileUtils.isFile(window.path.join(process.resourcesPath, 'app-update.yml'))
   if (!resFile) {
-    // No update resource file available.
+    // t('commands.utils.noUpdateResourceFile')
     return false
   } else if (process.env.APPIMAGE) {
     // We are running as AppImage.

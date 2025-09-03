@@ -1,13 +1,13 @@
 <template>
   <div class="pref-image">
-    <h4>Image</h4>
+    <h4>{{ t('preferences.image.title') }}</h4>
     <section class="image-ctrl">
       <div>
-        Default action after an image is inserted from local folder or clipboard
+        {{ t('preferences.image.defaultAction') }}
         <el-tooltip
           class="item"
           effect="dark"
-          content="Clipboard handling is only fully supported on macOS and Windows."
+          :content="t('preferences.image.clipboardTooltip')"
           placement="top-start"
         >
           <InfoFilled width="16" height="16" />
@@ -27,17 +27,22 @@
 
 <script setup>
 import { storeToRefs } from 'pinia'
+import { useI18n } from 'vue-i18n'
 import { usePreferencesStore } from '@/store/preferences'
 import Separator from '../common/separator/index.vue'
 import Uploader from './components/uploader/index.vue'
 import CurSelect from '../common/select/index.vue'
 import FolderSetting from './components/folderSetting/index.vue'
-import { imageActions } from './config'
+import { getImageActions } from './config'
 import { InfoFilled } from '@element-plus/icons-vue'
+
+const { t } = useI18n()
 
 const preferenceStore = usePreferencesStore()
 
 const { imageInsertAction } = storeToRefs(preferenceStore)
+
+const imageActions = getImageActions()
 
 const onSelectChange = (type, value) => {
   preferenceStore.SET_SINGLE_PREFERENCE({ type, value })

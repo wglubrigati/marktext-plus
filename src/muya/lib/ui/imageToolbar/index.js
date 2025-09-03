@@ -1,6 +1,6 @@
 import BaseFloat from '../baseFloat'
 import { patch, h } from '../../parser/render/snabbdom'
-import icons from './config'
+import getIcons from './config'
 
 import './index.css'
 
@@ -24,7 +24,7 @@ class ImageToolbar extends BaseFloat {
     this.oldVnode = null
     this.imageInfo = null
     this.options = opts
-    this.icons = icons
+    this.icons = getIcons(muya?.options?.t)
     this.reference = null
     const toolbarContainer = this.toolbarContainer = document.createElement('div')
     this.container.appendChild(toolbarContainer)
@@ -50,7 +50,8 @@ class ImageToolbar extends BaseFloat {
   }
 
   render () {
-    const { icons, oldVnode, toolbarContainer, imageInfo } = this
+    const { muya, oldVnode, toolbarContainer, imageInfo } = this
+    const icons = getIcons(muya?.options?.t)
     const { attrs } = imageInfo.token
     const dataAlign = attrs['data-align']
     const children = icons.map(i => {

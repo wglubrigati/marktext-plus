@@ -173,8 +173,9 @@ class StateRender {
 
   render (blocks, activeBlocks, matches) {
     const selector = `div#${CLASS_OR_ID.AG_EDITOR_ID}`
+    const t = this.muya.options.t || ((key) => key) // 获取翻译函数，如果没有则返回原始键值
     const children = blocks.map(block => {
-      return this.renderBlock(null, block, activeBlocks, matches, true)
+      return this.renderBlock(null, block, activeBlocks, matches, true, t)
     })
     const newVdom = h(selector, children)
     const rootDom = document.querySelector(selector) || this.container
@@ -191,7 +192,8 @@ class StateRender {
     const cursorOutMostBlock = activeBlocks[activeBlocks.length - 1]
     // If cursor is not in render blocks, need to render cursor block independently
     const needRenderCursorBlock = blocks.indexOf(cursorOutMostBlock) === -1
-    const newVnode = h('section', blocks.map(block => this.renderBlock(null, block, activeBlocks, matches)))
+    const t = this.muya.options.t || ((key) => key) // 获取翻译函数，如果没有则返回原始键值
+    const newVnode = h('section', blocks.map(block => this.renderBlock(null, block, activeBlocks, matches, false, t)))
     const html = toHTML(newVnode).replace(/^<section>([\s\S]+?)<\/section>$/, '$1')
 
     const needToRemoved = []
@@ -220,7 +222,7 @@ class StateRender {
       const cursorDom = document.querySelector(`#${key}`)
       if (cursorDom) {
         const oldCursorVnode = toVNode(cursorDom)
-        const newCursorVnode = this.renderBlock(null, cursorOutMostBlock, activeBlocks, matches)
+        const newCursorVnode = this.renderBlock(null, cursorOutMostBlock, activeBlocks, matches, false, t)
         patch(oldCursorVnode, newCursorVnode)
       }
     }
@@ -239,7 +241,8 @@ class StateRender {
    */
   singleRender (block, activeBlocks, matches) {
     const selector = `#${block.key}`
-    const newVdom = this.renderBlock(null, block, activeBlocks, matches, true)
+    const t = this.muya.options.t || ((key) => key) // 获取翻译函数，如果没有则返回原始键值
+    const newVdom = this.renderBlock(null, block, activeBlocks, matches, true, t)
     const rootDom = document.querySelector(selector)
     const oldVdom = toVNode(rootDom)
     patch(oldVdom, newVdom)

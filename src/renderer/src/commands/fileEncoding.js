@@ -1,12 +1,14 @@
 import { ENCODING_NAME_MAP, getEncodingName } from 'common/encoding'
 import { delay } from '@/util'
 import bus from '../bus'
+import getCommandDescriptionById from './descriptions'
+import { t } from '../../i18n'
 
 class FileEncodingCommand {
   constructor(editorState) {
     this.id = 'file.change-encoding'
-    this.description = 'File: Change Encoding'
-    this.placeholder = 'Select an option'
+    this.description = getCommandDescriptionById('file.change-encoding')
+    this.placeholder = t('commandPalette.placeholders.selectOption')
 
     this.subcommands = []
     this.subcommandSelectedIndex = -1

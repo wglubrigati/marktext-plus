@@ -2,10 +2,11 @@ import fs from 'fs'
 import path from 'path'
 import EventEmitter from 'events'
 import Store from 'electron-store'
-import { BrowserWindow, ipcMain, nativeTheme } from 'electron'
+import { app, BrowserWindow, ipcMain, nativeTheme } from 'electron'
 import log from 'electron-log'
 import { isWindows } from '../config'
 import { hasSameKeys } from '../utils'
+import { getSupportedLanguages, isLanguageSupported } from '../../shared/i18n'
 import schema from './schema'
 
 const PREFERENCES_FILE_NAME = 'preferences'
@@ -43,6 +44,16 @@ class Preference extends EventEmitter {
       // Set best theme on first application start.
       if (nativeTheme.shouldUseDarkColors) {
         defaultSettings.theme = 'dark'
+      }
+
+      // Set system language on first application start
+      if (!this.hasPreferencesFile) {
+        const systemLanguage = this._getSystemLanguage()
+        if (systemLanguage) {
+          defaultSettings.language = systemLanguage
+        }
+        // 确保拼写检查器始终使用英语，不受界面语言影响
+        defaultSettings.spellcheckerLanguage = 'en-US'
       }
     } catch (err) {
       log.error(err)
@@ -99,6 +110,10 @@ class Preference extends EventEmitter {
   }
 
   setItem(key, value) {
+    // 确保拼写检查器语言始终为英语，不受界面语言切换影响
+    if (key === 'spellcheckerLanguage') {
+      value = 'en-US'
+    }
     ipcMain.emit('broadcast-preferences-changed', { [key]: value })
     return this.store.set(key, value)
   }
@@ -154,6 +169,42 @@ class Preference extends EventEmitter {
     ipcMain.on('set-user-preference', (settings) => {
       this.setItems(settings)
     })
+  }
+
+  /**
+   * 获取系统语言，如果系统语言不在支持列表中则返回 null
+   * @returns {string|null} 支持的系统语言代码或 null
+   */
+  _getSystemLanguage() {
+    try {
+      // 获取系统语言
+      const systemLocale = app.getLocale()
+      log.info(`System locale detected: ${systemLocale}`)
+      
+      // 获取支持的语言列表
+      const supportedLanguages = getSupportedLanguages()
+      
+      // 直接匹配完整的语言代码（如 zh-CN）
+      if (isLanguageSupported(systemLocale)) {
+        log.info(`Using system language: ${systemLocale}`)
+        return systemLocale
+      }
+      
+      // 尝试匹配语言的主要部分（如 zh）
+      const primaryLanguage = systemLocale.split('-')[0]
+      const matchedLanguage = supportedLanguages.find(lang => lang.startsWith(primaryLanguage))
+      
+      if (matchedLanguage) {
+        log.info(`Using matched language: ${matchedLanguage} for system locale: ${systemLocale}`)
+        return matchedLanguage
+      }
+      
+      log.info(`System language ${systemLocale} not supported, will use default language`)
+      return null
+    } catch (error) {
+      log.error('Error detecting system language:', error)
+      return null
+    }
   }
 }
 

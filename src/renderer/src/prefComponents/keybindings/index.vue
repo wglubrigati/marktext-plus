@@ -1,21 +1,20 @@
 <template>
   <div class="pref-keybindings">
-    <h4>Key Bindings</h4>
+    <h4>{{ t('preferences.keybindings.title') }}</h4>
     <section class="keybindings">
       <div class="text">
-        Customize MarkText shortcuts and click on the save button below to apply all changes
-        (requires a restart). All available and default key binding can be found
-        <a class="link" @click="openKeybindingWiki">online</a>.
+        {{ t('preferences.keybindings.description') }}
+        <a class="link" @click="openKeybindingWiki">{{ t('preferences.keybindings.online') }}</a>.
       </div>
       <el-table :data="keybindingList" style="width: 100%">
-        <el-table-column prop="description" label="Description"> </el-table-column>
-        <el-table-column prop="accelerator" label="Key Combination" width="220"> </el-table-column>
-        <el-table-column label="Options" width="90">
+        <el-table-column prop="description" :label="t('preferences.keybindings.table.description')"> </el-table-column>
+        <el-table-column prop="accelerator" :label="t('preferences.keybindings.table.keyCombination')" width="220"> </el-table-column>
+        <el-table-column :label="t('preferences.keybindings.table.options')" width="90">
           <template #default="scope">
             <el-button
               type="text"
               size="small"
-              title="Edit"
+              :title="t('preferences.keybindings.table.edit')"
               @click="handleEditClick(scope.$index, scope.row)"
             >
               <Edit width="14" height="14" />
@@ -23,7 +22,7 @@
             <el-button
               type="text"
               size="small"
-              title="Reset"
+              :title="t('preferences.keybindings.table.reset')"
               @click="handleResetClick(scope.$index, scope.row)"
             >
               <RefreshRight width="14" height="14" />
@@ -31,7 +30,7 @@
             <el-button
               type="text"
               size="small"
-              title="Unbind"
+              :title="t('preferences.keybindings.table.unbind')"
               @click="handleUnbindClick(scope.$index, scope.row)"
             >
               <Delete width="14" height="14" />
@@ -42,14 +41,14 @@
     </section>
     <section class="footer">
       <separator></separator>
-      <el-button size="medium" @click="saveKeybindings">Save</el-button>
-      <el-button size="medium" @click="restoreDefaults">Restore default key bindings</el-button>
+      <el-button size="medium" @click="saveKeybindings">{{ t('preferences.keybindings.save') }}</el-button>
+      <el-button size="medium" @click="restoreDefaults">{{ t('preferences.keybindings.restoreDefaults') }}</el-button>
     </section>
     <section v-if="showDebugTools" class="keyboard-debug">
       <separator></separator>
-      <div><strong>Debug options:</strong></div>
+      <div><strong>{{ t('preferences.keybindings.debugOptions') }}:</strong></div>
       <el-button size="medium" @click="dumpKeyboardInformation"
-        >Dump keyboard information</el-button
+        >{{ t('preferences.keybindings.dumpKeyboardInfo') }}</el-button
       >
     </section>
     <key-input-dialog
@@ -62,17 +61,32 @@
 <script setup>
 import log from 'electron-log'
 import { setKeyboardLayout } from '@hfelix/electron-localshortcut'
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 import Separator from '../common/separator'
 import KeyInputDialog from './key-input-dialog.vue'
 import KeybindingConfigurator from './KeybindingConfigurator'
 import notice from '@/services/notification'
 import { Edit, RefreshRight, Delete } from '@element-plus/icons-vue'
+import { useI18n } from 'vue-i18n'
+
+const { t, locale } = useI18n()
 
 const showDebugTools = ref(false)
 const keybindingConfigurator = ref(null)
 const selectedShortcutId = ref(null)
 const keybindingList = ref([])
+
+// 重新构建快捷键列表的函数
+const rebuildKeybindingList = () => {
+  if (keybindingConfigurator.value) {
+    keybindingList.value = keybindingConfigurator.value.rebuildKeybindingList()
+  }
+}
+
+// 监听语言变化，重新构建快捷键列表
+watch(locale, () => {
+  rebuildKeybindingList()
+})
 
 onMounted(() => {
   window.electron.ipcRenderer
@@ -114,9 +128,9 @@ const saveKeybindings = () => {
       .then((success) => {
         if (!success) {
           notice.notify({
-            title: 'Failed to save',
+            title: t('preferences.keybindings.failedToSave'),
             type: 'error',
-            message: 'An unexpected error occurred while saving.'
+            message: t('preferences.keybindings.saveError')
           })
         }
       })
@@ -130,9 +144,9 @@ const restoreDefaults = () => {
     .then((success) => {
       if (!success) {
         notice.notify({
-          title: 'Failed to save',
+          title: t('preferences.keybindings.failedToSave'),
           type: 'error',
-          message: 'An unexpected error occurred while saving.'
+          message: t('preferences.keybindings.saveError')
         })
       }
     })
@@ -170,9 +184,9 @@ const onKeybinding = (value) => {
 
 const handleDuplicateShortcut = (id, accelerator) => {
   notice.notify({
-    title: 'Shortcut already in use',
+    title: t('preferences.keybindings.shortcutInUse'),
     type: 'warning',
-    message: `The shortcut "${accelerator}" is already in use. Please unset the shortcut and try again.`
+    message: t('preferences.keybindings.shortcutInUseMessage', { accelerator })
   })
 }
 

@@ -3,7 +3,7 @@
     class="side-bar-toc"
     :class="[{ 'side-bar-toc-overflow': !wordWrapInToc, 'side-bar-toc-wordwrap': wordWrapInToc }]"
   >
-    <div class="title">Table Of Contents</div>
+    <div class="title">{{ translate('sideBar.toc.title') }}</div>
     <el-tree
       v-if="toc.length"
       :data="toc"
@@ -17,10 +17,14 @@
 </template>
 
 <script setup>
+import { t } from '../../i18n'
 import { useEditorStore } from '@/store/editor'
 import { usePreferencesStore } from '@/store/preferences'
 import bus from '../../bus'
 import { storeToRefs } from 'pinia'
+
+// 确保翻译函数在模板中可用
+const translate = t
 
 const editorStore = useEditorStore()
 const preferencesStore = usePreferencesStore()
@@ -46,31 +50,37 @@ const handleClick = ({ slug }) => {
   list-style: none;
   display: flex;
   flex-direction: column;
-  & .title {
-    color: var(--sideBarTitleColor);
-    font-weight: 600;
-    font-size: 16px;
-    margin: 37px 0 10px 0;
-    padding-left: 25px;
-  }
-  & .el-tree-node {
-    margin-top: 8px;
-  }
-  & .el-tree {
-    background: transparent;
-    color: var(--sideBarColor);
-  }
-  & .el-tree-node:focus > .el-tree-node__content {
-    background-color: var(--sideBarItemHoverBgColor);
-  }
-  & .el-tree-node__content:hover {
-    background: var(--sideBarItemHoverBgColor);
-  }
-  & > li {
-    font-size: 14px;
-    margin-bottom: 15px;
-    cursor: pointer;
-  }
+}
+
+.side-bar-toc .title {
+  color: var(--sideBarTitleColor);
+  font-weight: 600;
+  font-size: 16px;
+  margin: 37px 0 10px 0;
+  padding-left: 25px;
+}
+
+.side-bar-toc .el-tree-node {
+  margin-top: 8px;
+}
+
+.side-bar-toc .el-tree {
+  background: transparent;
+  color: var(--sideBarColor);
+}
+
+.side-bar-toc .el-tree-node:focus > .el-tree-node__content {
+  background-color: var(--sideBarItemHoverBgColor);
+}
+
+.side-bar-toc .el-tree-node__content:hover {
+  background: var(--sideBarItemHoverBgColor);
+}
+
+.side-bar-toc > li {
+  font-size: 14px;
+  margin-bottom: 15px;
+  cursor: pointer;
 }
 .side-bar-toc-overflow {
   overflow: auto;
@@ -78,10 +88,11 @@ const handleClick = ({ slug }) => {
 .side-bar-toc-wordwrap {
   overflow-x: hidden;
   overflow-y: auto;
-  & .el-tree-node__content {
-    white-space: normal;
-    height: auto;
-    min-height: 26px;
-  }
+}
+
+.side-bar-toc-wordwrap .el-tree-node__content {
+  white-space: normal;
+  height: auto;
+  min-height: 26px;
 }
 </style>

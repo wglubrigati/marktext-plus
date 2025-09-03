@@ -10,6 +10,9 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import en from 'element-plus/es/locale/lang/en'
 
+// I18n translation system
+import i18nPlugin from './i18n'
+
 // something is wrong here! \/
 import services from './services/index'
 import routes from './router'
@@ -43,6 +46,7 @@ const router = createRouter({
 
 app.use(router)
 app.use(pinia)
+app.use(i18nPlugin)
 
 // Configure axios globally
 app.config.globalProperties.$http = axios

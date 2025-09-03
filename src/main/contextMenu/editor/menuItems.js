@@ -1,62 +1,75 @@
 // NOTE: This are mutable fields that may change at runtime.
 
-export const CUT = {
-  label: 'Cut',
+import { t } from '../../i18n'
+
+// 使用函数形式避免模块加载时调用翻译函数
+export const getCUT = () => ({
+  label: t('contextMenu.cut'),
   id: 'cutMenuItem',
   role: 'cut'
-}
+})
 
-export const COPY = {
-  label: 'Copy',
+export const getCOPY = () => ({
+  label: t('contextMenu.copy'),
   id: 'copyMenuItem',
   role: 'copy'
-}
+})
 
-export const PASTE = {
-  label: 'Paste',
+export const getPASTE = () => ({
+  label: t('contextMenu.paste'),
   id: 'pasteMenuItem',
   role: 'paste'
-}
+})
 
-export const COPY_AS_MARKDOWN = {
-  label: 'Copy As Markdown',
+export const getCOPY_AS_MARKDOWN = () => ({
+  label: t('contextMenu.copyAsMarkdown'),
   id: 'copyAsMarkdownMenuItem',
   click (menuItem, targetWindow) {
     targetWindow.webContents.send('mt::cm-copy-as-markdown')
   }
-}
+})
 
-export const COPY_AS_HTML = {
-  label: 'Copy As Html',
+export const getCOPY_AS_HTML = () => ({
+  label: t('contextMenu.copyAsHtml'),
   id: 'copyAsHtmlMenuItem',
   click (menuItem, targetWindow) {
     targetWindow.webContents.send('mt::cm-copy-as-html')
   }
-}
+})
 
-export const PASTE_AS_PLAIN_TEXT = {
-  label: 'Paste as Plain Text',
+export const getPASTE_AS_PLAIN_TEXT = () => ({
+  label: t('contextMenu.pasteAsPlainText'),
   id: 'pasteAsPlainTextMenuItem',
   click (menuItem, targetWindow) {
     targetWindow.webContents.send('mt::cm-paste-as-plain-text')
   }
-}
+})
 
-export const INSERT_BEFORE = {
-  label: 'Insert Paragraph Before',
+export const getINSERT_BEFORE = () => ({
+  label: t('contextMenu.insertParagraphBefore'),
   id: 'insertParagraphBeforeMenuItem',
   click (menuItem, targetWindow) {
     targetWindow.webContents.send('mt::cm-insert-paragraph', 'before')
   }
-}
+})
 
-export const INSERT_AFTER = {
-  label: 'Insert Paragraph After',
+export const getINSERT_AFTER = () => ({
+  label: t('contextMenu.insertParagraphAfter'),
   id: 'insertParagraphAfterMenuItem',
   click (menuItem, targetWindow) {
     targetWindow.webContents.send('mt::cm-insert-paragraph', 'after')
   }
-}
+})
+
+// 为了向后兼容，保留原有的导出
+export const CUT = getCUT()
+export const COPY = getCOPY()
+export const PASTE = getPASTE()
+export const COPY_AS_MARKDOWN = getCOPY_AS_MARKDOWN()
+export const COPY_AS_HTML = getCOPY_AS_HTML()
+export const PASTE_AS_PLAIN_TEXT = getPASTE_AS_PLAIN_TEXT()
+export const INSERT_BEFORE = getINSERT_BEFORE()
+export const INSERT_AFTER = getINSERT_AFTER()
 
 export const SEPARATOR = {
   type: 'separator'

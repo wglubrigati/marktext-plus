@@ -1,36 +1,37 @@
 import { getCurrentWindow, Menu as RemoteMenu, MenuItem as RemoteMenuItem } from '@electron/remote'
 import {
   SEPARATOR,
-  NEW_FILE,
-  NEW_DIRECTORY,
-  COPY,
-  CUT,
-  PASTE,
-  RENAME,
-  DELETE,
-  SHOW_IN_FOLDER
+  getNEW_FILE,
+  getNEW_DIRECTORY,
+  getCOPY,
+  getCUT,
+  getPASTE,
+  getRENAME,
+  getDELETE,
+  getSHOW_IN_FOLDER
 } from './menuItems'
 
 export const showContextMenu = (event, hasPathCache) => {
   const menu = new RemoteMenu()
   const win = getCurrentWindow()
-  const CONTEXT_ITEMS = [
-    NEW_FILE,
-    NEW_DIRECTORY,
+  // 动态获取菜单项以确保翻译正确
+  const contextItems = [
+    getNEW_FILE(),
+    getNEW_DIRECTORY(),
     SEPARATOR,
-    COPY,
-    CUT,
-    PASTE,
+    getCOPY(),
+    getCUT(),
+    getPASTE(),
     SEPARATOR,
-    RENAME,
-    DELETE,
+    getRENAME(),
+    getDELETE(),
     SEPARATOR,
-    SHOW_IN_FOLDER
+    getSHOW_IN_FOLDER()
   ]
 
-  PASTE.enabled = hasPathCache
+  contextItems[5].enabled = hasPathCache // PASTE item
 
-  CONTEXT_ITEMS.forEach(item => {
+  contextItems.forEach(item => {
     menu.append(new RemoteMenuItem(item))
   })
   menu.popup([{ window: win, x: event.clientX, y: event.clientY }])

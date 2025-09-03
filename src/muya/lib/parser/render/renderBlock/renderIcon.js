@@ -40,9 +40,9 @@ const FUNCTION_TYPE_HASH = {
   footnote: footnoteIcon
 }
 
-export default function renderIcon(block) {
+export default function renderIcon(block, t) {
   if (block.parent) {
-    console.error('Only top most block can render front icon button.')
+    console.error(t('editor.onlyTopBlockCanRenderIcon'))
   }
   const { type, functionType, listType } = block
   const selector = `a.${CLASS_OR_ID.AG_FRONT_ICON}`
@@ -58,7 +58,7 @@ export default function renderIcon(block) {
     case 'pre': {
       icon = FUNCTION_TYPE_HASH[functionType]
       if (!icon) {
-        console.warn(`Unhandled functionType ${functionType}`)
+        console.warn(t('editor.unhandledFunctionType', { functionType }))
         icon = paragraphIcon
       }
       break

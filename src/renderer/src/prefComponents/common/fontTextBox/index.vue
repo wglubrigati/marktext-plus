@@ -15,7 +15,7 @@
       class="font-autocomplete"
       popper-class="font-autocomplete-popper"
       :fetch-suggestions="querySearch"
-      placeholder="Select font..."
+      :placeholder="t('preferences.selectFont')"
       @select="handleSelect"
     >
       <template #suffix>
@@ -31,6 +31,7 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue'
 import { InfoFilled, ArrowDown } from '@element-plus/icons-vue'
+import { t } from '../../../i18n'
 
 const props = defineProps({
   description: String,

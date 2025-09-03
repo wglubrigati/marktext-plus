@@ -26,7 +26,11 @@ const preferencesStore = usePreferencesStore()
 const { theme, titleBarStyle } = storeToRefs(preferencesStore)
 
 const showCustomTitleBar = computed(() => {
-  return titleBarStyle.value === 'custom' && !isOsx
+  // 在macOS上总是显示自定义标题栏以提供关闭按钮
+  if (isOsx) {
+    return true
+  }
+  return titleBarStyle.value === 'custom'
 })
 
 // Watchers

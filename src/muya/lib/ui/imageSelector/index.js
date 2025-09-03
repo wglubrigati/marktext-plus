@@ -69,7 +69,9 @@ class ImageSelector extends BaseFloat {
         const input = this.imageSelectorContainer.querySelector('input.src')
         if (input) {
           input.focus()
-          input.select()
+          if (typeof input.select === 'function') {
+            input.select()
+          }
         }
       } else {
         this.hide()
@@ -231,13 +233,14 @@ class ImageSelector extends BaseFloat {
   }
 
   renderHeader() {
+    const t = this.muya?.options?.t || ((k)=>k)
     const tabs = [
       {
-        label: 'Select',
+        label: t('editor.image.selector.tab.select'),
         value: 'select'
       },
       {
-        label: 'Embed link',
+        label: t('editor.image.selector.tab.embedLink'),
         value: 'link'
       }
     ]
@@ -265,6 +268,7 @@ class ImageSelector extends BaseFloat {
 
   renderBody = () => {
     const { tab, state, isFullMode } = this
+    const t = this.muya?.options?.t || ((k)=>k)
     const { alt, title, src } = state
     let bodyContent = null
     if (tab === 'select') {
@@ -278,14 +282,14 @@ class ImageSelector extends BaseFloat {
               }
             }
           },
-          'Choose an Image'
+          t('editor.image.selector.select.chooseButton')
         ),
-        h('span.description', 'Choose image from your computer.')
+        h('span.description', t('editor.image.selector.select.tip'))
       ]
     } else {
       const altInput = h('input.alt', {
         props: {
-          placeholder: 'Alt text',
+          placeholder: t('editor.image.selector.inputs.alt'),
           value: alt
         },
         on: {
@@ -302,7 +306,7 @@ class ImageSelector extends BaseFloat {
       })
       const srcInput = h('input.src', {
         props: {
-          placeholder: 'Image link or local path',
+          placeholder: t('editor.image.selector.inputs.src'),
           value: src
         },
         on: {
@@ -322,7 +326,7 @@ class ImageSelector extends BaseFloat {
       })
       const titleInput = h('input.title', {
         props: {
-          placeholder: 'Image title',
+          placeholder: t('editor.image.selector.inputs.title'),
           value: title
         },
         on: {
@@ -351,10 +355,10 @@ class ImageSelector extends BaseFloat {
             }
           }
         },
-        'Embed Image'
+        t('editor.image.selector.embedButton')
       )
       const bottomDes = h('span.description', [
-        h('span', 'Paste web image or local image path. Use '),
+        h('span', t('editor.image.selector.hint.prefix') + ' '),
         h(
           'a',
           {
@@ -364,7 +368,7 @@ class ImageSelector extends BaseFloat {
               }
             }
           },
-          `${isFullMode ? 'simple mode' : 'full mode'}.`
+          `${isFullMode ? t('editor.image.selector.hint.simple') : t('editor.image.selector.hint.full')}.`
         )
       ])
       bodyContent = [inputWrapper, embedButton, bottomDes]

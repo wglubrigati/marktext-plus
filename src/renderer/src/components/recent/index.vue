@@ -1,14 +1,15 @@
 <template>
   <div class="recent-files-projects">
     <div class="centered-group">
-      You have no tabs open.
-      <button class="button-primary" @click="newFile">New File</button>
+      {{ t('recent.noTabsOpen') }}
+      <button class="button-primary" @click="newFile">{{ t('recent.newFile') }}</button>
     </div>
   </div>
 </template>
 
 <script setup>
 import { useEditorStore } from '@/store/editor'
+import { t } from '../../i18n'
 
 const editorStore = useEditorStore()
 

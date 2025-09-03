@@ -30,6 +30,7 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useEditorStore } from '@/store/editor'
 import { useLayoutStore } from '@/store/layout'
 import { storeToRefs } from 'pinia'
@@ -38,6 +39,7 @@ import dragula from 'dragula'
 import { showContextMenu } from '../../contextMenu/tabs'
 import bus from '../../bus'
 
+const { t } = useI18n()
 const editorStore = useEditorStore()
 const layoutStore = useLayoutStore()
 
@@ -165,7 +167,8 @@ onMounted(() => {
     const nextTabId = sibling && sibling.getAttribute('data-id')
     const isLastTab = !sibling || sibling.classList.contains('gu-mirror')
     if (!droppedId || (sibling && !nextTabId)) {
-      throw new Error('Cannot reorder tabs: invalid tab id.')
+      console.error('Tab reorder error: invalid tab IDs')
+      return
     }
 
     editorStore.EXCHANGE_TABS_BY_ID({

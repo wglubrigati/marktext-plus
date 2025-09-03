@@ -1,13 +1,14 @@
 // TODO: Remove information from other vue source files into this file.
+import { t } from '../../../../i18n'
 
 export const isValidService = name => {
-  return name !== 'none' && services.hasOwnProperty(name)
+  return name !== 'none' && getServices().hasOwnProperty(name)
 }
 
-const services = {
+const getServices = () => ({
   // Dummy service used to opt-in real services.
   none: {
-    name: 'None',
+    name: t('preferences.image.uploader.services.none'),
     isGdprCompliant: true,
     privacyUrl: '',
     tosUrl: '',
@@ -18,7 +19,7 @@ const services = {
 
   // Real services
   picgo: {
-    name: 'Picgo',
+    name: t('preferences.image.uploader.services.picgo'),
     isGdprCompliant: false,
     privacyUrl: '',
     tosUrl: 'https://github.com/PicGo/PicGo-Core',
@@ -28,7 +29,7 @@ const services = {
   },
 
   github: {
-    name: 'GitHub',
+    name: t('preferences.image.uploader.services.github'),
     isGdprCompliant: true,
     privacyUrl: 'https://github.com/site/privacy',
     tosUrl: 'https://github.com/site/terms',
@@ -38,12 +39,13 @@ const services = {
   },
 
   cliScript: {
-    name: 'Command line script',
+    name: t('preferences.image.uploader.services.cliScript'),
     isGdprCompliant: true,
     privacyUrl: '',
     tosUrl: '',
     agreedToLegalNotices: true
   }
-}
+})
 
-export default services
+export { getServices }
+export default getServices

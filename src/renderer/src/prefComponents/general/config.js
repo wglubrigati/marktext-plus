@@ -1,8 +1,10 @@
-export const titleBarStyleOptions = [{
-  label: 'Custom',
+import { t } from '../../i18n'
+
+export const getTitleBarStyleOptions = () => [{
+  label: t('preferences.general.window.titleBarStyle.custom'),
   value: 'custom'
 }, {
-  label: 'Native',
+  label: t('preferences.general.window.titleBarStyle.native'),
   value: 'native'
 }]
 
@@ -47,18 +49,42 @@ export const zoomOptions = [{
   value: 2.0
 }]
 
-export const fileSortByOptions = [{
-  label: 'Creation time',
+export const getFileSortByOptions = () => [{
+  label: t('preferences.general.sidebar.fileSortBy.creationTime'),
   value: 'created'
 }, {
-  label: 'Modification time',
+  label: t('preferences.general.sidebar.fileSortBy.modificationTime'),
   value: 'modified'
 }, {
-  label: 'Title',
+  label: t('preferences.general.sidebar.fileSortBy.title'),
   value: 'title'
 }]
 
-export const languageOptions = [{
-  label: 'English',
+export const getLanguageOptions = () => [{
+  label: t('preferences.general.misc.language.english'),
   value: 'en'
+}, {
+  label: t('preferences.general.misc.language.chinese'),
+  value: 'zh-CN'
+}, {
+  label: t('preferences.general.misc.language.traditionalChinese'),
+  value: 'zh-TW'
+}, {
+  label: t('preferences.general.misc.language.spanish'),
+  value: 'es'
+}, {
+  label: t('preferences.general.misc.language.french'),
+  value: 'fr'
+}, {
+  label: t('preferences.general.misc.language.german'),
+  value: 'de'
+}, {
+  label: t('preferences.general.misc.language.japanese'),
+  value: 'ja'
+}, {
+  label: t('preferences.general.misc.language.korean'),
+  value: 'ko'
+}, {
+  label: t('preferences.general.misc.language.portuguese'),
+  value: 'pt'
 }]

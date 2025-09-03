@@ -33,137 +33,146 @@ const SHIFT_KEY = isOsx ? '⇧' : 'Shift'
 // Caps Lock ⇪
 // Fn
 
-export const quickInsertObj = {
-  'basic block': [{
-    title: 'Paragraph',
-    subTitle: 'Lorem Ipsum is simply dummy text',
+// 创建一个函数来生成配置对象，接收翻译函数作为参数
+export const createQuickInsertObj = (t) => {
+  // 如果没有翻译函数，直接返回键名
+  const translate = t || ((key) => key)
+
+  return {
+    [translate('quickInsert.basicBlock')]: [{
+    title: translate('quickInsert.paragraph.title'),
+    subTitle: translate('quickInsert.paragraph.subtitle'),
     label: 'paragraph',
     shortCut: `${COMMAND_KEY}+0`,
     icon: paragraphIcon
   }, {
-    title: 'Horizontal Line',
-    subTitle: '---',
+    title: translate('quickInsert.horizontalLine.title'),
+    subTitle: translate('quickInsert.horizontalLine.subtitle'),
     label: 'hr',
     shortCut: `${OPTION_KEY}+${COMMAND_KEY}+-`,
     icon: hrIcon
   }, {
-    title: 'Front Matter',
-    subTitle: '--- Lorem Ipsum ---',
+    title: translate('quickInsert.frontMatter.title'),
+    subTitle: translate('quickInsert.frontMatter.subtitle'),
     label: 'front-matter',
     shortCut: `${OPTION_KEY}+${COMMAND_KEY}+Y`,
     icon: frontMatterIcon
   }],
-  header: [{
-    title: 'Header 1',
-    subTitle: '# Lorem Ipsum is simply ...',
+  [translate('quickInsert.header')]: [{
+    title: translate('quickInsert.header1.title'),
+    subTitle: translate('quickInsert.header1.subtitle'),
     label: 'heading 1',
     shortCut: `${COMMAND_KEY}+1`,
     icon: header1Icon
   }, {
-    title: 'Header 2',
-    subTitle: '## Lorem Ipsum is simply ...',
+    title: translate('quickInsert.header2.title'),
+    subTitle: translate('quickInsert.header2.subtitle'),
     label: 'heading 2',
     shortCut: `${COMMAND_KEY}+2`,
     icon: header2Icon
   }, {
-    title: 'Header 3',
-    subTitle: '### Lorem Ipsum is simply ...',
+    title: translate('quickInsert.header3.title'),
+    subTitle: translate('quickInsert.header3.subtitle'),
     label: 'heading 3',
     shortCut: `${COMMAND_KEY}+3`,
     icon: header3Icon
   }, {
-    title: 'Header 4',
-    subTitle: '#### Lorem Ipsum is simply ...',
+    title: translate('quickInsert.header4.title'),
+    subTitle: translate('quickInsert.header4.subtitle'),
     label: 'heading 4',
     shortCut: `${COMMAND_KEY}+4`,
     icon: header4Icon
   }, {
-    title: 'Header 5',
-    subTitle: '##### Lorem Ipsum is simply ...',
+    title: translate('quickInsert.header5.title'),
+    subTitle: translate('quickInsert.header5.subtitle'),
     label: 'heading 5',
     shortCut: `${COMMAND_KEY}+5`,
     icon: header5Icon
   }, {
-    title: 'Header 6',
-    subTitle: '###### Lorem Ipsum is simply ...',
+    title: translate('quickInsert.header6.title'),
+    subTitle: translate('quickInsert.header6.subtitle'),
     label: 'heading 6',
     shortCut: `${COMMAND_KEY}+6`,
     icon: header6Icon
   }],
-  'advanced block': [{
-    title: 'Table Block',
-    subTitle: '|Lorem | Ipsum is simply |',
+  [translate('quickInsert.advancedBlock')]: [{
+    title: translate('quickInsert.tableBlock.title'),
+    subTitle: translate('quickInsert.tableBlock.subtitle'),
     label: 'table',
     shortCut: `${SHIFT_KEY}+${COMMAND_KEY}+T`,
     icon: newTableIcon
   }, {
-    title: 'Display Math',
-    subTitle: '$$ Lorem Ipsum is simply $$',
+    title: translate('quickInsert.mathFormula.title'),
+    subTitle: translate('quickInsert.mathFormula.subtitle'),
     label: 'mathblock',
     shortCut: `${OPTION_KEY}+${COMMAND_KEY}+M`,
     icon: mathblockIcon
   }, {
-    title: 'HTML Block',
-    subTitle: '<div> Lorem Ipsum is simply </div>',
+    title: translate('quickInsert.htmlBlock.title'),
+    subTitle: translate('quickInsert.htmlBlock.subtitle'),
     label: 'html',
     shortCut: `${OPTION_KEY}+${COMMAND_KEY}+J`,
     icon: htmlIcon
   }, {
-    title: 'Code Block',
-    subTitle: '```java Lorem Ipsum is simply ```',
+    title: translate('quickInsert.codeBlock.title'),
+    subTitle: translate('quickInsert.codeBlock.subtitle'),
     label: 'pre',
     shortCut: `${OPTION_KEY}+${COMMAND_KEY}+C`,
     icon: codeIcon
   }, {
-    title: 'Quote Block',
-    subTitle: '>Lorem Ipsum is simply ...',
+    title: translate('quickInsert.quoteBlock.title'),
+    subTitle: translate('quickInsert.quoteBlock.subtitle'),
     label: 'blockquote',
     shortCut: `${OPTION_KEY}+${COMMAND_KEY}+Q`,
     icon: quoteIcon
   }],
-  'list block': [{
-    title: 'Order List',
-    subTitle: '1. Lorem Ipsum is simply ...',
+  [translate('quickInsert.listBlock')]: [{
+    title: translate('quickInsert.orderedList.title'),
+    subTitle: translate('quickInsert.orderedList.subtitle'),
     label: 'ol-order',
     shortCut: `${OPTION_KEY}+${COMMAND_KEY}+O`,
     icon: orderListIcon
   }, {
-    title: 'Bullet List',
-    subTitle: '- Lorem Ipsum is simply ...',
+    title: translate('quickInsert.bulletList.title'),
+    subTitle: translate('quickInsert.bulletList.subtitle'),
     label: 'ul-bullet',
     shortCut: `${OPTION_KEY}+${COMMAND_KEY}+U`,
     icon: bulletListIcon
   }, {
-    title: 'To-do List',
-    subTitle: '- [x] Lorem Ipsum is simply ...',
+    title: translate('quickInsert.todoList.title'),
+    subTitle: translate('quickInsert.todoList.subtitle'),
     label: 'ul-task',
     shortCut: `${OPTION_KEY}+${COMMAND_KEY}+X`,
     icon: todoListIcon
   }],
-  diagram: [{
-    title: 'Vega Chart',
-    subTitle: 'Render flow chart by vega-lite.js.',
-    label: 'vega-lite',
-    icon: vegaIcon
-  }, {
-    title: 'Flow Chart',
-    subTitle: 'Render flow chart by flowchart.js.',
-    label: 'flowchart',
-    icon: flowchartIcon
-  }, {
-    title: 'Sequence Diagram',
-    subTitle: 'Render sequence diagram by js-sequence.',
-    label: 'sequence',
-    icon: sequenceIcon
-  }, {
-    title: 'PlantUML Diagram',
-    subTitle: 'Render PlantUML diagrams',
-    label: 'plantuml',
-    icon: plantumlIcon
-  }, {
-    title: 'Mermaid',
-    subTitle: 'Render Diagram by mermaid.',
-    label: 'mermaid',
-    icon: mermaidIcon
-  }]
+  [translate('quickInsert.diagram')]: [{
+     title: translate('quickInsert.vegaChart.title'),
+     subTitle: translate('quickInsert.vegaChart.subtitle'),
+     label: 'vega-lite',
+     icon: vegaIcon
+   }, {
+     title: translate('quickInsert.flowChart.title'),
+     subTitle: translate('quickInsert.flowChart.subtitle'),
+     label: 'flowchart',
+     icon: flowchartIcon
+   }, {
+     title: translate('quickInsert.sequenceChart.title'),
+     subTitle: translate('quickInsert.sequenceChart.subtitle'),
+     label: 'sequence',
+     icon: sequenceIcon
+   }, {
+     title: translate('quickInsert.plantUMLChart.title'),
+     subTitle: translate('quickInsert.plantUMLChart.subtitle'),
+     label: 'plantuml',
+     icon: plantumlIcon
+   }, {
+     title: translate('quickInsert.mermaid.title'),
+     subTitle: translate('quickInsert.mermaid.subtitle'),
+     label: 'mermaid',
+     icon: mermaidIcon
+   }]
+ }
 }
+
+// 保持向后兼容性，导出默认配置
+// 移除旧的导出，所有地方都应该使用createQuickInsertObj函数

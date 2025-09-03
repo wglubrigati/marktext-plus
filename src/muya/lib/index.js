@@ -11,6 +11,7 @@ import { wordCount } from './utils'
 import ExportMarkdown from './utils/exportMarkdown'
 import ExportHtml from './utils/exportHtml'
 import ToolTip from './ui/tooltip'
+import I18nCSS from './utils/i18nCSS'
 import './assets/styles/index.css'
 import { debounce } from './utils'
 
@@ -45,6 +46,7 @@ class Muya {
     this.dragdrop = new DragDrop(this)
     this.resize = new Resize(this)
     this.mouseEvent = new MouseEvent(this)
+    this.i18nCSS = new I18nCSS(this.options.t)
     this.init()
   }
 
@@ -54,6 +56,12 @@ class Muya {
     eventCenter.subscribe('stateChange', this.dispatchChange)
     const { markdown } = this
     const { focusMode } = this.options
+    
+    // Initialize CSS variables for internationalization
+    if (this.i18nCSS) {
+      this.i18nCSS.updateCSSVariables()
+    }
+    
     this.setMarkdown(markdown)
     this.setFocusMode(focusMode)
     this.mutationObserver()
@@ -443,6 +451,11 @@ class Muya {
 
     if (options.bulletListMarker) {
       this.contentState.turndownConfig.bulletListMarker = options.bulletListMarker
+    }
+
+    // Update I18n CSS variables
+    if (options.t && this.i18nCSS) {
+      this.i18nCSS.setTranslationFunction(options.t)
     }
   }
 

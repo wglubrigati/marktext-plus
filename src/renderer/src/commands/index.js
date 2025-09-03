@@ -4,6 +4,7 @@ import bus from '../bus'
 import { delay, isOsx } from '@/util'
 import { isUpdatable } from './utils'
 import getCommandDescriptionById from './descriptions'
+// Removed i18n import - using hardcoded English descriptions
 
 export { default as FileEncodingCommand } from './fileEncoding'
 export { default as LineEndingCommand } from './lineEnding'
@@ -123,7 +124,7 @@ const commands = [
     subcommands: [
       {
         id: 'file.export-file-html',
-        description: 'HTML',
+        description: 'Export as HTML',
         execute: async () => {
           await delay(50)
           bus.emit('showExportDialog', 'styledHtml')
@@ -131,7 +132,7 @@ const commands = [
       },
       {
         id: 'file.export-file-pdf',
-        description: 'PDF',
+        description: 'Export as PDF',
         execute: async () => {
           await delay(50)
           bus.emit('showExportDialog', 'pdf')
@@ -448,62 +449,62 @@ const commands = [
     subcommands: [
       {
         id: 'file.zoom-0',
-        description: '0.625',
+        description: '62.5%',
         value: 0.625
       },
       {
         id: 'file.zoom-1',
-        description: '0.75',
+        description: '75%',
         value: 0.75
       },
       {
         id: 'file.zoom-2',
-        description: '0.875',
+        description: '87.5%',
         value: 0.875
       },
       {
         id: 'file.zoom-3',
-        description: '1.0',
+        description: '100%',
         value: 1.0
       },
       {
         id: 'file.zoom-4',
-        description: '1.125',
+        description: '112.5%',
         value: 1.125
       },
       {
         id: 'file.zoom-5',
-        description: '1.25',
+        description: '125%',
         value: 1.25
       },
       {
         id: 'file.zoom-6',
-        description: '1.375',
+        description: '137.5%',
         value: 1.375
       },
       {
         id: 'file.zoom-7',
-        description: '1.5',
+        description: '150%',
         value: 1.5
       },
       {
         id: 'file.zoom-8',
-        description: '1.625',
+        description: '162.5%',
         value: 1.625
       },
       {
         id: 'file.zoom-9',
-        description: '1.75',
+        description: '175%',
         value: 1.75
       },
       {
         id: 'file.zoom-10',
-        description: '1.875',
+        description: '187.5%',
         value: 1.875
       },
       {
         id: 'file.zoom-11',
-        description: '2.0',
+        description: '200%',
         value: 2.0
       }
     ],
@@ -643,13 +644,13 @@ const commands = [
   // Misc
 
   {
-    id: 'tabs.cycle-forward',
+    id: 'tabs.cycleForward',
     execute: async () => {
       window.electron.ipcRenderer.emit('mt::tabs-cycle-right', null)
     }
   },
   {
-    id: 'tabs.cycle-backward',
+    id: 'tabs.cycleBackward',
     execute: async () => {
       window.electron.ipcRenderer.emit('mt::tabs-cycle-left', null)
     }
@@ -677,7 +678,55 @@ if (isOsx) {
   })
 }
 
-// Complete all command descriptions.
+// Function to get commands with updated descriptions
+export const getCommandsWithDescriptions = async () => {
+  // Create a deep copy of commands to avoid modifying the original
+  const commandsCopy = JSON.parse(JSON.stringify(commands))
+  
+  // Import translation function here to ensure it's available
+  const { t } = await import('../i18n')
+  
+  // Update descriptions for all commands
+  const updateDescriptions = (commandList) => {
+    for (const item of commandList) {
+      const { id, subcommands } = item
+      // Always update description for commands with ID, regardless of existing description
+      if (id) {
+        item.description = getCommandDescriptionById(id)
+      }
+      
+      // Special handling for theme subcommands
+      if (id === 'window.change-theme' && subcommands && Array.isArray(subcommands)) {
+        for (const subcommand of subcommands) {
+          const { value } = subcommand
+          if (value === 'light') {
+            subcommand.description = t('theme.cadmiumLight')
+          } else if (value === 'dark') {
+            subcommand.description = t('theme.dark')
+          } else if (value === 'graphite') {
+            subcommand.description = t('theme.graphiteLight')
+          } else if (value === 'material-dark') {
+            subcommand.description = t('theme.materialDark')
+          } else if (value === 'one-dark') {
+            subcommand.description = t('theme.oneDark')
+          } else if (value === 'ulysses') {
+            subcommand.description = t('theme.ulyssesLight')
+          }
+        }
+      }
+      
+      // Also update other subcommands descriptions
+      if (subcommands && Array.isArray(subcommands)) {
+        updateDescriptions(subcommands)
+      }
+    }
+  }
+  
+  updateDescriptions(commandsCopy)
+  return commandsCopy
+}
+
+// Complete all command descriptions for initial load.
 for (const item of commands) {
   const { id, description } = item
   if (id && !description) {
