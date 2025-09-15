@@ -29,7 +29,7 @@
     "@vscode/ripgrep": "^1.15.14",
     "arg": "^5.0.2",
     "axios": "^1.11.0",
-    "ced": "^2.0.0",
+    "chardet": "^2.1.0",
     "chokidar": "^4.0.3",
     "codemirror": "^5.65.19",
     "command-exists": "^1.2.9",

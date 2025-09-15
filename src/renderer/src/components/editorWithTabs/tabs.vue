@@ -30,7 +30,6 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useEditorStore } from '@/store/editor'
 import { useLayoutStore } from '@/store/layout'
 import { storeToRefs } from 'pinia'
@@ -39,7 +38,6 @@ import dragula from 'dragula'
 import { showContextMenu } from '../../contextMenu/tabs'
 import bus from '../../bus'
 
-const { t } = useI18n()
 const editorStore = useEditorStore()
 const layoutStore = useLayoutStore()
 

@@ -9,6 +9,7 @@ import { updateFormatMenu } from '../menu/actions/format'
 import { updateSelectionMenus } from '../menu/actions/paragraph'
 import { viewLayoutChanged } from '../menu/actions/view'
 import configureMenu, { configSettingMenu } from '../menu/templates'
+import { setLanguage } from '../i18n.js'
 
 const RECENTLY_USED_DOCUMENTS_FILE_NAME = 'recently-used-documents.json'
 const MAX_RECENTLY_USED_DOCUMENTS = 12
@@ -381,7 +382,6 @@ class AppMenu {
     try {
       const currentLanguage = this._preferences.getItem('language')
       if (currentLanguage) {
-        const { setLanguage } = await import('../i18n.js')
         setLanguage(currentLanguage)
         log.info(`Main process language initialized to: ${currentLanguage}`)
       }
