@@ -698,7 +698,7 @@ pre.ag-active[data-role='flowchart']::after,
 pre.ag-active[data-role='sequence']::after,
 pre.ag-active[data-role='plantuml']::after,
 pre.ag-active[data-role='vega-lite']::after {
-  content: var(--i18n-code-fence, '```');
+  content: '```';
 }
 
 pre.ag-active.ag-front-matter::before,
