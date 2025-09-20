@@ -505,11 +505,19 @@ const backspaceCtrl = (ContentState) => {
 
             const greatGrandpaBlock = this.getBlock(grandpa.parent)
             if (greatGrandpaBlock && greatGrandpaBlock.type === 'li') {
-              const previousLength = greatGrandpaBlock.children[0].children[0].text.length
-              greatGrandpaBlock.children[0].children[0].text += children[0].children[0].text
+              let previousLength = 0
+              if (greatGrandpaBlock.listItemType === 'task') {
+                previousLength = greatGrandpaBlock.children[1].children[0].text.length
+                greatGrandpaBlock.children[1].children[0].text += children[0].children[0].text
+                key = greatGrandpaBlock.children[1].key
+              } else {
+                previousLength = greatGrandpaBlock.children[0].children[0].text.length
+                greatGrandpaBlock.children[0].children[0].text += children[0].children[0].text
+                key = greatGrandpaBlock.children[0].key
+              }
 
-              // Set key and offset for cursor to the previous list item
-              key = greatGrandpaBlock.children[0].key
+              // Set offset for cursor to the previous list item
+              // key will be set depending on the type
               offset = previousLength
 
               for (let i = 1; i < children.length; i++) {
@@ -531,11 +539,19 @@ const backspaceCtrl = (ContentState) => {
 
             const greatGrandpaBlock = this.getBlock(grandpa.parent)
             if (greatGrandpaBlock && greatGrandpaBlock.type === 'li') {
-              const previousLength = greatGrandpaBlock.children[0].children[0].text.length
-              greatGrandpaBlock.children[0].children[0].text += children[0].children[0].text
+              let previousLength = 0
+              if (greatGrandpaBlock.listItemType === 'task') {
+                previousLength = greatGrandpaBlock.children[1].children[0].text.length
+                greatGrandpaBlock.children[1].children[0].text += children[0].children[0].text
+                key = greatGrandpaBlock.children[1].key
+              } else {
+                previousLength = greatGrandpaBlock.children[0].children[0].text.length
+                greatGrandpaBlock.children[0].children[0].text += children[0].children[0].text
+                key = greatGrandpaBlock.children[0].key
+              }
 
-              // Set key and offset for cursor to the previous list item
-              key = greatGrandpaBlock.children[0].key
+              // Set offset for cursor to the previous list item
+              // key will be set depending on the type
               offset = previousLength
 
               for (let i = 1; i < children.length; i++) {
@@ -557,11 +573,19 @@ const backspaceCtrl = (ContentState) => {
 
             // Insert the text of the current list item to the previous list item.
             if (children[0].type === 'p') {
-              const previousLength = parPre.children[0].children[0].text.length
-              parPre.children[0].children[0].text += children[0].children[0].text
+              let previousLength = 0
+              if (parPre.listItemType === 'task') {
+                previousLength = parPre.children[1].children[0].text.length
+                parPre.children[1].children[0].text += children[0].children[0].text
+                key = parPre.children[1].key
+              } else {
+                previousLength = parPre.children[0].children[0].text.length
+                parPre.children[0].children[0].text += children[0].children[0].text
+                key = parPre.children[0].key
+              }
 
-              // Set key and offset for cursor to the previous list item
-              key = parPre.children[0].key
+              // Set offset for cursor to the previous list item
+              // key will be set depending on the type
               offset = previousLength
 
               for (let i = 1; i < children.length; i++) {

@@ -379,7 +379,7 @@ const enterCtrl = (ContentState) => {
 
     // we only want to select the li if and only if we are currently in the <p> of an li
     // the <p> is the "text content" of the li
-    if (parent && parent.type === 'li' && this.isFirstChild(block)) {
+    if (parent && parent.type === 'li' && block.type === 'p') {
       block = parent
       parent = this.getParent(block)
     }
@@ -467,8 +467,7 @@ const enterCtrl = (ContentState) => {
         // cursor at end of block or at begin of block
         if (type === 'li') {
           if (block.listItemType === 'task') {
-            const checked = false
-            newBlock = this.createTaskItemBlock(null, checked)
+            newBlock = this.createTaskItemBlock(null, false)
           } else {
             newBlock = this.createBlockLi()
             newBlock.listItemType = block.listItemType
@@ -489,10 +488,19 @@ const enterCtrl = (ContentState) => {
               this.removeBlock(lastLine)
             }
           } else if (block.type === 'li') {
-            if (block.children.length > 1) {
-              // When we have a sublist, we need to move the sublist (not the contents) to the new block instead of inserting an "empty" block at the next line
-              this.appendChild(newBlock, block.children[1])
-              this.removeBlock(block.children[1])
+            if (block.listItemType === 'task') {
+              if (block.children.length > 2) {
+                // tasks have an additional input infront, so it is children[2]
+                // When we have a sublist, we need to move the sublist (not the contents) to the new block instead of inserting an "empty" block at the next line
+                this.appendChild(newBlock, block.children[2])
+                this.removeBlock(block.children[2])
+              }
+            } else {
+              if (block.children.length > 1) {
+                // When we have a sublist, we need to move the sublist (not the contents) to the new block instead of inserting an "empty" block at the next line
+                this.appendChild(newBlock, block.children[1])
+                this.removeBlock(block.children[1])
+              }
             }
           }
           this.insertAfter(newBlock, block)
