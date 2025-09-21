@@ -6,7 +6,8 @@
 
 - Python (`>= 3.12`)
 
-- Node.JS (`>= 22`)
+- Node.JS (`22.19.0`) [Same version as the current Electron release]
+  - Using other versions *may* work, but you might run into errors while compiling native add-ons
 
 - A lot of patience
 

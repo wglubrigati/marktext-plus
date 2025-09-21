@@ -9,7 +9,7 @@
 
 ## Pre-requisites
 
-- Node.js (`>= 22`)
+- Node.js (`22.19.0`)
 - Ubuntu Packages: `git`, `build-essential` and `xorg-dev`
 
 ### 1. Install System Packages
