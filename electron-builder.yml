@@ -110,6 +110,10 @@ linux:
       Keywords: 'marktext;'
   target:
     - AppImage
+    - snap
+    - deb
+    - rpm
+    - flatpak
   fileAssociations:
     - ext: 'md'
       name: 'Markdown'
@@ -129,28 +133,3 @@ linux:
     - ext: 'mdtext'
       name: 'Markdown'
       description: 'Markdown document'
-  appImage:
-    artifactName: 'marktext-linux-${version}.${ext}'
-  deb:
-    # Custom dependencies:
-    depends:
-      # keytar
-      - 'libsecret-1-0'
-      # keyboard-layout
-      - 'libx11-xcb1'
-      - 'libxkbfile1'
-      # fontmanager
-      - 'libfontconfig1'
-    fpm:
-      # Expat := MIT like
-      - '--license=Expat'
-  rpm:
-    # Custom dependencies:
-    depends:
-      # keytar
-      - 'libsecret'
-      # keyboard-layout
-      - 'libX11-xcb'
-      - 'libxkbfile'
-      # fontmanager
-      - 'fontconfig'
