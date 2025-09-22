@@ -59,16 +59,22 @@ jobs:
       - name: build-linux
         if: matrix.os == 'ubuntu-latest'
         run: npm run build:linux
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Mac builds have been disabled due to a lack of a Developer ID to sign it
       # All builds by default will give a "this app is damaged and can't be opened" error
       - name: build-mac
         if: matrix.os == 'macos-latest'
         run: npm run build:mac
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: build-win
         if: matrix.os == 'windows-latest'
         run: npm run build:win
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: release
         uses: softprops/action-gh-release@v1
