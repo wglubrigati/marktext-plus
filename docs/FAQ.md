@@ -22,7 +22,7 @@ Documentation is currently under development.
 
 - [End-user documentation](https://github.com/marktext/marktext/blob/develop/docs/README.md)
 
-- [Developer documentation](https://github.com/marktext/marktext/blob/develop/docs/dev/README.md)
+- [Developer documentation](https://github.com/marktext/marktext/blob/develop/../dev/README.md)
 
 ### Can I run a portable version of MarkText?
 
@@ -34,7 +34,7 @@ You can report bugs and problems via our [GitHub issue tracker](https://github.c
 
 ### I cannot launch MarkText on Linux (SUID sandbox)
 
-> *The SUID sandbox helper binary was found, but is not configured correctly.*
+> _The SUID sandbox helper binary was found, but is not configured correctly._
 
 Normally, you should never get this error but if you disabled user namespaces, this error message may appears in the command output when launching MarkText. To solve the issue, that Chromium cannot start the sandbox (process), you can choose one of the following steps:
 

@@ -7,7 +7,7 @@
 - Python (`>= 3.12`)
 
 - Node.JS (`22.19.0`) [Same version as the current Electron release]
-  - Using other versions *may* work, but you might run into errors while compiling native add-ons
+  - Using other versions _may_ work, but you might run into errors while compiling native add-ons
 
 - A lot of patience
 
@@ -29,13 +29,22 @@ cd marktext
 npm install
 ```
 
-### 1.5 Run in Development
+### 1.5 Create minified locale files (Optional)
 
-```bash
-$ npm run dev
+- If you make any changes to the locale files, be sure to run the following first to update the minified locale files
+  - This is **automatically ran** when building for production, but not for dev for performance
+
+```
+npm run minify-locales
 ```
 
-#### 1.4.1 Some Points to Note:
+### 1.6 Run in Development
+
+```bash
+npm run dev
+```
+
+#### 1.6.1 Some Points to Note:
 
 - The `main` and `preload` processes are **NOT** automatically hot-loaded on edit, you need to **reload the development process** on each edit unfortunately
   - The good news is Vite bundles it _really really quickly_ so it shouldnt be too big of a hassle
@@ -44,7 +53,7 @@ $ npm run dev
   - `main` and `preload` still compile to `CommonJS`
   - `renderer` is `ESModules` only (take note when using any legacy `CommonJS` libraries)
 
-### 1.5 Build for Production
+### 1.7 Build for Production
 
 ```bash
 # For windows

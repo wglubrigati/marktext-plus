@@ -5,6 +5,7 @@ directories:
 files:
   - '!**/.vscode/*'
   - '!src/*'
+  - '!scripts/*'
   - '!electron.vite.config.{js,ts,mjs,cjs}'
   - '!{.eslintcache,eslint.config.mjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
   - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
@@ -44,7 +45,10 @@ extraResources:
     to: static
     filter:
       - '**/*'
+      - '!locales/**/!(*.min).json'
 npmRebuild: false
+electronLanguages: # Avoid packaging all chromium locales since our app has in-built locales
+  - en-US
 
 asarUnpack:
   - resources/**

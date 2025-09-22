@@ -9,14 +9,13 @@
     "format": "prettier --write .",
     "lint": "eslint --cache .",
     "start": "electron-vite preview",
+    "minify-locales": "node scripts/minify-locales.js",
     "dev": "electron-vite dev",
     "build": "electron-vite build",
-    "build:unpack": "npm run build && electron-builder --dir",
-    "build:win": "npm run build && electron-builder --win --publish never",
-    "build:mac": "npm run build && electron-builder --mac --publish never",
-    "build:linux": "npm run build && electron-builder --linux --publish never",
-    "build:release": "npm run build && electron-builder --win --mac --linux --publish never",
-    "rebuild:ced": "cross-env CL=\"-Wno-c++11-narrowing\" npm rebuild ced --build-from-source"
+    "build:unpack": "npm run minify-locales && npm run build && electron-builder --dir",
+    "build:win": "npm run minify-locales && npm run build && electron-builder --win --publish never",
+    "build:mac": "npm run minify-locales && npm run build && electron-builder --mac --publish never",
+    "build:linux": "npm run minify-locales && npm run build && electron-builder --linux --publish never"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.2",

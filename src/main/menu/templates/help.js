@@ -44,9 +44,7 @@ export default function () {
       {
         label: t('menu.help.changelog'),
         click() {
-          shell.openExternal(
-            'https://github.com/Tkaixiang/marktext/blob/trunk/.github/CHANGELOG.md'
-          )
+          shell.openExternal('https://github.com/Tkaixiang/marktext/releases')
         }
       },
       {

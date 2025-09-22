@@ -23,8 +23,8 @@ function loadTranslations(language) {
     // Since this script is used in both main and preload processes, we can't use global.__static directly here since it is only for the main process
     const localePath =
       process.env.NODE_ENV === 'development'
-        ? path.join(process.cwd(), 'static', 'locales', `${language}.json`)
-        : path.join(process.resourcesPath, 'static', 'locales', `${language}.json`)
+        ? path.join(process.cwd(), 'static', 'locales', `${language}.min.json`)
+        : path.join(process.resourcesPath, 'static', 'locales', `${language}.min.json`)
 
     if (!fs.existsSync(localePath)) {
       throw new Error(`Translation file not found for language: ${language}`)
