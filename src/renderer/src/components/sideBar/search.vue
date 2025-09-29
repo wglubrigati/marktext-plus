@@ -5,6 +5,7 @@
         ref="searchEl"
         v-model="keyword"
         type="text"
+        class="search-input"
         :placeholder="t('sideBar.search.searchInFolder')"
         @keyup="search"
       />
@@ -311,51 +312,52 @@ onMounted(() => {
   background: var(--inputBgColor);
   box-sizing: border-box;
   align-items: center;
-}
-.search-input > input {
-  color: var(--sideBarColor);
-  background: transparent;
-  height: 100%;
-  flex: 1;
-  border: none;
-  outline: none;
-  padding: 0 8px;
-  font-size: 13px;
-  width: 50%;
-}
-.search-input > .controls {
-  display: flex;
-  flex-shrink: 0;
-  margin-top: 3px;
-}
-.search-input > .controls > span {
-  cursor: pointer;
-  width: 20px;
-  height: 20px;
-  margin-left: 2px;
-  margin-right: 2px;
-}
-.search-input > .controls > span:hover {
-  color: var(--sideBarIconColor);
-}
-.search-input > .controls > span > svg {
-  fill: var(--sideBarIconColor);
-}
-.search-input > .controls > span > svg:hover {
-  fill: var(--highlightThemeColor);
-}
-.search-input > .controls > span.active svg {
-  fill: var(--highlightThemeColor);
-}
-.search-input > svg {
-  cursor: pointer;
-  flex-shrink: 0;
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-}
-.search-input > svg:hover {
-  color: var(--sideBarIconColor);
+  & > input {
+    color: var(--sideBarColor);
+    background: transparent;
+    height: 100%;
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0 8px;
+    font-size: 13px;
+    width: 50%;
+  }
+  & > .controls {
+    display: flex;
+    flex-shrink: 0;
+    margin-top: 3px;
+    & > span {
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
+      margin-left: 2px;
+      margin-right: 2px;
+      &:hover {
+        color: var(--sideBarIconColor);
+      }
+      & > svg {
+        fill: var(--sideBarIconColor);
+        &:hover {
+          fill: var(--highlightThemeColor);
+        }
+      }
+      &.active svg {
+        fill: var(--highlightThemeColor);
+      }
+    }
+  }
+
+  & > svg {
+    cursor: pointer;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    &:hover {
+      color: var(--sideBarIconColor);
+    }
+  }
 }
 .cancel-area {
   text-align: center;
@@ -376,10 +378,9 @@ onMounted(() => {
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-}
-.empty::-webkit-scrollbar:vertical,
-.search-result::-webkit-scrollbar:vertical {
-  width: 8px;
+  &::-webkit-scrollbar:vertical {
+    width: 8px;
+  }
 }
 .empty {
   font-size: 14px;
@@ -388,14 +389,14 @@ onMounted(() => {
   flex-direction: column;
   justify-content: space-around;
   padding-bottom: 100px;
-}
-.empty .no-data {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
-.empty .no-data .button-primary {
-  display: block;
-  margin-top: 20px;
+  & .no-data {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  & .no-data .button-primary {
+    display: block;
+    margin-top: 20px;
+  }
 }
 </style>
