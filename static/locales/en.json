@@ -218,9 +218,10 @@
     "replacementPlaceholder": "Replacement",
     "replaceAll": "Replace All",
     "replaceSingle": "Replace Single",
-    "invalidRegex": "Invalid regular expression",
-    "regexMatchEmpty": "Regular expression matches empty string",
-    "searchResultCount": "Search results"
+    "invalidRegex": "Invalid regular expression \"{pattern}\"",
+    "regexMatchEmpty": "Regular expression matches empty string \"{pattern}\"",
+    "searchResultInfo": "{matchCount} matches in {fileCount} files",
+    "searchLimited": "Searched limited to first {count} results"
   },
   "sideBar": {
     "search": {
@@ -608,7 +609,7 @@
       },
       "uploader": {
         "title": "Image Uploader",
-        "currentUploader": "Current Uploader",
+        "currentUploader": "Current Uploader: {name}",
         "picgoNotInstalled": "PicGo is not installed",
         "picgoDetectionStatus": "PicGo Detection Status",
         "picgoInstalled": "PicGo is installed",
@@ -660,7 +661,7 @@
           "title": "Legal Notices",
           "description": "I have read and agree to the relevant terms of service",
           "and": "and",
-          "byUsing": "By using this service, you agree to the",
+          "byUsing": "By using {name}, you agree to the",
           "gdprWarning": "GDPR warning",
           "privacyStatement": "Privacy Statement",
           "termsOfService": "Terms of Service"
@@ -843,7 +844,7 @@
       "online": "Online",
       "saveError": "Error saving keybindings",
       "shortcutInUse": "Shortcut in use",
-      "shortcutInUseMessage": "This shortcut is already assigned to another command",
+      "shortcutInUseMessage": "This shortcut is already assigned to {accelerator}",
       "table": {
         "description": "Description",
         "edit": "Edit",
@@ -880,8 +881,8 @@
     "selectAll": "Select All"
   },
   "about": {
-    "copyright": "Copyright",
-    "copyrightContributors": "Copyright Contributors"
+    "copyright": "Copyright © Luo Ran 2017-{year}",
+    "copyrightContributors": "Made with <3 by Github Contributors"
   },
   "commands": {
     "mt": {
@@ -1042,7 +1043,7 @@
     "close": "Close",
     "dontSave": "Don't Save",
     "file": "File",
-    "fileExists": "File exists",
+    "fileExists": "File exists {filename}",
     "files": "Files",
     "importWarning": "Import warning",
     "installPandoc": "Install Pandoc",
@@ -1055,12 +1056,12 @@
   "error": {
     "configSchemaViolation": "Configuration schema violation",
     "copyError": "Copy error",
-    "initializationFailed": "Initialization failed",
+    "initializationFailed": "Initialization failed {hint}",
     "otherInstanceDetected": "Another instance of MarkText is already running",
     "report": "Report",
     "startupError": "Startup error",
     "terminatedDueToError": "Terminated due to error",
-    "unexpectedErrorWithMessage": "Unexpected error with message",
+    "unexpectedErrorWithMessage": "Unexpected error with message {message}",
     "unexpectedMainProcess": "Unexpected main process error",
     "unexpectedRendererProcess": "Unexpected renderer process error"
   },
@@ -1072,7 +1073,7 @@
     "editor": {
       "anchorLinkCopied": "Anchor link copied",
       "tabNotFound": "Tab not found",
-      "tocItemNotFound": "Table of contents item not found",
+      "tocItemNotFound": "Table of contents {key} not found",
       "highlightStart": "[highlight start]",
       "highlightEnd": "[highlight end]",
       "typeAtToInsert": "Type {'@'} to insert",
@@ -1096,12 +1097,12 @@
       "errorLoadingTabMessage": "There was an error while loading the file change because the tab cannot be found.",
       "mixedLineEndingsNormalized": "\"{{name}}\" has mixed line endings which are automatically normalized to {{lineEnding}}.",
       "imageDeletionUrlTitle": "Image deletion URL",
-      "imageDeletionUrlMessage": "Click to copy the deletion URL of the uploaded image to the clipboard ({{url}}).",
-      "errorWhileSaving": "There was an error while saving: {{msg}}",
+      "imageDeletionUrlMessage": "Click to copy the deletion URL of the uploaded image to the clipboard {url}",
+      "errorWhileSaving": "There was an error while saving: {msg}",
       "exportSuccessTitle": "Exported successfully",
       "exportSuccessMessage": "Exported \"{{name}}\" successfully!",
-      "fileRemovedOnDisk": "\"{{name}}\" has been removed on disk.",
-      "fileChangedOnDisk": "\"{{name}}\" has been changed on disk. Do you want to reload it?"
+      "fileRemovedOnDisk": "\"{name}\" has been removed on disk.",
+      "fileChangedOnDisk": "\"{name}\" has been changed on disk. Do you want to reload it?"
     },
     "help": {
       "lineEndingAssertionError": "Line ending assertion error"
@@ -1302,8 +1303,8 @@
     },
     "export": {
       "error": "Export error",
-      "errorExporting": "Error exporting file",
-      "failed": "Export failed"
+      "errorExporting": "Error exporting {type} file",
+      "failed": "{type} export failed"
     },
     "insertTable": {
       "title": "Insert Table",
@@ -1314,7 +1315,7 @@
       "notificationNotFound": "Notification not found"
     },
     "print": {
-      "error": "Print error",
+      "error": "Print error for \"{title}\"",
       "failed": "Print failed"
     },
     "sourceCode": {
@@ -1323,9 +1324,9 @@
     },
     "spellcheck": {
       "disabledError": "Spellcheck disabled error",
-      "errorSwitchingLanguage": "Error switching spellcheck language",
-      "languageMissing": "Spellcheck language missing",
-      "switchError": "Spellcheck switch error",
+      "errorSwitchingLanguage": "Error switching spellcheck language {languageCode}",
+      "languageMissing": "Spellcheck language missing {languageCode}",
+      "switchError": "Spellcheck switch error for {languageCode}, {error}",
       "title": "Spellcheck",
       "disabled": "Spellcheck disabled",
       "enabled": "Spellcheck enabled",
@@ -1355,7 +1356,7 @@
     "emptyDiagramBlock": "< Empty Diagram Block >",
     "emptyHtmlBlock": "< Empty HTML Block >",
     "onlyTopBlockCanRenderIcon": "Only top most block can render front icon button.",
-    "unhandledFunctionType": "Unhandled functionType: {{functionType}}",
+    "unhandledFunctionType": "Unhandled functionType: {functionType}",
     "highlight-start": "[highlight end]",
     "highlight-end": "[highlight end]",
     "type-at-to-insert": "Type {'@'} to insert",

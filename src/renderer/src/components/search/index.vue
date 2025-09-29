@@ -16,9 +16,10 @@
             @keyup="searchFn($event)"
           />
           <div class="controls">
-            <span class="search-result">{{
-              t('search.searchResultCount', { current: highlightIndex + 1, total: highlightCount })
-            }}</span>
+            <span class="search-result"
+              >{{ highlightIndex + 1 }} /
+              {{ highlightCount }}
+            </span>
             <span
               :title="t('search.caseSensitive')"
               class="is-case-sensitive"

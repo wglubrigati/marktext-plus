@@ -174,7 +174,7 @@ const search = () => {
           if (promises.cancel) {
             promises.cancel()
           }
-          searchErrorString.value = t('sideBar.search.searchLimited', { count: 100 })
+          searchErrorString.value = t('search.searchLimited', { count: 100 })
         }
       },
 
