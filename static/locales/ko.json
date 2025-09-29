@@ -218,9 +218,11 @@
     "replacementPlaceholder": "바꿀 내용",
     "replaceAll": "모두 바꾸기",
     "replaceSingle": "하나 바꾸기",
-    "invalidRegex": "잘못된 정규식",
-    "regexMatchEmpty": "정규식이 빈 문자열과 일치",
-    "searchResultCount": "검색 결과"
+    "invalidRegex": "잘못된 정규식 \"{pattern}\"",
+    "regexMatchEmpty": "정규식이 빈 문자열 \"{pattern}\"과 일치",
+    "searchResultCount": "검색 결과",
+    "searchResultInfo": "{fileCount}개의 파일에서 {matchCount}개 일치",
+    "searchLimited": "처음 {count}개의 결과까지만 검색"
   },
   "sideBar": {
     "search": {
@@ -1089,12 +1091,12 @@
       "errorLoadingTabMessage": "파일 변경을 로드하는 동안 오류가 발생했습니다. 탭을 찾을 수 없습니다.",
       "mixedLineEndingsNormalized": "“{{name}}”에 혼합 줄 끝이 포함되어 있으며 {{lineEnding}}(으)로 자동 정규화되었습니다.",
       "imageDeletionUrlTitle": "이미지 삭제 URL",
-      "imageDeletionUrlMessage": "업로드된 이미지의 삭제 URL을 클립보드에 복사합니다 ({{url}}).",
-      "errorWhileSaving": "저장 중 오류가 발생했습니다: {{msg}}",
+      "imageDeletionUrlMessage": "업로드된 이미지의 삭제 URL을 클립보드에 복사합니다 ({url}).",
+      "errorWhileSaving": "저장 중 오류가 발생했습니다: {msg}",
       "exportSuccessTitle": "내보내기 성공",
       "exportSuccessMessage": "“{{name}}”을(를) 성공적으로 내보냈습니다!",
-      "fileRemovedOnDisk": "“{{name}}”이(가) 디스크에서 삭제되었습니다.",
-      "fileChangedOnDisk": "“{{name}}”이(가) 디스크에서 변경되었습니다. 다시 로드하시겠습니까?"
+      "fileRemovedOnDisk": "“{name}”이(가) 디스크에서 삭제되었습니다.",
+      "fileChangedOnDisk": "“{name}”이(가) 디스크에서 변경되었습니다. 다시 로드하시겠습니까?"
     },
     "help": {
       "lineEndingAssertionError": "줄 끝 어설션 오류"
@@ -1106,7 +1108,11 @@
     "unexpectedError": "예상치 못한 맞춤법 검사 오류"
   },
   "quickInsert": {
+    "basicBlock": "기본 블록",
     "header": "헤더",
+    "advancedBlock": "고급 블록",
+    "listBlock": "목록 블록",
+    "diagram": "다이어그램",
     "paragraph": {
       "title": "단락",
       "subtitle": "텍스트 내용 입력"
@@ -1147,9 +1153,9 @@
       "title": "표 블록",
       "subtitle": "｜ 헤더 ｜ 헤더 ｜"
     },
-    "mathBlock": {
-      "title": "수식 블록",
-      "subtitle": "$$ LaTeX $$"
+    "mathFormula": {
+      "title": "수학 공식",
+      "subtitle": "$$ 공식 $$"
     },
     "htmlBlock": {
       "title": "HTML 블록",
@@ -1163,20 +1169,21 @@
       "title": "인용 블록",
       "subtitle": "> 인용 내용"
     },
-    "orderList": {
+    "orderedList": {
       "title": "순서 목록",
-      "subtitle": "1. 항목"
+      "subtitle": "1. 목록 항목"
     },
     "bulletList": {
       "title": "글머리 기호 목록",
       "subtitle": "- 목록 항목"
     },
-    "taskList": {
-      "title": "작업 목록"
+    "todoList": {
+      "title": "할 일 목록",
+      "subtitle": "- [ ] 작업 항목"
     },
     "vegaChart": {
-      "title": "Vega 차트",
-      "subtitle": "```vega-lite"
+      "title": "Vega-Lite 차트",
+      "subtitle": "데이터 시각화 차트"
     },
     "flowChart": {
       "title": "플로우차트",
@@ -1188,21 +1195,11 @@
     },
     "plantUMLChart": {
       "title": "PlantUML 차트",
-      "subtitle": "```plantuml"
-    },
-    "mermaidChart": {
-      "title": "Mermaid 차트",
-      "subtitle": "```mermaid"
-    },
-    "mathFormula": {
-      "title": "수학 공식",
-      "subtitle": "$$ 공식 $$"
-    },
-    "orderedList": {
-      "title": "순서 목록",
-      "subtitle": "1. 목록 항목"
+      "subtitle": "UML 다이어그램"
     },
     "mermaid": {
+      "title": "Mermaid 차트",
+      "subtitle": "Mermaid 다이어그램",
       "gantt": {
         "title": "간트 차트"
       },
@@ -1233,9 +1230,10 @@
       },
       "requirement": {
         "title": "요구사항 다이어그램"
-      },
-      "title": "Mermaid 차트",
-      "subtitle": "Mermaid 차트"
+      }
+    },
+    "taskList": {
+      "title": "작업 목록"
     },
     "vegaliteChart": {
       "title": "Vega-Lite 차트"
@@ -1245,14 +1243,6 @@
     },
     "mermaidDiagram": {
       "title": "Mermaid 다이어그램"
-    },
-    "basicBlock": "기본 블록",
-    "advancedBlock": "고급 블록",
-    "listBlock": "목록 블록",
-    "diagram": "다이어그램",
-    "todoList": {
-      "title": "작업 목록",
-      "subtitle": "- [ ] 작업 항목"
     }
   },
   "frontMenu": {

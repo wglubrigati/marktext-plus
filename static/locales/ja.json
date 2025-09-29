@@ -218,9 +218,11 @@
     "replacementPlaceholder": "置換",
     "replaceAll": "すべて置換",
     "replaceSingle": "単一置換",
-    "invalidRegex": "無効な正規表現",
-    "regexMatchEmpty": "正規表現が空文字列にマッチ",
-    "searchResultCount": "検索結果"
+    "invalidRegex": "無効な正規表現 \"{pattern}\"",
+    "regexMatchEmpty": "正規表現が空文字列 \"{pattern}\" にマッチ",
+    "searchResultCount": "検索結果",
+    "searchResultInfo": "{fileCount} 件のファイルで {matchCount} 件一致",
+    "searchLimited": "最初の {count} 件まで検索しました"
   },
   "sideBar": {
     "search": {
@@ -1089,12 +1091,12 @@
       "errorLoadingTabMessage": "ファイル変更の読み込み中にエラーが発生しました。タブが見つかりません。",
       "mixedLineEndingsNormalized": "「{{name}}」には混在した改行コードが含まれており、{{lineEnding}} に自動正規化されました。",
       "imageDeletionUrlTitle": "画像削除 URL",
-      "imageDeletionUrlMessage": "アップロード済み画像の削除 URL をクリップボードにコピーします（{{url}}）。",
-      "errorWhileSaving": "保存中にエラーが発生しました: {{msg}}",
+      "imageDeletionUrlMessage": "アップロード済み画像の削除 URL をクリップボードにコピーします ({url})。",
+      "errorWhileSaving": "保存中にエラーが発生しました: {msg}",
       "exportSuccessTitle": "エクスポートに成功",
       "exportSuccessMessage": "「{{name}}」を正常にエクスポートしました！",
-      "fileRemovedOnDisk": "「{{name}}」はディスク上で削除されました。",
-      "fileChangedOnDisk": "「{{name}}」はディスク上で変更されました。再読み込みしますか？"
+      "fileRemovedOnDisk": "「{name}」はディスク上で削除されました。",
+      "fileChangedOnDisk": "「{name}」はディスク上で変更されました。再読み込みしますか？"
     },
     "help": {
       "lineEndingAssertionError": "改行コードアサーションエラー"

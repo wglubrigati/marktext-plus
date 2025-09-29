@@ -218,9 +218,10 @@
     "replacementPlaceholder": "Reemplazo",
     "replaceAll": "Reemplazar",
     "replaceSingle": "Reemplazar Uno",
-    "invalidRegex": "Expresión regular inválida",
-    "regexMatchEmpty": "La expresión regular coincide con cadena vacía",
-    "searchResultCount": "Resultados de búsqueda"
+    "invalidRegex": "Expresión regular inválida \"{pattern}\"",
+    "regexMatchEmpty": "La expresión regular coincide con la cadena vacía \"{pattern}\"",
+    "searchResultInfo": "{matchCount} coincidencias en {fileCount} archivos",
+    "searchLimited": "Búsqueda limitada a los primeros {count} resultados"
   },
   "sideBar": {
     "search": {
@@ -608,7 +609,7 @@
       },
       "uploader": {
         "title": "Subidor de Imágenes",
-        "currentUploader": "Subidor Actual",
+        "currentUploader": "Subidor actual: {name}",
         "picgoNotInstalled": "PicGo no está instalado",
         "picgoDetectionStatus": "Estado de Detección de PicGo",
         "picgoInstalled": "PicGo está instalado",
@@ -618,8 +619,7 @@
         "npmInstallCommand": "npm install picgo -g",
         "yarnInstallCommand": "yarn global add picgo",
         "pnpmInstallCommand": "pnpm add -g picgo",
-        "brewInstallCommand": "brew install picgo",
-        "chooseInstallMethod": "Elegir méde instalación:",
+        "chooseInstallMethod": "Elegir método de instalación:",
         "retestPicgo": "Volver a probar",
         "detecting": "Detectando...",
         "lastDetectionTime": "Última detección",
@@ -656,7 +656,7 @@
           "title": "Avisos Legales",
           "description": "He leído y acepto los términos de servicio relevantes",
           "and": "y",
-          "byUsing": "Al usar este servicio, aceptas los",
+          "byUsing": "Al usar {name}, aceptas los",
           "gdprWarning": "Advertencia GDPR",
           "privacyStatement": "Declaración de Privacidad",
           "termsOfService": "Términos de Servicio"
@@ -844,7 +844,7 @@
       "online": "En línea",
       "saveError": "Error al guardar atajos de teclado",
       "shortcutInUse": "Atajo en uso",
-      "shortcutInUseMessage": "Este atajo ya está asignado a otro comando",
+      "shortcutInUseMessage": "Este atajo ya está asignado a {accelerator}",
       "table": {
         "description": "Descripción",
         "edit": "Editar",
@@ -873,7 +873,7 @@
     }
   },
   "about": {
-    "copyright": "Derechos de Autor",
+    "copyright": "Derechos de autor © Luo Ran 2017-{year}",
     "copyrightContributors": "Derechos de Autor Contribuidores"
   },
   "commands": {
@@ -1035,7 +1035,7 @@
     "close": "Cerrar",
     "dontSave": "No Guardar",
     "file": "Archivo",
-    "fileExists": "El archivo existe",
+    "fileExists": "El archivo {filename} ya existe",
     "files": "Archivos",
     "importWarning": "Advertencia de importación",
     "installPandoc": "Instalar Pandoc",
@@ -1048,12 +1048,12 @@
   "error": {
     "configSchemaViolation": "Violación del esquema de configuración",
     "copyError": "Error de copia",
-    "initializationFailed": "Falló la inicialización",
+    "initializationFailed": "Falló la inicialización {hint}",
     "otherInstanceDetected": "Otra instancia de MarkText ya está ejecutándose",
     "report": "Reportar",
     "startupError": "Error de inicio",
     "terminatedDueToError": "Terminado debido a error",
-    "unexpectedErrorWithMessage": "Error inesperado con mensaje",
+    "unexpectedErrorWithMessage": "Error inesperado con mensaje {message}",
     "unexpectedMainProcess": "Error inesperado del proceso principal",
     "unexpectedRendererProcess": "Error inesperado del proceso de renderizado"
   },
@@ -1065,7 +1065,7 @@
     "editor": {
       "anchorLinkCopied": "Enlace de ancla copiado",
       "tabNotFound": "Pestaña no encontrada",
-      "tocItemNotFound": "Elemento de tabla de contenidos no encontrado",
+      "tocItemNotFound": "Elemento de tabla de contenidos {key} no encontrado",
       "highlightStart": "[Inicio de resaltado]",
       "highlightEnd": "[Fin de resaltado]",
       "typeAtToInsert": "Escriba {'@'} para insertar",
@@ -1089,12 +1089,12 @@
       "errorLoadingTabMessage": "Se produjo un error al cargar la modificación del archivo porque no se puede encontrar la pestaña.",
       "mixedLineEndingsNormalized": "«{{name}}» tiene finales de línea mixtos que se normalizaron automáticamente a {{lineEnding}}.",
       "imageDeletionUrlTitle": "URL de eliminación de la imagen",
-      "imageDeletionUrlMessage": "Haz clic para copiar al portapapeles la URL de eliminación de la imagen subida ({{url}}).",
-      "errorWhileSaving": "Se produjo un error al guardar: {{msg}}",
+      "imageDeletionUrlMessage": "Haz clic para copiar al portapapeles la URL de eliminación de la imagen subida ({url}).",
+      "errorWhileSaving": "Se produjo un error al guardar: {msg}",
       "exportSuccessTitle": "Exportado correctamente",
       "exportSuccessMessage": "¡Se exportó «{{name}}» correctamente!",
-      "fileRemovedOnDisk": "«{{name}}» ha sido eliminado del disco.",
-      "fileChangedOnDisk": "«{{name}}» ha cambiado en el disco. ¿Deseas recargarlo?"
+      "fileRemovedOnDisk": "«{name}» ha sido eliminado del disco.",
+      "fileChangedOnDisk": "«{name}» ha cambiado en el disco. ¿Deseas recargarlo?"
     },
     "help": {
       "lineEndingAssertionError": "Error de aserción de final de línea"
@@ -1183,14 +1183,6 @@
       "title": "Diagrama de Flujo",
       "subtitle": "Diagrama de flujo"
     },
-    "sequenceDiagram": {
-      "title": "Diagrama de Secuencia",
-      "subtitle": "Renderizar diagramas de secuencia usando js-sequence."
-    },
-    "plantumlDiagram": {
-      "title": "Diagrama PlantUML",
-      "subtitle": "Renderizar diagramas PlantUML"
-    },
     "mermaid": {
       "title": "Mermaid",
       "subtitle": "Renderizar gráficos usando mermaid.",
@@ -1229,42 +1221,6 @@
     "sequenceChart": {
       "title": "Gráfico de Secuencia",
       "subtitle": "Diagrama de secuencia"
-    },
-    "ganttChart": {
-      "title": "Gráfico de Gantt",
-      "subtitle": "Renderizar gráficos de Gantt usando mermaid."
-    },
-    "pieChart": {
-      "title": "Gráfico Circular",
-      "subtitle": "Renderizar gráficos circulares usando mermaid."
-    },
-    "flowchart": {
-      "title": "Diagrama de Flujo",
-      "subtitle": "Renderizar diagramas de flujo usando mermaid."
-    },
-    "classDiagram": {
-      "title": "Diagrama de Clases",
-      "subtitle": "Renderizar diagramas de clases usando mermaid."
-    },
-    "stateDiagram": {
-      "title": "Diagrama de Estados",
-      "subtitle": "Renderizar diagramas de estados usando mermaid."
-    },
-    "userJourney": {
-      "title": "Viaje del Usuario",
-      "subtitle": "Renderizar diagramas de viaje del usuario usando mermaid."
-    },
-    "gitGraph": {
-      "title": "Gráfico Git",
-      "subtitle": "Renderizar gráficos Git usando mermaid."
-    },
-    "erDiagram": {
-      "title": "Diagrama ER",
-      "subtitle": "Renderizar diagramas entidad-relación usando mermaid."
-    },
-    "requirementDiagram": {
-      "title": "Diagrama de Requisitos",
-      "subtitle": "Renderizar diagramas de requisitos usando mermaid."
     },
     "taskList": {
       "title": "Lista de tareas"
@@ -1349,8 +1305,8 @@
     },
     "export": {
       "error": "Error de exportación",
-      "errorExporting": "Error al exportar archivo",
-      "failed": "Exportación fallida"
+      "errorExporting": "Error al exportar archivo {type}",
+      "failed": "Falló la exportación de {type}"
     },
     "insertTable": {
       "title": "Insertar Tabla",
@@ -1361,7 +1317,7 @@
       "notificationNotFound": "Notificación no encontrada"
     },
     "print": {
-      "error": "Error de impresión",
+      "error": "Error de impresión para \"{title}\"",
       "failed": "Impresión fallida"
     },
     "sourceCode": {
@@ -1373,9 +1329,9 @@
       "disabled": "Corrector ortográfico deshabilitado",
       "enabledError": "Error al habilitar el corrector ortográfico",
       "disabledError": "Error al deshabilitar el corrector ortográfico",
-      "errorSwitchingLanguage": "Error al cambiar el idioma del corrector ortográfico",
-      "languageMissing": "Idioma del corrector ortográfico faltante",
-      "switchError": "Error de cambio del corrector ortográfico",
+      "errorSwitchingLanguage": "Error al cambiar el idioma del corrector ortográfico {languageCode}",
+      "languageMissing": "Idioma del corrector ortográfico faltante {languageCode}",
+      "switchError": "Error del corrector ortográfico para {languageCode}, {error}",
       "title": "Corrector ortográfico"
     },
     "table": "tabla",
@@ -1402,7 +1358,7 @@
     "emptyDiagramBlock": "< Bloque de diagrama vacío >",
     "emptyHtmlBlock": "< Bloque HTML vacío >",
     "onlyTopBlockCanRenderIcon": "Solo el bloque superior puede renderizar el botón de icono frontal.",
-    "unhandledFunctionType": "Tipo de función no manejado: {{functionType}}",
+    "unhandledFunctionType": "Tipo de función no manejado: {functionType}",
     "highlight-start": "[inicio de resaltado]",
     "highlight-end": "[fin de resaltado]",
     "type-at-to-insert": "Escriba {'@'} para insertar",

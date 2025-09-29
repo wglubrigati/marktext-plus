@@ -218,9 +218,10 @@
     "replacementPlaceholder": "Ersetzen",
     "replaceAll": "Alle ersetzen",
     "replaceSingle": "Einzeln ersetzen",
-    "invalidRegex": "Ungültiger regulärer Ausdruck",
-    "regexMatchEmpty": "Regulärer Ausdruck entspricht leerem String",
-    "searchResultCount": "Suchergebnisse"
+    "invalidRegex": "Ungültiger regulärer Ausdruck \"{pattern}\"",
+    "regexMatchEmpty": "Regulärer Ausdruck entspricht leerem String \"{pattern}\"",
+    "searchResultInfo": "{matchCount} Treffer in {fileCount} Dateien",
+    "searchLimited": "Suche auf die ersten {count} Ergebnisse beschränkt"
   },
   "sideBar": {
     "search": {
@@ -608,7 +609,7 @@
       },
       "uploader": {
         "title": "Bild-Uploader",
-        "currentUploader": "Aktueller Uploader",
+        "currentUploader": "Aktueller Uploader: {name}",
         "picgoNotInstalled": "PicGo nicht installiert",
         "picgoDetectionStatus": "PicGo-Erkennungsstatus",
         "picgoInstalled": "PicGo installiert",
@@ -618,7 +619,6 @@
         "npmInstallCommand": "npm install picgo -g",
         "yarnInstallCommand": "yarn global add picgo",
         "pnpmInstallCommand": "pnpm add -g picgo",
-        "brewInstallCommand": "brew install picgo",
         "chooseInstallMethod": "Installationsmethode wählen:",
         "retestPicgo": "Erneut testen",
         "detecting": "Erkennung läuft...",
@@ -656,7 +656,7 @@
           "title": "Rechtliche Hinweise",
           "description": "Ich habe die entsprechenden Nutzungsbedingungen gelesen und akzeptiert",
           "and": "und",
-          "byUsing": "Durch die Nutzung dieses Dienstes stimmen Sie zu",
+          "byUsing": "Durch die Nutzung von {name} stimmen Sie zu",
           "gdprWarning": "DSGVO-Warnung",
           "privacyStatement": "Datenschutzerklärung",
           "termsOfService": "Nutzungsbedingungen"
@@ -844,7 +844,7 @@
       "online": "Online",
       "saveError": "Fehler beim Speichern der Tastenkürzel",
       "shortcutInUse": "Tastenkürzel wird verwendet",
-      "shortcutInUseMessage": "Dieses Tastenkürzel ist bereits einem anderen Befehl zugewiesen",
+      "shortcutInUseMessage": "Dieses Tastenkürzel ist bereits {accelerator} zugeordnet",
       "table": {
         "description": "Beschreibung",
         "edit": "Bearbeiten",
@@ -873,7 +873,7 @@
     }
   },
   "about": {
-    "copyright": "Urheberrecht",
+    "copyright": "Copyright © Luo Ran 2017-{year}",
     "copyrightContributors": "Urheberrecht Mitwirkende"
   },
   "commands": {
@@ -1035,7 +1035,7 @@
     "close": "Schließen",
     "dontSave": "Nicht speichern",
     "file": "Datei",
-    "fileExists": "Datei existiert",
+    "fileExists": "Datei existiert bereits: {filename}",
     "files": "Dateien",
     "importWarning": "Import-Warnung",
     "installPandoc": "Pandoc installieren",
@@ -1048,12 +1048,12 @@
   "error": {
     "configSchemaViolation": "Konfigurationsschema-Verletzung",
     "copyError": "Kopierfehler",
-    "initializationFailed": "Initialisierung fehlgeschlagen",
+    "initializationFailed": "Initialisierung fehlgeschlagen {hint}",
     "otherInstanceDetected": "Eine andere Instanz von MarkText läuft bereits",
     "report": "Melden",
     "startupError": "Startfehler",
     "terminatedDueToError": "Aufgrund eines Fehlers beendet",
-    "unexpectedErrorWithMessage": "Unerwartete Fehlermeldung",
+    "unexpectedErrorWithMessage": "Unerwarteter Fehler mit Nachricht {message}",
     "unexpectedMainProcess": "Unerwarteter Hauptprozess-Fehler",
     "unexpectedRendererProcess": "Unerwarteter Renderer-Prozess-Fehler"
   },
@@ -1065,7 +1065,7 @@
     "editor": {
       "anchorLinkCopied": "Anker-Link kopiert",
       "tabNotFound": "Tab nicht gefunden",
-      "tocItemNotFound": "Inhaltsverzeichnis-Element nicht gefunden",
+      "tocItemNotFound": "Inhaltsverzeichnis {key} nicht gefunden",
       "highlightStart": "[Hervorhebung Start]",
       "highlightEnd": "[Hervorhebung Ende]",
       "typeAtToInsert": "{'@'} eingeben zum Einfügen",
@@ -1089,12 +1089,12 @@
       "errorLoadingTabMessage": "Beim Laden der Dateiänderung ist ein Fehler aufgetreten, da der Tab nicht gefunden werden kann.",
       "mixedLineEndingsNormalized": "„{{name}}“ enthält gemischte Zeilenenden, die automatisch zu {{lineEnding}} normalisiert wurden.",
       "imageDeletionUrlTitle": "Bild‑Lösch‑URL",
-      "imageDeletionUrlMessage": "Klicken, um die Lösch‑URL des hochgeladenen Bildes in die Zwischenablage zu kopieren ({{url}}).",
-      "errorWhileSaving": "Beim Speichern ist ein Fehler aufgetreten: {{msg}}",
+      "imageDeletionUrlMessage": "Klicken, um die Lösch-URL des hochgeladenen Bildes in die Zwischenablage zu kopieren ({url}).",
+      "errorWhileSaving": "Beim Speichern ist ein Fehler aufgetreten: {msg}",
       "exportSuccessTitle": "Erfolgreich exportiert",
       "exportSuccessMessage": "„{{name}}“ wurde erfolgreich exportiert!",
-      "fileRemovedOnDisk": "„{{name}}“ wurde auf dem Datenträger gelöscht.",
-      "fileChangedOnDisk": "„{{name}}“ wurde auf dem Datenträger geändert. Möchten Sie neu laden?"
+      "fileRemovedOnDisk": "„{name}“ wurde auf dem Datenträger gelöscht.",
+      "fileChangedOnDisk": "„{name}“ wurde auf dem Datenträger geändert. Möchten Sie neu laden?"
     },
     "help": {
       "lineEndingAssertionError": "Zeilenendezeichen-Assertion-Fehler"
@@ -1305,8 +1305,8 @@
     },
     "export": {
       "error": "Export-Fehler",
-      "errorExporting": "Fehler beim Exportieren der Datei",
-      "failed": "Export fehlgeschlagen"
+      "errorExporting": "Fehler beim Exportieren der {type}-Datei",
+      "failed": "{type}-Export fehlgeschlagen"
     },
     "insertTable": {
       "title": "Tabelle einfügen",
@@ -1317,7 +1317,7 @@
       "notificationNotFound": "Benachrichtigung nicht gefunden"
     },
     "print": {
-      "error": "Druckfehler",
+      "error": "Druckfehler für \"{title}\"",
       "failed": "Drucken fehlgeschlagen"
     },
     "sourceCode": {
@@ -1329,9 +1329,9 @@
       "disabled": "Rechtschreibprüfung deaktiviert",
       "enabledError": "Fehler beim Aktivieren der Rechtschreibprüfung",
       "disabledError": "Fehler beim Deaktivieren der Rechtschreibprüfung",
-      "errorSwitchingLanguage": "Fehler beim Wechseln der Rechtschreibprüfungssprache",
-      "languageMissing": "Rechtschreibprüfungssprache fehlt",
-      "switchError": "Rechtschreibprüfung Wechselfehler",
+      "errorSwitchingLanguage": "Fehler beim Wechseln der Rechtschreibprüfungssprache {languageCode}",
+      "languageMissing": "Rechtschreibprüfungssprache fehlt {languageCode}",
+      "switchError": "Rechtschreibprüfung-Wechselfehler für {languageCode}, {error}",
       "title": "Rechtschreibprüfung"
     },
     "table": "Tabelle",
@@ -1358,7 +1358,7 @@
     "emptyDiagramBlock": "< Leerer Diagramm-Block >",
     "emptyHtmlBlock": "< Leerer HTML-Block >",
     "onlyTopBlockCanRenderIcon": "Nur der oberste Block kann das vordere Symbol rendern.",
-    "unhandledFunctionType": "Unbehandelter Funktionstyp: {{functionType}}",
+    "unhandledFunctionType": "Unbehandelter Funktionstyp: {functionType}",
     "highlight-start": "[Hervorhebung Start]",
     "highlight-end": "[Hervorhebung Ende]",
     "type-at-to-insert": "Geben Sie {'@'} ein, um einzufügen",

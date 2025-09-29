@@ -218,9 +218,11 @@
     "replacementPlaceholder": "取代",
     "replaceAll": "全部取代",
     "replaceSingle": "單一取代",
-    "invalidRegex": "無效的正規表示式",
-    "regexMatchEmpty": "正規表示式符合空字串",
-    "searchResultCount": "搜尋結果"
+    "invalidRegex": "無效的正規表示式 \"{pattern}\"",
+    "regexMatchEmpty": "正規表示式 \"{pattern}\" 符合空字串",
+    "searchResultCount": "搜尋結果",
+    "searchResultInfo": "在 {fileCount} 個檔案中找到 {matchCount} 個符合項目",
+    "searchLimited": "搜尋僅限前 {count} 個結果"
   },
   "sideBar": {
     "search": {
@@ -1089,12 +1091,12 @@
       "errorLoadingTabMessage": "載入檔案變更時發生錯誤，因為找不到該標籤頁。",
       "mixedLineEndingsNormalized": "「{{name}}」含有混合換行字元，已自動正規化為 {{lineEnding}}。",
       "imageDeletionUrlTitle": "圖片刪除連結",
-      "imageDeletionUrlMessage": "點擊將已上傳圖片的刪除連結複製到剪貼簿（{{url}}）。",
-      "errorWhileSaving": "儲存時發生錯誤：{{msg}}",
+      "imageDeletionUrlMessage": "點擊將已上傳圖片的刪除連結複製到剪貼簿（{url}）。",
+      "errorWhileSaving": "儲存時發生錯誤：{msg}",
       "exportSuccessTitle": "匯出成功",
       "exportSuccessMessage": "已成功匯出「{{name}}」！",
-      "fileRemovedOnDisk": "「{{name}}」已在磁碟上被刪除。",
-      "fileChangedOnDisk": "「{{name}}」已在磁碟上發生變更。是否重新載入？"
+      "fileRemovedOnDisk": "「{name}」已在磁碟上被刪除。",
+      "fileChangedOnDisk": "「{name}」已在磁碟上發生變更。是否重新載入？"
     },
     "help": {
       "lineEndingAssertionError": "行結束符斷言錯誤"
@@ -1366,7 +1368,7 @@
     "emptyDiagramBlock": "< 空圖表區塊 >",
     "emptyHtmlBlock": "< 空 HTML 區塊 >",
     "onlyTopBlockCanRenderIcon": "只有最上層區塊可以渲染前置圖示按鈕。",
-    "unhandledFunctionType": "未處理的功能類型: {{functionType}}",
+    "unhandledFunctionType": "未處理的功能類型: {functionType}",
     "highlight-start": "[高亮開始]",
     "highlight-end": "[高亮結束]",
     "type-at-to-insert": "輸入 {'@'} 來插入",

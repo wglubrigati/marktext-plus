@@ -218,9 +218,11 @@
     "replacementPlaceholder": "Remplacer",
     "replaceAll": "Remplacer tout",
     "replaceSingle": "Remplacer un",
-    "invalidRegex": "Expression régulière invalide",
-    "regexMatchEmpty": "L'expression régulière correspond à une chaîne vide",
-    "searchResultCount": "Résultats de recherche"
+    "invalidRegex": "Expression régulière invalide \"{pattern}\"",
+    "regexMatchEmpty": "L'expression régulière correspond à une chaîne vide \"{pattern}\"",
+    "searchResultCount": "Résultats de recherche",
+    "searchResultInfo": "{matchCount} correspondances dans {fileCount} fichiers",
+    "searchLimited": "Recherche limitée aux {count} premiers résultats"
   },
   "sideBar": {
     "search": {
@@ -1089,12 +1091,12 @@
       "errorLoadingTabMessage": "Une erreur s’est produite lors du chargement de la modification du fichier car l’onglet est introuvable.",
       "mixedLineEndingsNormalized": "« {{name}} » contient des fins de ligne mixtes qui ont été automatiquement normalisées en {{lineEnding}}.",
       "imageDeletionUrlTitle": "URL de suppression de l’image",
-      "imageDeletionUrlMessage": "Cliquez pour copier dans le presse‑papiers l’URL de suppression de l’image téléversée ({{url}}).",
-      "errorWhileSaving": "Une erreur s’est produite lors de l’enregistrement : {{msg}}",
+      "imageDeletionUrlMessage": "Cliquez pour copier dans le presse‑papiers l’URL de suppression de l’image téléversée ({url}).",
+      "errorWhileSaving": "Une erreur s'est produite lors de l'enregistrement : {msg}",
       "exportSuccessTitle": "Exportation réussie",
-      "exportSuccessMessage": "« {{name}} » a été exporté avec succès !",
-      "fileRemovedOnDisk": "« {{name}} » a été supprimé du disque.",
-      "fileChangedOnDisk": "« {{name}} » a été modifié sur le disque. Voulez‑vous le recharger ?"
+      "exportSuccessMessage": "« {{name}} » a été exporté avec succès !",
+      "fileRemovedOnDisk": "« {name} » a été supprimé du disque.",
+      "fileChangedOnDisk": "« {name} » a été modifié sur le disque. Voulez-vous le recharger ?"
     },
     "help": {
       "lineEndingAssertionError": "Erreur d'assertion de fin de ligne"

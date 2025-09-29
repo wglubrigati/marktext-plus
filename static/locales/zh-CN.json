@@ -218,9 +218,11 @@
     "replacementPlaceholder": "替换",
     "replaceAll": "全部替换",
     "replaceSingle": "单个替换",
-    "invalidRegex": "无效的正则表达式",
-    "regexMatchEmpty": "正则表达式匹配空字符串",
-    "searchResultCount": "搜索结果"
+    "invalidRegex": "无效的正则表达式 \"{pattern}\"",
+    "regexMatchEmpty": "正则表达式 \"{pattern}\" 匹配到了空字符串",
+    "searchResultCount": "搜索结果",
+    "searchResultInfo": "在 {fileCount} 个文件中找到 {matchCount} 个匹配项",
+    "searchLimited": "仅搜索前 {count} 个结果"
   },
   "sideBar": {
     "search": {
@@ -1096,12 +1098,12 @@
       "errorLoadingTabMessage": "加载文件变更时发生错误，因为找不到该标签页。",
       "mixedLineEndingsNormalized": "“{{name}}” 含有混合换行符，已自动规范化为 {{lineEnding}}。",
       "imageDeletionUrlTitle": "图片删除链接",
-      "imageDeletionUrlMessage": "点击将已上传图片的删除链接复制到剪贴板（{{url}}）。",
-      "errorWhileSaving": "保存时发生错误：{{msg}}",
+      "imageDeletionUrlMessage": "点击将已上传图片的删除链接复制到剪贴板 ({url})。",
+      "errorWhileSaving": "保存时发生错误：{msg}",
       "exportSuccessTitle": "导出成功",
       "exportSuccessMessage": "已成功导出“{{name}}”！",
-      "fileRemovedOnDisk": "“{{name}}” 已在磁盘上被删除。",
-      "fileChangedOnDisk": "“{{name}}” 已在磁盘上发生变更。是否重新加载？"
+      "fileRemovedOnDisk": "“{name}” 已在磁盘上被删除。",
+      "fileChangedOnDisk": "“{name}” 已在磁盘上发生变更。是否重新加载？"
     },
     "help": {
       "lineEndingAssertionError": "行结束符断言错误"
