@@ -29,10 +29,9 @@ cd marktext
 npm install
 ```
 
-### 1.5 Create minified locale files (Optional)
+### 1.5 Create minified locale files
 
-- If you make any changes to the locale files, be sure to run the following first to update the minified locale files
-  - This is **automatically ran** when building for production, but not for dev for performance
+- This is **automatically ran** when building for production, but not for dev for performance
 
 ```
 npm run minify-locales
