@@ -276,24 +276,26 @@ const executeCommand = (commandId) => {
   }
 }
 
+const handleLanguageChanged = () => {
+  // 如果命令面板当前是打开状态，重新加载命令
+  if (showCommandPalette.value && currentCommand.value) {
+    currentCommand.value.run().then(() => {
+      availableCommands.value = currentCommand.value.subcommands
+      updateCommands()
+    })
+  }
+}
+
 onMounted(() => {
   bus.on('show-command-palette', handleShow)
 
   // 监听语言变化事件，重新获取命令列表
-  bus.on('language-changed', () => {
-    // 如果命令面板当前是打开状态，重新加载命令
-    if (showCommandPalette.value && currentCommand.value) {
-      currentCommand.value.run().then(() => {
-        availableCommands.value = currentCommand.value.subcommands
-        updateCommands()
-      })
-    }
-  })
+  bus.on('language-changed', handleLanguageChanged)
 })
 
 onBeforeUnmount(() => {
   bus.off('show-command-palette', handleShow)
-  bus.off('language-changed')
+  bus.off('language-changed', handleLanguageChanged)
 })
 </script>
 
