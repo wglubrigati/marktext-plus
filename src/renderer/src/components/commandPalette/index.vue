@@ -104,7 +104,9 @@ const handleShow = (command) => {
         }
 
         if (searchInput.value) {
-          searchInput.value.focus()
+          setTimeout(() => {
+            searchInput.value.focus()
+          }, 50)
         }
       })
     })

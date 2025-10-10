@@ -680,9 +680,6 @@ if (isOsx) {
 
 // Function to get commands with updated descriptions
 export const getCommandsWithDescriptions = async () => {
-  // Create a deep copy of commands to avoid modifying the original
-  const commandsCopy = JSON.parse(JSON.stringify(commands))
-
   // Update descriptions for all commands
   const updateDescriptions = (commandList) => {
     for (const item of commandList) {
@@ -719,8 +716,8 @@ export const getCommandsWithDescriptions = async () => {
     }
   }
 
-  updateDescriptions(commandsCopy)
-  return commandsCopy
+  updateDescriptions(commands)
+  return commands
 }
 
 // Complete all command descriptions for initial load.
