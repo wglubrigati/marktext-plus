@@ -44,9 +44,7 @@ const handleError = async (title, error, type) => {
   }
 
   if (EXIT_ON_ERROR) {
-    console.log(
-      t('error.terminatedDueToError')
-    )
+    console.log(t('error.terminatedDueToError'))
     process.exit(1)
     // eslint, don't lie to me, the return statement is important!
     return
@@ -79,7 +77,7 @@ const handleError = async (title, error, type) => {
 
 ${title}.
 
-<!-- Please describe, how the bug occurred -->
+### Minimal Reprouducible Markdown Example (or Steps)
 
 ### Stack Trace
 
