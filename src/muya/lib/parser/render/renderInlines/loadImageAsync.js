@@ -19,7 +19,7 @@ const addImageToContainer = (imageText, img, className) => {
 }
 
 export default function loadImageAsync(imageInfo, attrs, className, imageClass) {
-  const { src } = imageInfo
+  let { src } = imageInfo
   let id
   let isSuccess
   let w
@@ -82,7 +82,7 @@ export default function loadImageAsync(imageInfo, attrs, className, imageClass) 
       this.loadImageMap.set(src, {
         id,
         isSuccess: true,
-        img: img,
+        img,
         width: img.naturalWidth,
         height: img.naturalHeight,
         dispMsec,

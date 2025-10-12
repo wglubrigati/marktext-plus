@@ -111,19 +111,31 @@ const copyCutCtrl = (ContentState) => {
     const imageWrappers = wrapper.querySelectorAll('span.ag-inline-image')
     for (const imageWrapper of imageWrappers) {
       const dataRaw = imageWrapper.getAttribute('data-raw')
-      const dataRawSrcMatch = dataRaw.match(/!\[\]\((.*)\)/)
-      const image = imageWrapper.querySelector('img')
+      // 2 types of images:
+      // Type 1: ![alt](src "title")
+      const markdownSrcMatch = dataRaw.match(/!\[\]\((.*)\)/) // ![](<stuff here>)
+      // Type 2: <img ... />
       let finalSrc = ''
-      if (dataRawSrcMatch && dataRawSrcMatch.length >= 2) {
-        finalSrc = dataRawSrcMatch[1]
+      const image = imageWrapper.querySelector('img')
+      if (markdownSrcMatch && markdownSrcMatch.length >= 2) {
+        finalSrc = markdownSrcMatch[1]
       } else {
-        finalSrc = image.getAttribute('src')
+        const imgSrcMatch = dataRaw.match(/<img[^>]*\bsrc="([^"]*)"/)
+        if (imgSrcMatch && imgSrcMatch.length >= 2) {
+          finalSrc = imgSrcMatch[1]
+        } else {
+          // Fallback to the actual image src
+          finalSrc = image.getAttribute('src')
+        }
       }
 
-      image.setAttribute('src', finalSrc.replace('file://', '').replace(/\?msec=\d+$/, ''))
-      // We should not include file:// in the copied image path since it should be a relative link
-      // This also helps fix compatibility issues with certain contexts not allowing file:// links
-      // We also want to remove the "msec" query parameter used for cache busting
+      image.setAttribute(
+        'src',
+        finalSrc
+          .replace('file://', '') // We should not include file:// in the copied image path since markdown should not have the protocol specified
+          .replace(/\\/g, '/') // Normalise windows path to use "/"
+          .replace(/\?msec=\d+/, '') // We also want to remove the "msec" query parameter used for cache busting
+      )
     }
 
     const hrs = wrapper.querySelectorAll('[data-role=hr]')
