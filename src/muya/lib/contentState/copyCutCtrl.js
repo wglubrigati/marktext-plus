@@ -108,20 +108,22 @@ const copyCutCtrl = (ContentState) => {
       }
     }
 
-    const images = wrapper.querySelectorAll('span.ag-inline-image img')
-    for (const image of images) {
-      const src = image.getAttribute('src')
-      let finalSrc = src
-      for (const [sSrc, tSrc] of this.stateRender.urlMap.entries()) {
-        if (tSrc === src) {
-          finalSrc = sSrc
-          break
-        }
+    const imageWrappers = wrapper.querySelectorAll('span.ag-inline-image')
+    for (const imageWrapper of imageWrappers) {
+      const dataRaw = imageWrapper.getAttribute('data-raw')
+      const dataRawSrcMatch = dataRaw.match(/!\[\]\((.*)\)/)
+      const image = imageWrapper.querySelector('img')
+      let finalSrc = ''
+      if (dataRawSrcMatch && dataRawSrcMatch.length >= 2) {
+        finalSrc = dataRawSrcMatch[1]
+      } else {
+        finalSrc = image.getAttribute('src')
       }
 
-      image.setAttribute('src', finalSrc.replace('file://', ''))
+      image.setAttribute('src', finalSrc.replace('file://', '').replace(/\?msec=\d+$/, ''))
       // We should not include file:// in the copied image path since it should be a relative link
       // This also helps fix compatibility issues with certain contexts not allowing file:// links
+      // We also want to remove the "msec" query parameter used for cache busting
     }
 
     const hrs = wrapper.querySelectorAll('[data-role=hr]')

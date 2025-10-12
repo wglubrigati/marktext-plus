@@ -221,7 +221,6 @@ Renderer.prototype.image = function (href, title, text) {
 }
 
 Renderer.prototype.text = function (text) {
-  console.log('Renderer.prototype.text', text)
   return text
 }
 
