@@ -1023,8 +1023,6 @@ export const useEditorStore = defineStore('editor', {
       markdown = adjustTrailingNewlines(markdown, trimTrailingNewline)
       this.currentFile.markdown = markdown
 
-      this.currentFile.blocks = blocks || []
-
       if (oldMarkdown.length === 0 && markdown.length === 1 && markdown[0] === '\n') {
         return
       }
@@ -1037,6 +1035,7 @@ export const useEditorStore = defineStore('editor', {
         this.listToc = toc
         this.toc = listToTree(toc)
       }
+      if (blocks) this.currentFile.blocks = blocks
 
       if (markdown !== oldMarkdown) {
         this.currentFile.isSaved = false

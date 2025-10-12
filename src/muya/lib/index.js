@@ -7,13 +7,12 @@ import DragDrop from './eventHandler/dragDrop'
 import Resize from './eventHandler/resize'
 import ClickEvent from './eventHandler/clickEvent'
 import { CLASS_OR_ID, MUYA_DEFAULT_OPTION } from './config'
-import { wordCount } from './utils'
+import { wordCount, debounce } from './utils'
 import ExportMarkdown from './utils/exportMarkdown'
 import ExportHtml from './utils/exportHtml'
 import ToolTip from './ui/tooltip'
 import I18nCSS from './utils/i18nCSS'
 import './assets/styles/index.css'
-import { debounce } from './utils'
 
 class Muya {
   static plugins = []
@@ -56,12 +55,12 @@ class Muya {
     eventCenter.subscribe('stateChange', this.dispatchChange)
     const { markdown } = this
     const { focusMode } = this.options
-    
+
     // Initialize CSS variables for internationalization
     if (this.i18nCSS) {
       this.i18nCSS.updateCSSVariables()
     }
-    
+
     this.setMarkdown(markdown)
     this.setFocusMode(focusMode)
     this.mutationObserver()
@@ -199,6 +198,7 @@ class Muya {
       // We have a cursor (pointing to the exact block key) defined, we can use the saved this.blocks instead of re-parsing the markdown
       finalCursor = cursor
       if (blocks) this.contentState.setBlocks(blocks)
+      else this.contentState.importMarkdown(markdown) // Fallback incase an error occurs and we lose the blocks state for whatever reason
     } else if (muyaIndexCursor && muyaIndexCursor.anchor && muyaIndexCursor.focus) {
       // We do not have a cursor, but we have a muyaIndexCursor, which is not based on a block key.
       // We need to convert the muyaIndexCursor to a cursor, so we can set it in the contentState.
