@@ -629,10 +629,17 @@ export const useEditorStore = defineStore('editor', {
       })
     },
 
-    CLOSE_TAB() {
-      const file = this.currentFile
+    CLOSE_TAB(file = null) {
+      if (!file) {
+        file = this.currentFile
+      }
       if (!hasKeys(file)) return
-      this.CLOSE_TAB(file)
+
+      if (file.isSaved) {
+        this.FORCE_CLOSE_TAB(file)
+      } else {
+        this.CLOSE_UNSAVED_TAB(file)
+      }
     },
 
     LISTEN_FOR_CLOSE_TAB() {
@@ -663,14 +670,6 @@ export const useEditorStore = defineStore('editor', {
       window.electron.ipcRenderer.on('mt::switch-tab-by-index', (_, index) => {
         this.SWITCH_TAB_BY_INDEX(index)
       })
-    },
-
-    CLOSE_TAB(file) {
-      if (file.isSaved) {
-        this.FORCE_CLOSE_TAB(file)
-      } else {
-        this.CLOSE_UNSAVED_TAB(file)
-      }
     },
 
     FORCE_CLOSE_TAB(file) {
