@@ -785,7 +785,7 @@ const handleExport = async (options) => {
           footer,
           headerFooterStyled
         })
-        printer.renderMarkdown(html)
+        printer.renderMarkdown(html, true)
         editorStore.EXPORT({ type, pageOptions })
       } catch (err) {
         log.error('Failed to export document:', err)
@@ -810,7 +810,7 @@ const handleExport = async (options) => {
           footer,
           headerFooterStyled
         })
-        printer.renderMarkdown(html)
+        printer.renderMarkdown(html, true)
         editorStore.PRINT_RESPONSE()
       } catch (err) {
         log.error('Failed to export document:', err)
