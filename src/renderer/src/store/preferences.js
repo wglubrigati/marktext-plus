@@ -57,7 +57,7 @@ export const usePreferencesStore = defineStore('preferences', {
     sequenceTheme: 'hand',
 
     theme: 'light',
-    followSystemTheme: false,
+    followSystemTheme: true,
     lightModeTheme: 'light',
     darkModeTheme: 'dark',
     customCss: '',
