@@ -573,9 +573,11 @@ const backspaceCtrl = (ContentState) => {
             key = newBlock.children[0].key
             this.insertAfter(newBlock, parent)
             // Any sublists it has should be added after the new paragraph
+            let prevBlock = newBlock
             block.children.forEach((child) => {
               if (child.type === 'ul' || child.type === 'ol') {
-                this.insertAfter(child, newBlock)
+                this.insertAfter(child, prevBlock)
+                prevBlock = child
               }
             })
             // Also append all the nextSibilings of the current list item to a ul
@@ -601,6 +603,12 @@ const backspaceCtrl = (ContentState) => {
                 // Remove all the added siblings from the current parent
                 parent.children = parent.children.filter(
                   (child) => !addedChildKeys.includes(child.key)
+                )
+                console.log(
+                  'inserting newULBlock',
+                  JSON.parse(JSON.stringify(newULBlock)),
+                  'after',
+                  JSON.parse(JSON.stringify(newBlock))
                 )
                 this.insertAfter(newULBlock, newBlock)
               }

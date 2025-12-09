@@ -172,8 +172,12 @@ const enterCtrl = (ContentState) => {
         newBlock = this.createBlockP()
         this.insertAfter(newBlock, parent)
         // Any sublists it has should be added after the new paragraph
+        let prevBlock = newBlock
         block.children.forEach((child) => {
-          if (child.type === 'ul' || child.type === 'ol') this.insertAfter(child, newBlock)
+          if (child.type === 'ul' || child.type === 'ol') {
+            this.insertAfter(child, prevBlock)
+            prevBlock = child
+          }
         })
         // Any nextSibilings it has should be added after the new paragraph
         if (block.nextSibling) {
