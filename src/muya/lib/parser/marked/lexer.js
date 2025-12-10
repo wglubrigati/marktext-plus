@@ -6,7 +6,7 @@ import { splitCells, rtrim, getUniqueId } from './utils'
  * Block Lexer
  */
 
-function Lexer (opts) {
+function Lexer(opts) {
   this.tokens = []
   this.tokens.links = Object.create(null)
   this.tokens.footnotes = Object.create(null)
@@ -26,9 +26,7 @@ function Lexer (opts) {
  */
 
 Lexer.prototype.lex = function (src) {
-  src = src
-    .replace(/\r\n|\r/g, '\n')
-    .replace(/\t/g, '    ')
+  src = src.replace(/\r\n|\r/g, '\n').replace(/\t/g, '    ')
   this.checkFrontmatter = true
   this.footnoteOrder = 0
   this.token(src, true)
@@ -61,15 +59,11 @@ Lexer.prototype.lex = function (src) {
 
 /**
  * Lexing
+ * prevListIsOrdered: null (default) | true | false (if set to non-null value, it means we are in a list)
  */
 
-Lexer.prototype.token = function (src, top) {
-  const {
-    footnote,
-    frontMatter,
-    isGitlabCompatibilityEnabled,
-    math
-  } = this.options
+Lexer.prototype.token = function (src, top, prevListIsOrdered = null) {
+  const { footnote, frontMatter, isGitlabCompatibilityEnabled, math } = this.options
   src = src.replace(/^ +$/gm, '')
 
   let loose
@@ -139,9 +133,7 @@ Lexer.prototype.token = function (src, top) {
         this.tokens.push({
           type: 'code',
           codeBlockStyle: 'indented',
-          text: !this.options.pedantic
-            ? rtrim(cap, '\n')
-            : cap
+          text: !this.options.pedantic ? rtrim(cap, '\n') : cap
         })
       }
       continue
@@ -330,11 +322,30 @@ Lexer.prototype.token = function (src, top) {
       src = src.substring(cap[0].length)
       bull = cap[2]
       let isOrdered = bull.length > 1
+
+      // Nested list that differs from the prev list type (on the same line) should be parsed as just a text block.
+
+      if (prevListIsOrdered !== null && prevListIsOrdered !== isOrdered) {
+        // Should parse this as just a text block
+        cap = cap[0].match(this.rules.item)
+
+        this.tokens.push({
+          type: 'paragraph',
+          text: cap[0].trimEnd()
+        })
+        // Recurse for any valid nested lists of the same type
+        if (cap.length > 1) {
+          this.token(cap.slice(1).join('\n'), false, prevListIsOrdered)
+        }
+        continue
+      }
+
       this.tokens.push({
         type: 'list_start',
         ordered: isOrdered,
-        listType: bull.length > 1 ? 'order' : (/^( {0,3})([-*+]) \[[xX ]\]/.test(cap[0]) ? 'task' : 'bullet'),
-        start: isOrdered ? +(bull.slice(0, -1)) : ''
+        listType:
+          bull.length > 1 ? 'order' : /^( {0,3})([-*+]) \[[xX ]\]/.test(cap[0]) ? 'task' : 'bullet',
+        start: isOrdered ? +bull.slice(0, -1) : ''
       })
 
       let next = false
@@ -384,16 +395,14 @@ Lexer.prototype.token = function (src, top) {
           //   - ordered, ordered --> lastChar !== lastChar --> new list (e.g "." --> ")")
           //   - else --> new list (e.g. ordered --> unordered)
           i !== 0 &&
-          (
-            (!isOrdered && !newIsOrdered && bull !== newBull) ||
+          ((!isOrdered && !newIsOrdered && bull !== newBull) ||
             (isOrdered && newIsOrdered && bull.slice(-1) !== newBull.slice(-1)) ||
-            (isOrdered !== newIsOrdered) ||
+            isOrdered !== newIsOrdered ||
             // Changing to/from task list item from/to bullet, starts a new list(work for marktext issue #870)
             // Because we distinguish between task list and bullet list in MarkText,
             // the parsing here is somewhat different from the commonmark Spec,
             // and the task list needs to be a separate list.
-            (isTaskList !== newIsTaskListItem)
-          )
+            isTaskList !== newIsTaskListItem)
         ) {
           this.tokens.push({
             type: 'list_end'
@@ -406,8 +415,13 @@ Lexer.prototype.token = function (src, top) {
           this.tokens.push({
             type: 'list_start',
             ordered: isOrdered,
-            listType: bull.length > 1 ? 'order' : (/^( {0,3})([-*+]) \[[xX ]\]/.test(itemWithBullet) ? 'task' : 'bullet'),
-            start: isOrdered ? +(bull.slice(0, -1)) : ''
+            listType:
+              bull.length > 1
+                ? 'order'
+                : /^( {0,3})([-*+]) \[[xX ]\]/.test(itemWithBullet)
+                  ? 'task'
+                  : 'bullet',
+            start: isOrdered ? +bull.slice(0, -1) : ''
           })
         }
 
@@ -424,9 +438,11 @@ Lexer.prototype.token = function (src, top) {
         // Backpedal if it does not belong in this list.
         if (i !== l - 1) {
           b = this.rules.bullet.exec(cap[i + 1])[0]
-          if (bull.length > 1
-            ? b.length === 1
-            : (b.length > 1 || (this.options.smartLists && b !== bull))) {
+          if (
+            bull.length > 1
+              ? b.length === 1
+              : b.length > 1 || (this.options.smartLists && b !== bull)
+          ) {
             src = cap.slice(i + 1).join('\n') + src
             i = l - 1
           }
@@ -446,7 +462,12 @@ Lexer.prototype.token = function (src, top) {
         // loose = next = next || /^ *([*+-]|\d{1,9}(?:\.|\)))( +\S+\n\n(?!\s*$)|\n\n(?!\s*$))/.test(itemWithBullet)
         loose = next = next || /\n\n(?!\s*$)/.test(item)
         // Check if previous line ends with a new line.
-        if (!loose && (i !== 0 || l > 1) && prevItem.length !== 0 && prevItem.charAt(prevItem.length - 1) === '\n') {
+        if (
+          !loose &&
+          (i !== 0 || l > 1) &&
+          prevItem.length !== 0 &&
+          prevItem.charAt(prevItem.length - 1) === '\n'
+        ) {
           loose = next = true
         }
 
@@ -466,7 +487,7 @@ Lexer.prototype.token = function (src, top) {
         const isOrderedListItem = /\d/.test(bull)
         this.tokens.push({
           checked,
-          listItemType: bull.length > 1 ? 'order' : (isTaskList ? 'task' : 'bullet'),
+          listItemType: bull.length > 1 ? 'order' : isTaskList ? 'task' : 'bullet',
           bulletMarkerOrDelimiter: isOrderedListItem ? bull.slice(-1) : bull.charAt(0),
           type: loose ? 'loose_item_start' : 'list_item_start'
         })
@@ -478,7 +499,7 @@ Lexer.prototype.token = function (src, top) {
           })
         } else {
           // Recurse.
-          this.token(item, false)
+          this.token(item, false, isOrdered)
         }
 
         this.tokens.push({
@@ -497,12 +518,15 @@ Lexer.prototype.token = function (src, top) {
     if (cap) {
       src = src.substring(cap[0].length)
       this.tokens.push({
-        type: this.options.sanitize
-          ? 'paragraph'
-          : 'html',
-        pre: !this.options.sanitizer &&
+        type: this.options.sanitize ? 'paragraph' : 'html',
+        pre:
+          !this.options.sanitizer &&
           (cap[1] === 'pre' || cap[1] === 'script' || cap[1] === 'style'),
-        text: this.options.sanitize ? (this.options.sanitizer ? this.options.sanitizer(cap[0]) : escape(cap[0])) : cap[0]
+        text: this.options.sanitize
+          ? this.options.sanitizer
+            ? this.options.sanitizer(cap[0])
+            : escape(cap[0])
+          : cap[0]
       })
       continue
     }
@@ -564,7 +588,8 @@ Lexer.prototype.token = function (src, top) {
         for (i = 0; i < item.cells.length; i++) {
           item.cells[i] = splitCells(
             item.cells[i].replace(/^ *\| *| *\| *$/g, ''),
-            item.header.length)
+            item.header.length
+          )
         }
 
         this.tokens.push(item)
@@ -614,9 +639,7 @@ Lexer.prototype.token = function (src, top) {
 
       this.tokens.push({
         type: 'paragraph',
-        text: cap[1].charAt(cap[1].length - 1) === '\n'
-          ? cap[1].slice(0, -1)
-          : cap[1]
+        text: cap[1].charAt(cap[1].length - 1) === '\n' ? cap[1].slice(0, -1) : cap[1]
       })
       continue
     }
@@ -639,7 +662,7 @@ Lexer.prototype.token = function (src, top) {
   }
 }
 
-function indentCodeCompensation (raw, text) {
+function indentCodeCompensation(raw, text) {
   const matchIndentToCode = raw.match(/^(\s+)(?:```)/)
 
   if (matchIndentToCode === null) {
@@ -650,7 +673,7 @@ function indentCodeCompensation (raw, text) {
 
   return text
     .split('\n')
-    .map(node => {
+    .map((node) => {
       const matchIndentInNode = node.match(/^\s+/)
       if (matchIndentInNode === null) {
         return node
