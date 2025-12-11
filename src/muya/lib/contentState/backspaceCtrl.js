@@ -604,13 +604,7 @@ const backspaceCtrl = (ContentState) => {
                 parent.children = parent.children.filter(
                   (child) => !addedChildKeys.includes(child.key)
                 )
-                console.log(
-                  'inserting newULBlock',
-                  JSON.parse(JSON.stringify(newULBlock)),
-                  'after',
-                  JSON.parse(JSON.stringify(newBlock))
-                )
-                this.insertAfter(newULBlock, newBlock)
+                this.insertAfter(newULBlock, prevBlock)
               }
             }
             this.removeBlock(block)

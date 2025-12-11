@@ -195,7 +195,7 @@ const enterCtrl = (ContentState) => {
           if (newULBlock.children.length > 0) {
             // Remove all the added siblings from the current parent
             parent.children = parent.children.filter((child) => !addedChildKeys.includes(child.key))
-            this.insertAfter(newULBlock, newBlock)
+            this.insertAfter(newULBlock, prevBlock)
           }
         }
         this.removeBlock(block, this.blocks, true)
