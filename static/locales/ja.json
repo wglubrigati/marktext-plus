@@ -1094,7 +1094,6 @@
   },
   "spellchecker": {
     "failedToRemoveWord": "辞書から単語を削除できませんでした",
-    "failedToSwitchLanguage": "スペルチェック言語を切り替えできませんでした",
     "unexpectedError": "予期しないスペルチェックエラー"
   },
   "quickInsert": {

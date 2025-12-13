@@ -1100,7 +1100,6 @@
   },
   "spellchecker": {
     "failedToRemoveWord": "Failed to remove word from dictionary",
-    "failedToSwitchLanguage": "Failed to switch spellchecker language",
     "unexpectedError": "Unexpected spellchecker error"
   },
   "quickInsert": {

@@ -1092,7 +1092,6 @@
   },
   "spellchecker": {
     "failedToRemoveWord": "Wort konnte nicht aus dem Wörterbuch entfernt werden",
-    "failedToSwitchLanguage": "Rechtschreibprüfungssprache konnte nicht gewechselt werden",
     "unexpectedError": "Unerwarteter Rechtschreibprüfungsfehler"
   },
   "quickInsert": {

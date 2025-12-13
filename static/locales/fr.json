@@ -1094,7 +1094,6 @@
   },
   "spellchecker": {
     "failedToRemoveWord": "Échec de la suppression du mot du dictionnaire",
-    "failedToSwitchLanguage": "Échec du changement de langue du correcteur orthographique",
     "unexpectedError": "Erreur inattendue du correcteur orthographique"
   },
   "quickInsert": {

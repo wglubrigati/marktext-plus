@@ -1,7 +1,7 @@
-import { BrowserWindow } from 'electron'
+import { BrowserWindow, ipcMain } from 'electron'
 import log from 'electron-log'
 import { isOsx } from '../config'
-import { ipcMain } from 'electron'
+
 /**
  * Add the given word to the spellchecker dictionary.
  *
@@ -53,9 +53,7 @@ export const setSpellCheckerEnabled = (win, enabled) => {
  * @throws Throws an exception if the language cannot be set.
  */
 export const switchLanguage = (win, lang) => {
-  // 强制使用英语作为拼写检查语言，忽略传入的语言参数
-  const spellcheckerLang = 'en-US'
-  win.webContents.session.setSpellCheckerLanguages([spellcheckerLang])
+  win.webContents.session.setSpellCheckerLanguages([lang])
 }
 
 /**
@@ -71,13 +69,10 @@ export const getAvailableDictionaries = (win) => {
     // NB: On macOS the OS spellchecker is used and will detect the language automatically.
     return []
   }
-  
-  // 只返回英语拼写检查语言选项
+
   const availableLanguages = win.webContents.session.availableSpellCheckerLanguages
-  const englishLanguages = availableLanguages.filter(lang => lang.startsWith('en'))
-  
-  // 如果没有找到英语语言，返回默认的 en-US
-  return englishLanguages.length > 0 ? englishLanguages : ['en-US']
+
+  return availableLanguages.length > 0 ? availableLanguages : ['en-US']
 }
 
 export default () => {

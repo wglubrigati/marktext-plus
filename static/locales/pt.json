@@ -1094,7 +1094,6 @@
   },
   "spellchecker": {
     "failedToRemoveWord": "Falha ao remover palavra do dicionário",
-    "failedToSwitchLanguage": "Falha ao alterar idioma do corretor ortográfico",
     "unexpectedError": "Erro inesperado do corretor ortográfico"
   },
   "quickInsert": {

@@ -1094,7 +1094,6 @@
   },
   "spellchecker": {
     "failedToRemoveWord": "사전에서 단어 제거 실패",
-    "failedToSwitchLanguage": "맞춤법 검사 언어 전환 실패",
     "unexpectedError": "예상치 못한 맞춤법 검사 오류"
   },
   "quickInsert": {

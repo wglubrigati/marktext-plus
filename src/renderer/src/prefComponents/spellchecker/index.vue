@@ -39,11 +39,22 @@
 
     <div v-if="!isOsx && spellcheckerEnabled">
       <h6 class="title">{{ t('preferences.spellchecker.customDictionary.title') }}</h6>
-      <div class="description">{{ t('preferences.spellchecker.customDictionary.description') }}</div>
-      <el-table :data="wordsInCustomDictionary" :empty-text="t('preferences.spellchecker.customDictionary.noWordsAvailable')" style="width: 100%">
-        <el-table-column prop="word" :label="t('preferences.spellchecker.customDictionary.word')"> </el-table-column>
+      <div class="description">
+        {{ t('preferences.spellchecker.customDictionary.description') }}
+      </div>
+      <el-table
+        :data="wordsInCustomDictionary"
+        :empty-text="t('preferences.spellchecker.customDictionary.noWordsAvailable')"
+        style="width: 100%"
+      >
+        <el-table-column prop="word" :label="t('preferences.spellchecker.customDictionary.word')">
+        </el-table-column>
 
-        <el-table-column fixed="right" :label="t('preferences.spellchecker.customDictionary.options')" width="90">
+        <el-table-column
+          fixed="right"
+          :label="t('preferences.spellchecker.customDictionary.options')"
+          width="90"
+        >
           <template #default="scope">
             <el-button
               type="text"
@@ -63,7 +74,7 @@
 <script setup>
 import log from 'electron-log'
 import { usePreferencesStore } from '@/store/preferences'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import Compound from '../common/compound'
 import CurSelect from '../common/select'
@@ -79,37 +90,32 @@ const { t } = useI18n()
 const isOsx = checkIsOsx
 const availableDictionaries = ref([])
 const wordsInCustomDictionary = ref([])
-const spellchecker = ref(null)
 
 const preferenceStore = usePreferencesStore()
 
 const { spellcheckerEnabled, spellcheckerNoUnderline, spellcheckerLanguage } =
   storeToRefs(preferenceStore)
 
-onMounted(() => {
-  if (!isOsx) {
-    getAvailableDictionaries().then((dicts) => {
-      availableDictionaries.value = dicts
-    })
-
-    window.electron.ipcRenderer
-      .invoke('mt::spellchecker-get-custom-dictionary-words')
-      .then((words) => {
-        wordsInCustomDictionary.value = words.map((word) => {
-          return { word }
-        })
-      })
+onMounted(async () => {
+  if (isOsx) {
+    return
   }
+
+  availableDictionaries.value = await getAvailableDictionaries()
+
+  window.electron.ipcRenderer
+    .invoke('mt::spellchecker-get-custom-dictionary-words')
+    .then((words) => {
+      wordsInCustomDictionary.value = words.map((word) => {
+        return { word }
+      })
+    })
 })
 
 const getAvailableDictionaries = async () => {
   const dictionaries = await SpellChecker.getAvailableDictionaries()
-  // 只显示英语拼写检查选项
-  const englishDictionaries = dictionaries.filter(dict => dict.startsWith('en'))
-  // 如果没有英语选项，提供默认的 en-US
-  const finalDictionaries = englishDictionaries.length > 0 ? englishDictionaries : ['en-US']
-  
-  return finalDictionaries.map((selectedItem) => {
+
+  return dictionaries.map((selectedItem) => {
     return {
       value: selectedItem,
       label: getLanguageName(selectedItem)
@@ -117,27 +123,8 @@ const getAvailableDictionaries = async () => {
   })
 }
 
-const ensureDictLanguage = async (lang) => {
-  if (!spellchecker.value) {
-    spellchecker.value = new SpellChecker(true, 'en-US')
-  }
-  // 强制使用英语作为拼写检查语言
-  await spellchecker.value.switchLanguage('en-US')
-}
-
 const handleSpellcheckerLanguage = (languageCode) => {
-  ensureDictLanguage(languageCode)
-    .then(() => {
-      onSelectChange('spellcheckerLanguage', languageCode)
-    })
-    .catch((error) => {
-      log.error(error)
-      notice.notify({
-        title: t('spellchecker.failedToSwitchLanguage'),
-        type: 'error',
-        message: error.message
-      })
-    })
+  onSelectChange('spellcheckerLanguage', languageCode)
 }
 
 const handleSpellcheckerEnabled = (isEnabled) => {

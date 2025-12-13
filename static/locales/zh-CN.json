@@ -1101,7 +1101,6 @@
   },
   "spellchecker": {
     "failedToRemoveWord": "从词典中删除单词失败",
-    "failedToSwitchLanguage": "切换拼写检查器语言失败",
     "unexpectedError": "意外的拼写检查器错误"
   },
   "quickInsert": {

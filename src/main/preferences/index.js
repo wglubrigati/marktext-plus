@@ -52,8 +52,6 @@ class Preference extends EventEmitter {
         if (systemLanguage) {
           defaultSettings.language = systemLanguage
         }
-        // 确保拼写检查器始终使用英语，不受界面语言影响
-        defaultSettings.spellcheckerLanguage = 'en-US'
       }
     } catch (err) {
       log.error(err)
@@ -110,10 +108,6 @@ class Preference extends EventEmitter {
   }
 
   setItem(key, value) {
-    // 确保拼写检查器语言始终为英语，不受界面语言切换影响
-    if (key === 'spellcheckerLanguage') {
-      value = 'en-US'
-    }
     ipcMain.emit('broadcast-preferences-changed', { [key]: value })
     return this.store.set(key, value)
   }

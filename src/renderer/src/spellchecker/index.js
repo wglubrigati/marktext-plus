@@ -84,10 +84,8 @@ export class SpellChecker {
     } else if (!lang) {
       throw new Error('Expected non-empty language for spell checker.')
     } else if (this.isEnabled) {
-      // 强制使用英语作为拼写检查语言，忽略传入的语言参数
-      const spellcheckerLang = 'en-US'
-      await window.electron.ipcRenderer.invoke('mt::spellchecker-switch-language', spellcheckerLang)
-      this.lang = spellcheckerLang
+      await window.electron.ipcRenderer.invoke('mt::spellchecker-switch-language', lang)
+      this.lang = lang
       return true
     }
     return false

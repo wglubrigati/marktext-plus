@@ -22,10 +22,8 @@ class SpellcheckerLanguageCommand {
 
   run = async () => {
     const langs = await SpellChecker.getAvailableDictionaries()
-    // 只显示英语拼写检查选项
-    const englishLangs = langs.filter((lang) => lang.startsWith('en'))
-    // 如果没有英语选项，提供默认的 en-US
-    const finalLangs = englishLangs.length > 0 ? englishLangs : ['en-US']
+
+    const finalLangs = langs.length > 0 ? langs : ['en-US']
 
     this.subcommands = finalLangs.map((lang) => {
       return {
@@ -49,8 +47,7 @@ class SpellcheckerLanguageCommand {
   executeSubcommand = async (id) => {
     const command = this.subcommands.find((cmd) => cmd.id === id)
     if (this.spellchecker.isEnabled) {
-      // 强制使用英语作为拼写检查语言
-      bus.emit('switch-spellchecker-language', 'en-US')
+      bus.emit('switch-spellchecker-language', command.value)
     } else {
       notice.notify({
         title: 'Spelling',

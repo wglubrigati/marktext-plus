@@ -1094,7 +1094,6 @@
   },
   "spellchecker": {
     "failedToRemoveWord": "從字典中移除單字失敗",
-    "failedToSwitchLanguage": "切換拼字檢查語言失敗",
     "unexpectedError": "意外的拼字檢查錯誤"
   },
   "quickInsert": {
