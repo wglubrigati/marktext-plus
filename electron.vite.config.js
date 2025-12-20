@@ -1,5 +1,5 @@
 import { resolve, dirname } from 'path'
-import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
+import { defineConfig } from 'electron-vite'
 import vue from '@vitejs/plugin-vue'
 import renderer from 'vite-plugin-electron-renderer'
 import svgLoader from 'vite-svg-loader'
@@ -16,11 +16,11 @@ export default defineConfig({
     // externalizeDepsPlugin() basically externises all the dependencies from being bundled during build - treating them as runtime dependencies
     // electron-vite still builds the main and preload processes into commonJS
     // hence, we need to "exclude" (in order to NOT externalise) ESonly modules so that they can be converted to commonJS and can be required() afterwards correctly
-    plugins: [
-      externalizeDepsPlugin({
+    build: {
+      externalizeDeps: {
         exclude: ['electron-store']
-      })
-    ],
+      }
+    },
     define: {
       MARKTEXT_VERSION: JSON.stringify(packageJson.version),
       MARKTEXT_VERSION_STRING: JSON.stringify(`v${packageJson.version}`)
@@ -37,7 +37,6 @@ export default defineConfig({
   },
   preload: {
     // --> Bundled as CommonJS
-    plugins: [externalizeDepsPlugin()],
     resolve: {
       alias: {
         '@': resolve(__dirname, 'src/renderer/src'),
