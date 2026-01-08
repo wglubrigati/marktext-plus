@@ -41,14 +41,15 @@
         >
           <template #content>
             <div class="title-item">
-              <span class="front">Words:</span><span class="text">{{ wordCount['word'] }}</span>
+              <span class="front">{{ t('menu.counter.words') }}:</span
+              ><span class="text">{{ wordCount['word'] }}</span>
             </div>
             <div class="title-item">
-              <span class="front">Characters:</span
+              <span class="front">{{ t('menu.counter.characters') }}:</span
               ><span class="text">{{ wordCount['character'] }}</span>
             </div>
             <div class="title-item">
-              <span class="front">Paragraphs:</span
+              <span class="front">{{ t('menu.counter.paragraphs') }}:</span
               ><span class="text">{{ wordCount['paragraph'] }}</span>
             </div>
           </template>
@@ -113,6 +114,7 @@ import { minimizePath, restorePath, maximizePath, closePath } from '../../assets
 import { PATH_SEPARATOR } from '../../config'
 import { isOsx as isOsxPlatform } from '@/util'
 import { useEditorStore } from '@/store/editor'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
   project: Object,
@@ -127,6 +129,7 @@ const props = defineProps({
 const preferencesStore = usePreferencesStore()
 const layoutStore = useLayoutStore()
 const editorStore = useEditorStore()
+const { t } = useI18n()
 
 const isOsx = isOsxPlatform
 const HASH = {

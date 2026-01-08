@@ -1,5 +1,10 @@
 {
   "menu": {
+    "counter": {
+      "words": "単語数",
+      "characters": "文字数",
+      "paragraphs": "段落数"
+    },
     "file": {
       "file": "ファイル",
       "new": "新規",

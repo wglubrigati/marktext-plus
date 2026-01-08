@@ -1,5 +1,10 @@
 {
   "menu": {
+    "counter": {
+      "words": "Palabras",
+      "characters": "Caracteres",
+      "paragraphs": "Párrafos"
+    },
     "file": {
       "file": "Archivo",
       "new": "Nuevo",

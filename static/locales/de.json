@@ -1,5 +1,10 @@
 {
   "menu": {
+    "counter": {
+      "words": "Wörter",
+      "characters": "Zeichen",
+      "paragraphs": "Absätze"
+    },
     "file": {
       "file": "Datei",
       "new": "Neu",

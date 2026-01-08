@@ -1,5 +1,10 @@
 {
   "menu": {
+    "counter": {
+      "words": "Words",
+      "characters": "Characters",
+      "paragraphs": "Paragraphs"
+    },
     "file": {
       "file": "File",
       "new": "New",
@@ -1264,6 +1269,7 @@
     "hr": "Horizontal Rule"
   },
   "editor": {
+    "words": {},
     "image": {
       "selector": {
         "tab": { "select": "Select", "embedLink": "Embed link" },
