@@ -55,6 +55,22 @@
   --buttonPrimaryFocusShadow: inset 0 0 0 1px rgba(145, 75, 29, 0.6), 0 0 0 1px var(--themeColor);
   --tableBorderColor: #4f585e;
 
+  /* Markdown element colors */
+  --headingColor: rgba(171, 178, 191, 1);
+  --h1Color: #f48237;
+  --h2Color: #56b6c2;
+  --h3Color: #c678dd;
+  --h4Color: #98c379;
+  --h5Color: #e5c07b;
+  --h6Color: #61afef;
+  --blockquoteTextColor: rgba(171, 178, 191, .7);
+  --blockquoteBorderColor: #f48237;
+  --hrColor: rgba(171, 178, 191, .3);
+  --linkColor: #61afef;
+  --strongColor: rgba(171, 178, 191, 1);
+  --emColor: #c678dd;
+  --listMarkerColor: #f48237;
+
   /*marktext*/
   --sideBarColor: rgba(255, 255, 255, .6);
   --sideBarIconColor: var(--iconColor);

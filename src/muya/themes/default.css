@@ -186,7 +186,7 @@ kbd {
   }
 
   a {
-    color: var(--themeColor);
+    color: var(--linkColor);
   }
 
   h1,
@@ -201,8 +201,15 @@ kbd {
     font-weight: bold;
     line-height: 1.4;
     cursor: text;
-    color: var(--editorColor80);
+    color: var(--headingColor);
   }
+
+  h1 { color: var(--h1Color); }
+  h2 { color: var(--h2Color); }
+  h3 { color: var(--h3Color); }
+  h4 { color: var(--h4Color); }
+  h5 { color: var(--h5Color); }
+  h6 { color: var(--h6Color); }
 
   h1:hover a.anchor,
   h2:hover a.anchor,
@@ -380,7 +387,7 @@ kbd {
   blockquote {
     position: relative;
     padding: 0 30px;
-    color: var(--editorColor50);
+    color: var(--blockquoteTextColor);
   }
 
   blockquote::before {
@@ -391,7 +398,7 @@ kbd {
     position: absolute;
     left: 15px;
     top: 0;
-    background: var(--themeColor);
+    background: var(--blockquoteBorderColor);
   }
 
   blockquote blockquote {
