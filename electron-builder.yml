@@ -52,6 +52,37 @@ electronLanguages: # Avoid packaging all chromium locales since our app has in-b
 
 asarUnpack:
   - resources/**
+fileAssociations:
+  - ext: md
+    name: Markdown
+    description: Markdown document
+    mimeType: text/markdown
+    role: Editor
+  - ext: markdown
+    name: Markdown
+    description: Markdown document
+    mimeType: text/markdown
+    role: Editor
+  - ext: mmd
+    name: Markdown
+    description: Markdown document
+    mimeType: text/markdown
+    role: Editor
+  - ext: mdown
+    name: Markdown
+    description: Markdown document
+    mimeType: text/markdown
+    role: Editor
+  - ext: mdtxt
+    name: Markdown
+    description: Markdown document
+    mimeType: text/markdown
+    role: Editor
+  - ext: mdtext
+    name: Markdown
+    description: Markdown document
+    mimeType: text/markdown
+    role: Editor
 win:
   executableName: marktext
   artifactName: 'marktext-win-${arch}-${version}.${ext}'
