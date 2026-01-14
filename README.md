@@ -105,13 +105,19 @@
 
 - Output **HTML** and **PDF** files.
 
-- Various themes: **Cadmium Light**, **Material Dark** etc.
+- **33 built-in themes** including popular schemes like **Dracula**, **Nord**, **Catppuccin**, **Tokyo Night**, **Gruvbox**, and more.
 
 - Various editing modes: **Source Code mode**, **Typewriter mode**, **Focus mode**.
 
 - Paste images directly from clipboard.
 
 ## 3.1 🌙 Themes🔆
+
+MarkText includes **33 built-in themes** - 10 light and 23 dark themes:
+
+**Light**: Ayu Light, Cadmium Light, Catppuccin Latte, Everforest Light, Graphite Light, Gruvbox Light, Rosé Pine Dawn, Solarized Light, Tokyo Night Light, Ulysses Light
+
+**Dark**: Ayu Dark, Ayu Mirage, Cadmium Dark, Catppuccin Mocha, cyberdream, Dracula, Everforest Dark, Gruvbox Dark, Horizon Dark, Kanagawa, Material Dark, Monokai Pro, Nightfox, Nord, One Dark, Oxocarbon Dark, Palenight, Rosé Pine, Rosé Pine Moon, Solarized Dark, Synthwave '84, Tokyo Night, Tokyo Night Storm
 
 | Cadmium Light                                     | Dark                                            |
 | ------------------------------------------------- | ----------------------------------------------- |
@@ -120,6 +126,8 @@
 | ![](docs/themeImages/graphite-light.png?raw=true) | ![](docs/themeImages/materal-dark.png?raw=true) |
 | Ulysses Light                                     | One Dark                                        |
 | ![](docs/themeImages/ulysses-light.png?raw=true)  | ![](docs/themeImages/one-dark.png?raw=true)     |
+
+> 📖 See [docs/THEMES.md](docs/THEMES.md) for the complete theme list with descriptions and screenshots.
 
 ## 3.2 😸Edit Modes🐶
 
