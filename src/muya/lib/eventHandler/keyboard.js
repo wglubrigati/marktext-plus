@@ -8,7 +8,7 @@ class Keyboard {
   constructor(muya) {
     this.muya = muya
     this.isComposed = false
-    this.shownFloat = new Set()
+    this.shownFloat = {}
     this.recordIsComposed()
     this.dispatchEditorState()
     this.keydownBinding()
@@ -20,7 +20,9 @@ class Keyboard {
   listen() {
     // cache shown float box
     this.muya.eventCenter.subscribe('muya-float', (tool, status) => {
-      status ? this.shownFloat.add(tool) : this.shownFloat.delete(tool)
+      if (status) this.shownFloat[tool.name] = tool
+      else delete this.shownFloat[tool.name]
+
       if (tool.name === 'ag-front-menu' && !status) {
         const seletedParagraph = this.muya.container.querySelector('.ag-selected')
         if (seletedParagraph) {
@@ -33,8 +35,8 @@ class Keyboard {
   }
 
   hideAllFloatTools() {
-    for (const tool of this.shownFloat) {
-      tool.hide()
+    for (const tool in this.shownFloat) {
+      this.shownFloat[tool].hide()
     }
   }
 
@@ -64,7 +66,7 @@ class Keyboard {
       if (
         event.type === 'keyup' &&
         (event.key === EVENT_KEYS.ArrowUp || event.key === EVENT_KEYS.ArrowDown) &&
-        this.shownFloat.size > 0
+        Object.keys(this.shownFloat).length > 0
       ) {
         return
       }
@@ -137,7 +139,7 @@ class Keyboard {
       }
 
       if (
-        this.shownFloat.size > 0 &&
+        Object.keys(this.shownFloat).length > 0 &&
         (event.key === EVENT_KEYS.Enter ||
           event.key === EVENT_KEYS.Escape ||
           event.key === EVENT_KEYS.Tab ||
@@ -146,15 +148,15 @@ class Keyboard {
       ) {
         let needPreventDefault = false
 
-        for (const tool of this.shownFloat) {
+        for (const tool in this.shownFloat) {
           if (
-            tool.name === 'ag-format-picker' ||
-            tool.name === 'ag-table-picker' ||
-            tool.name === 'ag-quick-insert' ||
-            tool.name === 'ag-emoji-picker' ||
-            tool.name === 'ag-front-menu' ||
-            tool.name === 'ag-list-picker' ||
-            tool.name === 'ag-image-selector'
+            tool === 'ag-format-picker' ||
+            tool === 'ag-table-picker' ||
+            tool === 'ag-quick-insert' ||
+            tool === 'ag-emoji-picker' ||
+            tool === 'ag-front-menu' ||
+            tool === 'ag-list-picker' ||
+            tool === 'ag-image-selector'
           ) {
             needPreventDefault = true
             break
