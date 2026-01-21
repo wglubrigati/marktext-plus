@@ -186,7 +186,7 @@ const tabCtrl = (ContentState) => {
     // Search for a list in previous block
     let newList = this.getLastChild(prevListItem)
     if (!newList || !/ol|ul/.test(newList.type)) {
-      newList = this.createBlock(list.type)
+      newList = this.createBlock(list.type, { listType: list.listType })
       this.appendChild(prevListItem, newList)
     }
 
