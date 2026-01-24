@@ -7,7 +7,7 @@ MarkText key bindings for Linux. Please see [general key bindings](KEYBINDINGS.m
 #### File menu
 
 | Id                     | Default                                       | Description                           |
-|:---------------------- | --------------------------------------------- | ------------------------------------- |
+| :--------------------- | --------------------------------------------- | ------------------------------------- |
 | `file.new-window`      | <kbd>Ctrl</kbd>+<kbd>N</kbd>                  | New window                            |
 | `file.new-tab`         | <kbd>Ctrl</kbd>+<kbd>T</kbd>                  | New tab                               |
 | `file.open-file`       | <kbd>Ctrl</kbd>+<kbd>O</kbd>                  | Open markdown file                    |
@@ -26,13 +26,13 @@ MarkText key bindings for Linux. Please see [general key bindings](KEYBINDINGS.m
 #### Edit menu
 
 | Id                        | Default                                       | Description                                     |
-|:------------------------- | --------------------------------------------- | ----------------------------------------------- |
+| :------------------------ | --------------------------------------------- | ----------------------------------------------- |
 | `edit.undo`               | <kbd>Ctrl</kbd>+<kbd>Z</kbd>                  | Undo last operation                             |
 | `edit.redo`               | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> | Redo last operation                             |
 | `edit.cut`                | <kbd>Ctrl</kbd>+<kbd>X</kbd>                  | Cut selected text                               |
 | `edit.copy`               | <kbd>Ctrl</kbd>+<kbd>C</kbd>                  | Copy selected text                              |
 | `edit.paste`              | <kbd>Ctrl</kbd>+<kbd>V</kbd>                  | Paste text                                      |
-| `edit.copy-as-markdown`   | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd> | Copy selected text as markdown                  |
+| `edit.copy-as-rich`       | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd> | Copy selected text as markdown                  |
 | `edit.copy-as-html`       | -                                             | Copy selected text as html                      |
 | `edit.paste-as-plaintext` | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> | Copy selected text as plaintext                 |
 | `edit.select-all`         | <kbd>Ctrl</kbd>+<kbd>A</kbd>                  | Select all text of the document                 |
@@ -93,8 +93,8 @@ MarkText key bindings for Linux. Please see [general key bindings](KEYBINDINGS.m
 | ----------------------------- | ---------------------------- | ------------------------- |
 | `window.minimize`             | <kbd>Ctrl</kbd>+<kbd>M</kbd> | Minimize the window       |
 | `window.toggle-always-on-top` | -                            | Toogle always on top mode |
-| `window.zoomIn`              | -                            | Zoom in                   |
-| `window.zoomOut`             | -                            | Zoom out                  |
+| `window.zoomIn`               | -                            | Zoom in                   |
+| `window.zoomOut`              | -                            | Zoom out                  |
 | `window.toggle-full-screen`   | <kbd>F11</kbd>               | Toggle fullscreen mode    |
 
 #### View menu
@@ -116,10 +116,10 @@ MarkText key bindings for Linux. Please see [general key bindings](KEYBINDINGS.m
 
 #### Tabs
 
-| Id                       | Default                                         | Description                  |
-| ------------------------ | ----------------------------------------------- | ---------------------------- |
-| `tabs.cycle-forward`     | <kbd>Ctrl</kbd>+<kbd>Tab</kbd>                  | Cycle through tabs           |
-| `tabs.cycle-backward`    | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Tab</kbd> | Cycle backwards through tabs |
+| Id                     | Default                                         | Description                  |
+| ---------------------- | ----------------------------------------------- | ---------------------------- |
+| `tabs.cycle-forward`   | <kbd>Ctrl</kbd>+<kbd>Tab</kbd>                  | Cycle through tabs           |
+| `tabs.cycle-backward`  | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Tab</kbd> | Cycle backwards through tabs |
 | `tabs.switchToleft`    | <kbd>Ctrl</kbd>+<kbd>PageUp</kbd>               | Switch tab to the left       |
 | `tabs.switchToright`   | <kbd>Ctrl</kbd>+<kbd>PageDown</kbd>             | Switch tab to the right      |
 | `tabs.switchTofirst`   | <kbd>Ctrl</kbd>+<kbd>1</kbd>                    | Switch tab to the 1st        |
