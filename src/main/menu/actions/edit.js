@@ -43,7 +43,7 @@ export const editorRedo = (win) => {
   edit(win, 'redo')
 }
 
-export const editorcopyAsRich = (win) => {
+export const editorCopyAsRich = (win) => {
   edit(win, 'copyAsRich')
 }
 
@@ -130,7 +130,7 @@ export const lineEnding = (win, lineEnding) => {
 export const loadEditCommands = (commandManager) => {
   commandManager.add(COMMANDS.EDIT_COPY, nativeCopy)
   commandManager.add(COMMANDS.EDIT_COPY_AS_HTML, editorCopyAsHtml)
-  commandManager.add(COMMANDS.EDIT_COPY_AS_RICH, editorcopyAsRich)
+  commandManager.add(COMMANDS.EDIT_COPY_AS_RICH, editorCopyAsRich)
   commandManager.add(COMMANDS.EDIT_CREATE_PARAGRAPH, editorCreateParagraph)
   commandManager.add(COMMANDS.EDIT_CUT, nativeCut)
   commandManager.add(COMMANDS.EDIT_DELETE_PARAGRAPH, editorDeleteParagraph)
