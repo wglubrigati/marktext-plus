@@ -103,7 +103,7 @@ div.ag-show-quick-insert-hint
        generally. */
   display: block;
 
-  height: 3px;
+  height: 6px;
   width: 3px;
 }
 
@@ -285,6 +285,9 @@ span.ag-math {
   top: 100%;
   left: 0;
   -webkit-user-select: none;
+  max-width: calc(var(--editorAreaWidth) - 100px); /* 100px to account for editor padding */
+  overflow-y: hidden;
+  overflow-x: auto;
   user-select: none;
   z-index: 1;
 }
@@ -311,8 +314,18 @@ span.ag-math > .ag-math-render.ag-math-error {
   font-family: monospace;
 }
 
-/* (Preview) math block */
-/* TODO: DOM path should be wrong. Correct path should be: 'ag-container-preview > .katex-display'. */
+/* Preview math block underneth when typing */
+.ag-container-preview > .katex-display {
+  margin: 0;
+  padding-bottom: 6px;
+  overflow-x: auto;
+}
+
+.katex-display::-webkit-scrollbar,
+.ag-math-render::-webkit-scrollbar {
+  height: 6px;
+}
+/* In-line rendered math block */
 .ag-math > .ag-math-render .katex-display {
   margin: 0;
 }
@@ -321,6 +334,7 @@ span.ag-math > .ag-math-render.ag-math-error {
 .ag-math > .ag-math-render .katex {
   vertical-align: middle;
   white-space: nowrap;
+  overflow: hidden;
 }
 
 .ag-hide.ag-ruby,
@@ -588,7 +602,7 @@ pre.ag-multiple-math,
 pre.ag-front-matter {
   position: relative;
   background: var(--selectionColor);
-  padding: 0.5rem;
+  padding-bottom: 0.5rem !important;
   border: 5px;
   font-size: 14px;
   margin: 0;

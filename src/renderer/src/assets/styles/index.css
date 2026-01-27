@@ -117,11 +117,11 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--editorColor10);
+  background: var(--editorColor30);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--editorColor30);
+  background: var(--editorColor50);
 }
 
 :focus {
