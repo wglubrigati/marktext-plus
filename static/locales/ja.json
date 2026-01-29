@@ -513,6 +513,7 @@
       "startup": {
         "title": "起動",
         "openDefaultDirectory": "デフォルトディレクトリを開く",
+        "openLastFolder": "開いているフォルダを復元",
         "selectFolder": "フォルダを選択",
         "openBlankPage": "空白ページを開く"
       },

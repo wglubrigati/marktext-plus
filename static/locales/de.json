@@ -512,6 +512,7 @@
       "startup": {
         "title": "Start",
         "openDefaultDirectory": "Standardverzeichnis öffnen",
+        "openLastFolder": "Geöffneten Ordner wiederherstellen",
         "selectFolder": "Ordner auswählen",
         "openBlankPage": "Leere Seite öffnen"
       },

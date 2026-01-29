@@ -513,6 +513,7 @@
       "startup": {
         "title": "Inicialização",
         "openDefaultDirectory": "Abrir diretório padrão",
+        "openLastFolder": "Restaurar pasta aberta",
         "selectFolder": "Selecionar Pasta",
         "openBlankPage": "Abrir página em branco"
       },

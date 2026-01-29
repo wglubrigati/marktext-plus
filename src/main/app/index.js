@@ -126,52 +126,63 @@ class App {
   async _initializeLanguage() {
     try {
       let currentLanguage = this._accessor.preferences.getItem('language')
-      
+
       // 如果没有设置语言，则根据系统语言自动设置
       if (!currentLanguage) {
         const systemLanguage = app.getLocale()
         console.log(`System language detected: ${systemLanguage}`)
-        
+
         // 支持的语言列表（根据项目实际支持的语言）
-        const supportedLanguages = ['en', 'zh-CN', 'zh-TW', 'ja', 'ko', 'fr', 'de', 'es', 'pt', 'ru']
-        
+        const supportedLanguages = [
+          'en',
+          'zh-CN',
+          'zh-TW',
+          'ja',
+          'ko',
+          'fr',
+          'de',
+          'es',
+          'pt',
+          'ru'
+        ]
+
         // 语言映射：系统语言代码 -> 应用语言代码
         const languageMap = {
           'zh-CN': 'zh-CN',
-          'zh-TW': 'zh-TW', 
+          'zh-TW': 'zh-TW',
           'zh-HK': 'zh-TW',
-          'zh': 'zh-CN',
-          'en': 'en',
+          zh: 'zh-CN',
+          en: 'en',
           'en-US': 'en',
           'en-GB': 'en',
-          'ja': 'ja',
+          ja: 'ja',
           'ja-JP': 'ja',
-          'ko': 'ko',
+          ko: 'ko',
           'ko-KR': 'ko',
-          'fr': 'fr',
+          fr: 'fr',
           'fr-FR': 'fr',
-          'de': 'de',
+          de: 'de',
           'de-DE': 'de',
-          'es': 'es',
+          es: 'es',
           'es-ES': 'es',
-          'pt': 'pt',
+          pt: 'pt',
           'pt-BR': 'pt',
-          'ru': 'ru',
+          ru: 'ru',
           'ru-RU': 'ru'
         }
-        
+
         currentLanguage = languageMap[systemLanguage] || 'en'
-        
+
         // 如果检测到的语言不在支持列表中，使用英语
         if (!supportedLanguages.includes(currentLanguage)) {
           currentLanguage = 'en'
         }
-        
+
         // 保存检测到的语言设置
         this._accessor.preferences.setItem('language', currentLanguage)
         console.log(`Auto-detected and set language to: ${currentLanguage}`)
       }
-      
+
       setLanguage(currentLanguage)
       console.log(`Main process language initialized to: ${currentLanguage}`)
     } catch (error) {
@@ -211,10 +222,23 @@ class App {
       }
     }
 
-    const { startUpAction, defaultDirectoryToOpen, followSystemTheme, lightModeTheme, darkModeTheme, theme } = preferences.getAll()
+    const {
+      startUpAction,
+      defaultDirectoryToOpen,
+      followSystemTheme,
+      lastOpenedFolder,
+      lightModeTheme,
+      darkModeTheme,
+      theme
+    } = preferences.getAll()
 
     if (startUpAction === 'folder' && defaultDirectoryToOpen) {
       const info = normalizeMarkdownPath(defaultDirectoryToOpen)
+      if (info) {
+        _openFilesCache.unshift(info)
+      }
+    } else if (startUpAction === 'openLastFolder' && lastOpenedFolder) {
+      const info = normalizeMarkdownPath(lastOpenedFolder)
       if (info) {
         _openFilesCache.unshift(info)
       }
@@ -230,7 +254,9 @@ class App {
 
     if (followSystemTheme && isDarkTheme !== systemIsDark) {
       const newTheme = systemIsDark ? darkModeTheme : lightModeTheme
-      log.info(`Following system theme at startup: ${newTheme} (system ${systemIsDark ? 'dark' : 'light'})`)
+      log.info(
+        `Following system theme at startup: ${newTheme} (system ${systemIsDark ? 'dark' : 'light'})`
+      )
       selectTheme(newTheme)
     }
 
@@ -246,12 +272,17 @@ class App {
         const { lightModeTheme, darkModeTheme } = preferences.getAll()
         const newTheme = systemIsDark ? darkModeTheme : lightModeTheme
 
-        log.info(`followSystemTheme enabled, switching to: ${newTheme} (system ${systemIsDark ? 'dark' : 'light'})`)
+        log.info(
+          `followSystemTheme enabled, switching to: ${newTheme} (system ${systemIsDark ? 'dark' : 'light'})`
+        )
         selectTheme(newTheme)
         preferences.setItem('theme', newTheme)
       }
       // When light/dark mode theme preferences change, apply immediately if following system
-      if (preferences.getItem('followSystemTheme') && (change.lightModeTheme || change.darkModeTheme)) {
+      if (
+        preferences.getItem('followSystemTheme') &&
+        (change.lightModeTheme || change.darkModeTheme)
+      ) {
         const systemIsDark = nativeTheme.shouldUseDarkColors
 
         // Get current values, but prefer the NEW values from the change event
@@ -285,7 +316,9 @@ class App {
 
           // Only switch if the theme actually needs to change
           if (newTheme !== currentTheme) {
-            log.info(`System theme changed, switching to: ${newTheme} (system ${systemIsDark ? 'dark' : 'light'})`)
+            log.info(
+              `System theme changed, switching to: ${newTheme} (system ${systemIsDark ? 'dark' : 'light'})`
+            )
             selectTheme(newTheme)
             preferences.setItem('theme', newTheme)
           }
@@ -399,6 +432,9 @@ class App {
    */
   _createEditorWindow(rootDirectory = null, fileList = [], markdownList = [], options = {}) {
     const editor = new EditorWindow(this._accessor)
+    if (rootDirectory) {
+      this._accessor.preferences.setItems({ lastOpenedFolder: rootDirectory })
+    }
     editor.createWindow(rootDirectory, fileList, markdownList, options)
     this._windowManager.add(editor)
     if (this._windowManager.windowCount === 1) {

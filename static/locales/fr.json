@@ -513,6 +513,7 @@
       "startup": {
         "title": "Démarrage",
         "openDefaultDirectory": "Ouvrir le répertoire par défaut",
+        "openLastFolder": "Restaurer le dossier ouvert",
         "selectFolder": "Sélectionner un dossier",
         "openBlankPage": "Ouvrir une page vierge"
       },

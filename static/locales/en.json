@@ -511,6 +511,7 @@
       "startup": {
         "title": "Startup",
         "openDefaultDirectory": "Open default directory",
+        "openLastFolder": "Restore opened folder",
         "selectFolder": "Select Folder",
         "openBlankPage": "Open blank page"
       },

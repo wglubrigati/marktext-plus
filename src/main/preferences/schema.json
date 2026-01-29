@@ -47,9 +47,13 @@
     "enum": ["modified", "created", "title"],
     "default": "modified"
   },
+  "lastOpenedFolder": {
+    "description": "General--The last folder that was opened in MarkText.",
+    "type": "string"
+  },
   "startUpAction": {
-    "description": "General--The action after MarkText startup, open the last edited content, open the specified folder or blank page",
-    "enum": ["folder", "lastState", "blank"],
+    "description": "General--The action after MarkText startup, open the last opened folder, open the specified folder or blank page",
+    "enum": ["folder", "openLastFolder", "blank"],
     "default": "blank"
   },
   "defaultDirectoryToOpen": {

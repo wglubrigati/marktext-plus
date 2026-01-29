@@ -95,14 +95,17 @@
         <h6 class="title">{{ t('preferences.general.startup.title') }}</h6>
       </template>
       <template #children>
-        <section class="startup-action-ctrl">
-          <el-radio-group v-model="startUpAction">
+        <section>
+          <el-radio-group v-model="startUpAction" class="startup-action-ctrl">
             <!--
               Hide "lastState" for now (#2064).
             <el-radio class="ag-underdevelop" label="lastState">Restore last editor session</el-radio>
             -->
+            <el-radio label="openLastFolder">{{
+              t('preferences.general.startup.openLastFolder')
+            }}</el-radio>
             <div>
-              <el-radio label="folder" style="margin-bottom: 10px"
+              <el-radio label="folder"
                 >{{ t('preferences.general.startup.openDefaultDirectory')
                 }}<span>: {{ defaultDirectoryToOpen }}</span></el-radio
               >
@@ -199,15 +202,16 @@ const selectDefaultDirectoryToOpen = () => {
   font-size: 14px;
   user-select: none;
   color: var(--editorColor);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .pref-general .startup-action-ctrl .el-button--small {
   margin-left: 10px;
-  margin-right: 20px;
 }
 
 .pref-general .startup-action-ctrl label {
-  display: block;
-  margin: 20px 0;
+  margin: 5px 0;
 }
 </style>

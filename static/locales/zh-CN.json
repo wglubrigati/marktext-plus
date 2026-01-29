@@ -513,6 +513,7 @@
       "startup": {
         "title": "启动",
         "openDefaultDirectory": "打开默认目录",
+        "openLastFolder": "恢复打开的文件夹",
         "selectFolder": "选择文件夹",
         "openBlankPage": "打开空白页"
       },

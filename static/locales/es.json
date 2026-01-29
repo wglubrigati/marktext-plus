@@ -512,6 +512,7 @@
       "startup": {
         "title": "Inicio",
         "openDefaultDirectory": "Abrir directorio predeterminado",
+        "openLastFolder": "Restaurar carpeta abierta",
         "selectFolder": "Seleccionar Carpeta",
         "openBlankPage": "Abrir página en blanco"
       },
