@@ -185,7 +185,6 @@ Renderer.prototype.del = function (text) {
 }
 
 Renderer.prototype.link = function (href, title, text) {
-  console.log('Renderer.prototype.link', href, title, text)
   href = cleanUrl(this.options.sanitize, this.options.baseUrl, href)
   if (href === null) {
     return text

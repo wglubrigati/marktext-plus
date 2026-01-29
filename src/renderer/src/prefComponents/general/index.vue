@@ -101,11 +101,20 @@
               Hide "lastState" for now (#2064).
             <el-radio class="ag-underdevelop" label="lastState">Restore last editor session</el-radio>
             -->
-            <el-radio label="folder" style="margin-bottom: 10px"
-              >{{ t('preferences.general.startup.openDefaultDirectory') }}<span>: {{ defaultDirectoryToOpen }}</span></el-radio
-            >
-            <el-button size="small" @click="selectDefaultDirectoryToOpen">{{ t('preferences.general.startup.selectFolder') }}</el-button>
-            <el-radio label="blank">{{ t('preferences.general.startup.openBlankPage') }}</el-radio>
+            <div>
+              <el-radio label="folder" style="margin-bottom: 10px"
+                >{{ t('preferences.general.startup.openDefaultDirectory')
+                }}<span>: {{ defaultDirectoryToOpen }}</span></el-radio
+              >
+              <el-button size="small" @click="selectDefaultDirectoryToOpen">{{
+                t('preferences.general.startup.selectFolder')
+              }}</el-button>
+            </div>
+            <div>
+              <el-radio label="blank">{{
+                t('preferences.general.startup.openBlankPage')
+              }}</el-radio>
+            </div>
           </el-radio-group>
         </section>
       </template>
@@ -139,7 +148,12 @@ import Bool from '../common/bool/index.vue'
 import textBox from '../common/textBox/index.vue'
 import { isOsx } from '@/util'
 
-import { getTitleBarStyleOptions, zoomOptions, getFileSortByOptions, getLanguageOptions } from './config'
+import {
+  getTitleBarStyleOptions,
+  zoomOptions,
+  getFileSortByOptions,
+  getLanguageOptions
+} from './config'
 
 const { t } = useI18n()
 const preferenceStore = usePreferencesStore()
@@ -177,6 +191,10 @@ const selectDefaultDirectoryToOpen = () => {
 </script>
 
 <style scoped>
+.pref-general .startup-action-ctrl div {
+  display: flex;
+  align-items: center;
+}
 .pref-general .startup-action-ctrl {
   font-size: 14px;
   user-select: none;
@@ -184,7 +202,8 @@ const selectDefaultDirectoryToOpen = () => {
 }
 
 .pref-general .startup-action-ctrl .el-button--small {
-  margin-left: 25px;
+  margin-left: 10px;
+  margin-right: 20px;
 }
 
 .pref-general .startup-action-ctrl label {
