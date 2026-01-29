@@ -54,7 +54,7 @@
   "startUpAction": {
     "description": "General--The action after MarkText startup, open the last opened folder, open the specified folder or blank page",
     "enum": ["folder", "openLastFolder", "blank"],
-    "default": "blank"
+    "default": "openLastFolder"
   },
   "defaultDirectoryToOpen": {
     "description": "General--The default directory that should be opened on startup when startUp=folder.",
