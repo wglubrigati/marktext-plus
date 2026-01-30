@@ -13,6 +13,7 @@
             v-model="searchValue"
             type="text"
             :placeholder="t('search.searchPlaceholder')"
+            @keyup="handleEnterKey"
           />
           <div class="controls">
             <span class="search-result"
@@ -254,7 +255,13 @@ const find = (action) => {
   bus.emit('find-action', action)
 }
 
-const searchFn = () => {
+const handleEnterKey = (event) => {
+  if (event.key === 'Enter') {
+    find('next')
+  }
+}
+
+const searchFn = (event = null) => {
   if (isRegexp.value) {
     // Handle invalid regexp.
     try {
