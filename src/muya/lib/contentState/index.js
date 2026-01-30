@@ -208,8 +208,12 @@ class ContentState {
 
   setNextRenderRange() {
     const { start, end } = this.cursor
-    const startBlock = this.getBlock(start.key)
-    const endBlock = this.getBlock(end.key)
+    const startBlock = this.getBlock(start ? start.key : null)
+    const endBlock = this.getBlock(end ? end.key : null)
+    if (!startBlock || !endBlock) {
+      this.renderRange = [null, null]
+      return
+    }
     const startOutMostBlock = this.findOutMostBlock(startBlock)
     const endOutMostBlock = this.findOutMostBlock(endBlock)
 
@@ -572,6 +576,9 @@ class ContentState {
 
   getActiveBlocks() {
     const result = []
+    if (!this.cursor || !this.cursor.start) {
+      return result
+    }
     let block = this.getBlock(this.cursor.start.key)
     if (block) {
       result.push(block)
@@ -615,6 +622,9 @@ class ContentState {
   }
 
   findOutMostBlock(block) {
+    if (!block) {
+      return null
+    }
     const parent = this.getBlock(block.parent)
     return parent ? this.findOutMostBlock(parent) : block
   }

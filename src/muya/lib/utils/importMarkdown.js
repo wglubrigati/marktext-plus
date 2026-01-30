@@ -624,6 +624,8 @@ const importRegister = (ContentState) => {
       const offset = firstBlock.text.length
       cursor.anchor = { key, offset }
       cursor.focus = { key, offset }
+      cursor.start = { key, offset }
+      cursor.end = { key, offset }
     }
 
     this.cursor = cursor
