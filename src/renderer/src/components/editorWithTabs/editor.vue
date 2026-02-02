@@ -1082,8 +1082,8 @@ onMounted(() => {
     }
   })
 
-  editor.value.on('scroll', (scroll) => {
-    editorStore.updateScrollPosition(scroll.scrollTop)
+  editor.value.on('scroll', (scrollEvent) => {
+    editorStore.updateScrollPosition(currentFile.value.id, scrollEvent.scrollTop)
   })
 
   editor.value.on('heading-copy-link', ({ key }) => {
@@ -1188,6 +1188,8 @@ onBeforeUnmount(() => {
   bus.off('replace-misspelling', replaceMisspelling)
 
   document.removeEventListener('keyup', keyup)
+  editor.value.off('change')
+  editor.value.off('scroll')
 
   resizeObserverForEditor.disconnect()
 

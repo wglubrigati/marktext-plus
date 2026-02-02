@@ -64,21 +64,20 @@ class Muya {
     this.setMarkdown(markdown)
     this.setFocusMode(focusMode)
     this.mutationObserver()
+
+    const handleScroll = debounce(() => {
+      eventCenter.dispatch('scroll', {
+        scrollTop: container.scrollTop
+      })
+    }, 250)
+
     eventCenter.attachDOMEvent(container, 'focus', () => {
       eventCenter.dispatch('focus')
     })
     eventCenter.attachDOMEvent(container, 'blur', () => {
       eventCenter.dispatch('blur')
     })
-    eventCenter.attachDOMEvent(
-      container,
-      'scroll',
-      debounce(() => {
-        eventCenter.dispatch('scroll', {
-          scrollTop: container.scrollTop
-        })
-      })
-    )
+    eventCenter.attachDOMEvent(container, 'scroll', handleScroll)
   }
 
   mutationObserver() {

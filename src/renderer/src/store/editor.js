@@ -64,8 +64,13 @@ export const useEditorStore = defineStore('editor', {
     /**
      * Update scroll position for the currentFile
      */
-    updateScrollPosition(scrollTop) {
-      this.currentFile.scrollTop = scrollTop
+    updateScrollPosition(id, scrollTop) {
+      if (!(id in this.tabIdToIndex)) {
+        console.warn('updateScrollPosition: Cannot find tab index for id:', id)
+        return
+      }
+
+      this.tabs[this.tabIdToIndex[id]].scrollTop = scrollTop
     },
 
     /**
