@@ -319,8 +319,8 @@ class ExportMarkdown {
     let i
     let j
 
-    for (i = 0; i <= row; i++) {
-      for (j = 0; j <= column; j++) {
+    for (i = 0; i < row; i++) {
+      for (j = 0; j < column; j++) {
         columnWidth[j].width = Math.max(columnWidth[j].width, tableData[i][j].length + 2) // add 2, because have two space around text
       }
     }

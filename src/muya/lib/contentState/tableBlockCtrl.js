@@ -201,7 +201,7 @@ const tableBlockCtrl = (ContentState) => {
             })
           }
 
-          if (row < oldRow) {
+          if (row < oldRow && tBody) {
             while (tBody.children.length > row) {
               const lastRow = tBody.children[tBody.children.length - 1]
               this.removeBlock(lastRow)
@@ -311,7 +311,8 @@ const tableBlockCtrl = (ContentState) => {
             this.removeBlock(preRow)
           }
         } else if (location === 'current') {
-          if (cellBlock.type === 'th' && tbody.children.length >= 2) {
+          if (tbody.children.length <= 0) return
+          if (cellBlock.type === 'th') {
             const firstRow = tbody.children[0]
             this.removeBlock(currentRow)
             this.removeBlock(firstRow)
@@ -319,14 +320,21 @@ const tableBlockCtrl = (ContentState) => {
             firstRow.children.forEach((cell) => (cell.type = 'th'))
             cursorBlock = firstRow.children[columnIndex].children[0]
           }
-          if (cellBlock.type === 'td' && (currentRow.preSibling || currentRow.nextSibling)) {
-            cursorBlock = (this.getNextSibling(currentRow) || this.getPreSibling(currentRow))
-              .children[columnIndex].children[0]
+          if (cellBlock.type === 'td') {
+            const nextOrPrevtdRow =
+              this.getNextSibling(currentRow) || this.getPreSibling(currentRow)
+
+            // If there are no more table rows left (i.e only header left)
+            if (nextOrPrevtdRow) {
+              cursorBlock = nextOrPrevtdRow.children[columnIndex].children[0]
+            } else {
+              cursorBlock = thead.children[0].children[columnIndex].children[0]
+            }
             this.removeBlock(currentRow)
           }
         } else {
           if (cellBlock.type === 'th') {
-            if (tbody.children.length >= 2) {
+            if (tbody && tbody.children.length >= 2) {
               const firstRow = tbody.children[0]
               this.removeBlock(firstRow)
             } else {
@@ -342,53 +350,63 @@ const tableBlockCtrl = (ContentState) => {
       }
     } else if (target === 'column') {
       if (action === 'insert') {
-        ;[...thead.children, ...tbody.children].forEach((tableRow) => {
-          const targetCell = tableRow.children[columnIndex]
-          const cell = this.createBlock(targetCell.type, {
-            align: ''
-          })
-          const cellContent = this.createBlock('span', {
-            functionType: 'cellContent'
-          })
-          this.appendChild(cell, cellContent)
-          if (location === 'left') {
-            this.insertBefore(cell, targetCell)
-          } else {
-            this.insertAfter(cell, targetCell)
+        ;[...(thead ? thead.children : []), ...(tbody ? tbody.children : [])].forEach(
+          (tableRow) => {
+            const targetCell = tableRow.children[columnIndex]
+            const cell = this.createBlock(targetCell.type, {
+              align: ''
+            })
+            const cellContent = this.createBlock('span', {
+              functionType: 'cellContent'
+            })
+            this.appendChild(cell, cellContent)
+            if (location === 'left') {
+              this.insertBefore(cell, targetCell)
+            } else {
+              this.insertAfter(cell, targetCell)
+            }
+            tableRow.children.forEach((cell, i) => {
+              cell.column = i
+            })
           }
-          tableRow.children.forEach((cell, i) => {
-            cell.column = i
-          })
-        })
+        )
         cursorBlock =
           location === 'left'
             ? this.getPreSibling(cellBlock).children[0]
             : this.getNextSibling(cellBlock).children[0]
         // handle remove column
       } else {
-        if (currentRow.children.length <= 2) return
-        ;[...thead.children, ...tbody.children].forEach((tableRow) => {
-          const targetCell = tableRow.children[columnIndex]
-          const removeCell =
-            location === 'left'
-              ? this.getPreSibling(targetCell)
-              : location === 'current'
-                ? targetCell
-                : this.getNextSibling(targetCell)
-          if (removeCell === cellBlock) {
-            cursorBlock = this.findNextBlockInLocation(block)
-          }
+        if (currentRow.children.length <= 1) return // 1 col left, the drag bar should be hidden
+        ;[...(thead ? thead.children : []), ...(tbody ? tbody.children : [])].forEach(
+          (tableRow) => {
+            const targetCell = tableRow.children[columnIndex]
+            const removeCell =
+              location === 'left'
+                ? this.getPreSibling(targetCell)
+                : location === 'current'
+                  ? targetCell
+                  : this.getNextSibling(targetCell)
 
-          if (removeCell) this.removeBlock(removeCell)
-          tableRow.children.forEach((cell, i) => {
-            cell.column = i
-          })
-        })
+            if (removeCell === cellBlock) {
+              // Remove the current cell where the user has clicked
+              cursorBlock =
+                columnIndex === currentRow.children.length - 1 // If we are at the last column, we should find the previous cell
+                  ? this.findPreBlockInLocation(block)
+                  : this.findNextBlockInLocation(block)
+            }
+
+            if (removeCell) this.removeBlock(removeCell)
+            tableRow.children.forEach((cell, i) => {
+              cell.column = i
+            })
+          }
+        )
       }
     }
 
     const newColum = thead.children[0].children.length - 1
-    const newRow = thead.children.length + tbody.children.length - 1
+    //                                      \/ Handles single row tables
+    const newRow = thead.children.length + (tbody ? tbody.children.length - 1 : 0)
     Object.assign(table, { row: newRow, column: newColum })
 
     if (cursorBlock) {
