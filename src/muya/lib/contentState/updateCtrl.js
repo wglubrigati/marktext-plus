@@ -422,11 +422,25 @@ const updateCtrl = (ContentState) => {
 
     this.removeBlock(block)
 
+    // ISSUE: When pressing Shift + Enter in a paragraph and then attempting to create a header
+    // If the offset of start > length of text, the cursor range will be out of bounds and cause an error.
+    // Even for <= 5, it will set it to the END of the text content, which is not expected.
+    // We need to not take the offset from the START of the selection, but of the actual header line
     const { start, end } = this.cursor
+
     const key = atxBlock.children[0].key
     this.cursor = {
-      start: { key, offset: start.offset },
-      end: { key, offset: end.offset },
+      start: {
+        key,
+        offset: start.offset <= atxBlock.children[0].text.length ? start.offset : header.length + 1
+      },
+      end: {
+        key,
+        offset:
+          end.offset <= atxBlock.children[0].text.length
+            ? end.offset
+            : atxBlock.children[0].text.length
+      },
       isEdit: true
     }
     return atxBlock
