@@ -423,6 +423,7 @@
         "wordWrapInToc": "Ob Zeilenumbruch im Inhaltsverzeichnis aktiviert werden soll",
         "fileSortBy": "Dateien im geöffneten Ordner nach Erstellungszeit, Änderungszeit und Titel sortieren",
         "startUpAction": "Die Aktion nach MarkText-Start, letzten bearbeiteten Inhalt öffnen, angegebenen Ordner öffnen oder leere Seite",
+        "restoreLayoutState": "Vorherigen Editorzustand beim Start wiederherstellen",
         "defaultDirectoryToOpen": "Das Standard-Verzeichnis, das beim Start geöffnet werden soll, wenn startUp=folder",
         "language": "Die Sprache, die MarkText verwendet",
         "editorFontFamily": "Editor-Schriftfamilie",
@@ -511,6 +512,10 @@
       },
       "startup": {
         "title": "Start",
+        "layoutOptions": "Layout-Optionen",
+        "startupFilesFolders": "Startdateien/-ordner",
+        "restorePreviousState": "Vorherigen Editorzustand wiederherstellen",
+        "openBlankState": "Leeren Zustand öffnen",
         "openDefaultDirectory": "Standardverzeichnis öffnen",
         "openLastFolder": "Geöffneten Ordner wiederherstellen",
         "selectFolder": "Ordner auswählen",

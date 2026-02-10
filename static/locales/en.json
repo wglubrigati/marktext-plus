@@ -422,6 +422,7 @@
         "wordWrapInToc": "Whether to enable word wrap in TOC",
         "fileSortBy": "Sort files in opened folder by created time, modified time and title",
         "startUpAction": "The action after MarkText startup, open the last edited content, open the specified folder or blank page",
+        "restoreLayoutState": "Restore previous editor state on startup",
         "defaultDirectoryToOpen": "The default directory that should be opened on startup when startUp=folder",
         "language": "The language MarkText use",
         "editorFontFamily": "Editor font family",
@@ -509,7 +510,11 @@
         "zoom": "Zoom"
       },
       "startup": {
-        "title": "Startup",
+        "title": "Startup Options",
+        "layoutOptions": "Layout Options",
+        "startupFilesFolders": "Startup Files/Folders",
+        "restorePreviousState": "Restore previous editor state",
+        "openBlankState": "Open blank state",
         "openDefaultDirectory": "Open default directory",
         "openLastFolder": "Restore opened folder",
         "selectFolder": "Select Folder",

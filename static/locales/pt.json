@@ -424,6 +424,7 @@
         "wordWrapInToc": "Se habilitar a quebra de linha na tabela de conteúdos",
         "fileSortBy": "Ordenar arquivos na pasta aberta por tempo de criação, tempo de modificação e título",
         "startUpAction": "A ação após a inicialização do MarkText, abrir o último conteúdo editado, abrir a pasta especificada ou página em branco",
+        "restoreLayoutState": "Restaurar o estado anterior do editor na inicialização",
         "defaultDirectoryToOpen": "O diretório padrão que deve ser aberto na inicialização quando startUp=folder",
         "language": "O idioma que o MarkText usa",
         "editorFontFamily": "Família de fonte do editor",
@@ -512,6 +513,10 @@
       },
       "startup": {
         "title": "Inicialização",
+        "layoutOptions": "Opções de layout",
+        "startupFilesFolders": "Arquivos/pastas de inicialização",
+        "restorePreviousState": "Restaurar estado anterior do editor",
+        "openBlankState": "Abrir estado em branco",
         "openDefaultDirectory": "Abrir diretório padrão",
         "openLastFolder": "Restaurar pasta aberta",
         "selectFolder": "Selecionar Pasta",

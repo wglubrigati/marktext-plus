@@ -424,6 +424,7 @@
         "wordWrapInToc": "목차에서 자동 줄바꿈을 활성화할지 여부",
         "fileSortBy": "열린 폴더의 파일을 생성 시간, 수정 시간, 제목으로 정렬",
         "startUpAction": "MarkText 시작 후 작업, 마지막으로 편집한 내용 열기, 지정된 폴더 열기 또는 빈 페이지",
+        "restoreLayoutState": "시작 시 이전 편집기 상태 복원",
         "defaultDirectoryToOpen": "startUp=folder일 때 시작 시 열어야 할 기본 디렉터리",
         "language": "MarkText가 사용하는 언어",
         "editorFontFamily": "편집기 글꼴 패밀리",
@@ -512,6 +513,10 @@
       },
       "startup": {
         "title": "시작",
+        "layoutOptions": "레이아웃 옵션",
+        "startupFilesFolders": "시작 파일/폴더",
+        "restorePreviousState": "이전 편집기 상태 복원",
+        "openBlankState": "빈 상태 열기",
         "openDefaultDirectory": "기본 디렉터리 열기",
         "openLastFolder": "열린 폴더 복원",
         "selectFolder": "폴더 선택",

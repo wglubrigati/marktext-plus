@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import bus from '../bus'
+import { usePreferencesStore } from './preferences'
 
 const width = localStorage.getItem('side-bar-width')
 const sideBarWidth = typeof +width === 'number' ? Math.max(+width, 220) : 280
@@ -16,11 +17,23 @@ export const useLayoutStore = defineStore('layout', {
       if (layout.showSideBar !== undefined) {
         const { windowId } = global.marktext.env
         window.electron.ipcRenderer.send('mt::update-sidebar-menu', windowId, !!layout.showSideBar)
+        const preferencesStore = usePreferencesStore()
+        preferencesStore.SET_SINGLE_PREFERENCE({
+          type: 'sideBarVisibility',
+          value: !!layout.showSideBar
+        })
       }
       Object.assign(this, layout)
     },
     TOGGLE_LAYOUT_ENTRY(entryName) {
       this[entryName] = !this[entryName]
+      if (entryName === 'showSideBar') {
+        const preferencesStore = usePreferencesStore()
+        preferencesStore.SET_SINGLE_PREFERENCE({
+          type: 'sideBarVisibility',
+          value: !!this.showSideBar
+        })
+      }
     },
     SET_SIDE_BAR_WIDTH(width) {
       // TODO: Add side bar to session (GH#732).

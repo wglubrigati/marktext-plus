@@ -48,7 +48,7 @@
     "default": "modified"
   },
   "lastOpenedFolder": {
-    "description": "General--The last folder that was opened in MarkText.",
+    "description": "General--The last folder that was opened in MarkText.--internal",
     "type": "string"
   },
   "startUpAction": {
@@ -291,13 +291,18 @@
     "type": "string",
     "default": "light"
   },
+  "restoreLayoutState": {
+    "description": "General--Restore previous editor state on startup.",
+    "type": "boolean",
+    "default": true
+  },
   "darkModeTheme": {
     "description": "Theme--Theme to use when system is in dark mode.",
     "type": "string",
     "default": "dark"
   },
   "customCss": {
-    "description": "Custom CSS--Custom CSS to apply to the current theme.",
+    "description": "Custom CSS--Custom CSS to apply to the current theme.--internal",
     "type": "string",
     "default": ""
   },
@@ -333,22 +338,22 @@
     "default": "assets"
   },
   "sideBarVisibility": {
-    "description": "View--Whether the side bar is visible.",
+    "description": "View--Whether the side bar is visible.--internal",
     "type": "boolean",
     "default": false
   },
   "tabBarVisibility": {
-    "description": "View--Whether the tabs are shown.",
+    "description": "View--Whether the tabs are shown.--internal",
     "type": "boolean",
     "default": false
   },
   "sourceCodeModeEnabled": {
-    "description": "View--Whether the source-code mode is enabled by default.",
+    "description": "View--Whether the source-code mode is enabled by default.--internal",
     "type": "boolean",
     "default": false
   },
   "searchExclusions": {
-    "description": "Searcher--List of glob patterns to exclude from search.",
+    "description": "Searcher--List of glob patterns to exclude from search.--internal",
     "type": "array",
     "items": {
       "type": "string"
@@ -356,28 +361,28 @@
     "default": []
   },
   "searchMaxFileSize": {
-    "description": "Searcher--The maximal file size (<maxFileSize><suffix>). Suffixes of K, M or G are allowed if not suffix is given the number is treated as bytes.",
+    "description": "Searcher--The maximal file size (<maxFileSize><suffix>). Suffixes of K, M or G are allowed if not suffix is given the number is treated as bytes.--internal",
     "type": "string",
     "pattern": "^(?:$|[0-9]+(?:K|M|G)?$)",
     "default": ""
   },
   "searchIncludeHidden": {
-    "description": "Searcher--Whether to search in hidden files and directories.",
+    "description": "Searcher--Whether to search in hidden files and directories.--internal",
     "type": "boolean",
     "default": false
   },
   "searchNoIgnore": {
-    "description": "Searcher--Whether to ignore ignore files like .gitignore.",
+    "description": "Searcher--Whether to ignore ignore files like .gitignore.--internal",
     "type": "boolean",
     "default": false
   },
   "searchFollowSymlinks": {
-    "description": "Searcher--Whether symlinks should be followed.",
+    "description": "Searcher--Whether symlinks should be followed.--internal",
     "type": "boolean",
     "default": true
   },
   "watcherUsePolling": {
-    "description": "Watcher--Whether to use polling. Polling may leads to high CPU utilization but is necessary to watch files over a network.",
+    "description": "Watcher--Whether to use polling. Polling may leads to high CPU utilization but is necessary to watch files over a network.--internal",
     "type": "boolean",
     "default": false
   }

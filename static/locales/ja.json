@@ -424,6 +424,7 @@
         "wordWrapInToc": "目次で自動改行を有効にするかどうか",
         "fileSortBy": "開いたフォルダ内のファイルを作成時刻、変更時刻、タイトルで並べ替え",
         "startUpAction": "MarkText起動後のアクション、最後に編集したコンテンツを開く、指定されたフォルダを開く、または空白ページ",
+        "restoreLayoutState": "起動時に前回のエディター状態を復元",
         "defaultDirectoryToOpen": "startUp=folderの場合に起動時に開かれるデフォルトディレクトリ",
         "language": "MarkTextが使用する言語",
         "editorFontFamily": "エディターのフォントファミリー",
@@ -512,6 +513,10 @@
       },
       "startup": {
         "title": "起動",
+        "layoutOptions": "レイアウトオプション",
+        "startupFilesFolders": "起動時のファイル/フォルダ",
+        "restorePreviousState": "前回のエディター状態を復元",
+        "openBlankState": "空の状態を開く",
         "openDefaultDirectory": "デフォルトディレクトリを開く",
         "openLastFolder": "開いているフォルダを復元",
         "selectFolder": "フォルダを選択",

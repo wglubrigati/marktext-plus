@@ -424,6 +424,7 @@
         "wordWrapInToc": "Activer le retour à la ligne dans la table des matières",
         "fileSortBy": "Trier les fichiers dans le dossier ouvert par heure de création, heure de modification et titre",
         "startUpAction": "L'action après le démarrage de MarkText, ouvrir le dernier contenu édité, ouvrir le dossier spécifié ou une page vierge",
+        "restoreLayoutState": "Restaurer l'état précédent de l'éditeur au démarrage",
         "defaultDirectoryToOpen": "Le répertoire par défaut qui devrait être ouvert au démarrage quand startUp=folder",
         "language": "La langue utilisée par MarkText",
         "editorFontFamily": "Famille de police de l'éditeur",
@@ -512,6 +513,10 @@
       },
       "startup": {
         "title": "Démarrage",
+        "layoutOptions": "Options de mise en page",
+        "startupFilesFolders": "Fichiers/dossiers au démarrage",
+        "restorePreviousState": "Restaurer l'état précédent de l'éditeur",
+        "openBlankState": "Ouvrir un état vierge",
         "openDefaultDirectory": "Ouvrir le répertoire par défaut",
         "openLastFolder": "Restaurer le dossier ouvert",
         "selectFolder": "Sélectionner un dossier",

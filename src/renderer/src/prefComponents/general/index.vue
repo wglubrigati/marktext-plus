@@ -95,6 +95,18 @@
         <h6 class="title">{{ t('preferences.general.startup.title') }}</h6>
       </template>
       <template #children>
+        <h6>{{ t('preferences.general.startup.layoutOptions') }}</h6>
+        <section>
+          <el-radio-group v-model="restoreLayoutState" class="startup-action-ctrl">
+            <el-radio :label="true">{{
+              t('preferences.general.startup.restorePreviousState')
+            }}</el-radio>
+            <el-radio :label="false">{{
+              t('preferences.general.startup.openBlankState')
+            }}</el-radio>
+          </el-radio-group>
+        </section>
+        <h6>{{ t('preferences.general.startup.startupFilesFolders') }}</h6>
         <section>
           <el-radio-group v-model="startUpAction" class="startup-action-ctrl">
             <!--
@@ -180,6 +192,14 @@ const startUpAction = computed({
   get: () => preferenceStore.startUpAction,
   set: (value) => {
     const type = 'startUpAction'
+    preferenceStore.SET_SINGLE_PREFERENCE({ type, value })
+  }
+})
+
+const restoreLayoutState = computed({
+  get: () => preferenceStore.restoreLayoutState,
+  set: (value) => {
+    const type = 'restoreLayoutState'
     preferenceStore.SET_SINGLE_PREFERENCE({ type, value })
   }
 })
