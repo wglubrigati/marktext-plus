@@ -119,11 +119,22 @@ export const viewLayoutChanged = (applicationMenu, changes) => {
       case 'showTabBar':
         changeMenuByName('tabBarMenuItem', value)
         break
-      case 'sourceCode':
+      case 'sourceCode': {
         changeMenuByName('sourceCodeModeMenuItem', value)
         disableMenuByName(focusModeMenuItemId, !value)
         disableMenuByName(typewriterModeMenuItemId, !value)
+        // Disable Format and Paragraph menus in source code mode (markdown
+        // formatting doesn't apply to plain text files like CSV, JSON, etc.)
+        const formatMenuItem = applicationMenu.getMenuItemById('formatMenuItem')
+        if (formatMenuItem) {
+          formatMenuItem.submenu.items.forEach(item => (item.enabled = !value))
+        }
+        const paragraphMenuItem = applicationMenu.getMenuItemById('paragraphMenuItem')
+        if (paragraphMenuItem) {
+          paragraphMenuItem.submenu.items.forEach(item => (item.enabled = !value))
+        }
         break
+      }
       case 'typewriter':
         changeMenuByName(typewriterModeMenuItemId, value)
         break
