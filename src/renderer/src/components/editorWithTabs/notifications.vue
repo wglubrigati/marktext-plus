@@ -7,6 +7,7 @@
   >
     <div class="msg">
       {{ currentNotification.msg }}
+      <span v-if="countdown > 0" class="countdown">({{ countdown }}s)</span>
     </div>
     <div class="controls">
       <div>
@@ -28,7 +29,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, watch, ref, onBeforeUnmount } from 'vue'
 import { useEditorStore } from '@/store/editor'
 import { useLayoutStore } from '@/store/layout'
 import { storeToRefs } from 'pinia'
@@ -40,6 +41,10 @@ const layoutStore = useLayoutStore()
 const { currentFile } = storeToRefs(editorStore)
 const { showSideBar, sideBarWidth } = storeToRefs(layoutStore)
 
+const countdown = ref(0)
+let autoHideTimer = null
+let countdownInterval = null
+
 const currentNotification = computed(() => {
   const notifications = currentFile.value.notifications
   if (!notifications || notifications.length === 0) {
@@ -48,7 +53,48 @@ const currentNotification = computed(() => {
   return notifications[0]
 })
 
+const clearTimers = () => {
+  if (autoHideTimer) {
+    clearTimeout(autoHideTimer)
+    autoHideTimer = null
+  }
+  if (countdownInterval) {
+    clearInterval(countdownInterval)
+    countdownInterval = null
+  }
+  countdown.value = 0
+}
+
+watch(currentNotification, (notification) => {
+  clearTimers()
+  if (notification && notification.autoHide) {
+    const duration = notification.autoHide
+    countdown.value = Math.ceil(duration / 1000)
+
+    countdownInterval = setInterval(() => {
+      countdown.value--
+      if (countdown.value <= 0) {
+        clearInterval(countdownInterval)
+        countdownInterval = null
+      }
+    }, 1000)
+
+    autoHideTimer = setTimeout(() => {
+      clearTimers()
+      const notifications = currentFile.value.notifications
+      if (notifications && notifications.length > 0) {
+        notifications.shift()
+      }
+    }, duration)
+  }
+}, { immediate: true })
+
+onBeforeUnmount(() => {
+  clearTimers()
+})
+
 const handleClick = (status) => {
+  clearTimers()
   const notifications = currentFile.value.notifications
   if (!notifications || notifications.length === 0) {
     console.error(t('editor.notifications.notificationNotFound'))
@@ -83,10 +129,19 @@ const handleClick = (status) => {
     background: var(--notificationErrorBg);
     color: var(--notificationErrorColor);
   }
+  &.success {
+    background: var(--notificationSuccessBg, #2e7d32);
+    color: var(--notificationSuccessColor, #fff);
+  }
 }
 .msg {
   font-size: 13px;
   flex: 1;
+}
+.countdown {
+  opacity: 0.7;
+  font-size: 12px;
+  margin-left: 4px;
 }
 .controls {
   display: flex;
