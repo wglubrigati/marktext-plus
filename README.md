@@ -62,9 +62,7 @@
 ### Experimental Preferences Panel
 - New "Experimental" category in Preferences for opt-in features
 
-## Screenshots
-
-![MarkText+ Editor](docs/marktext.png?raw=true)
+<!-- TODO: Add screenshot of MarkText+ in action -->
 
 ## Features
 
