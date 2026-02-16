@@ -162,6 +162,7 @@ export const useEditorStore = defineStore('editor', {
       Object.assign(tab, newFileState)
       tab.id = oldId
       tab.notifications = oldNotifications
+      tab.needsInitialAnchor = true
       if (oldHistory) {
         tab.history = oldHistory
       }
@@ -367,6 +368,7 @@ export const useEditorStore = defineStore('editor', {
           tab.history.lastEditIndex < tab.history.stack.length
         ) {
           tab.lastSavedHistoryId = tab.history.stack[tab.history.lastEditIndex].id
+          tab.savedNormalizedMarkdown = tab.markdown
           tab.isSaved = true
         }
       })
@@ -991,6 +993,15 @@ export const useEditorStore = defineStore('editor', {
       if (selected) {
         this.UPDATE_CURRENT_FILE(docState)
         bus.emit('file-loaded', { id, markdown, cursor })
+
+        // Switch to source code mode for non-markdown files
+        if (options.forceSourceCodeMode) {
+          const preferencesStore = usePreferencesStore()
+          if (!preferencesStore.sourceCode) {
+            preferencesStore.SET_MODE({ type: 'sourceCode', checked: true })
+            preferencesStore.DISPATCH_EDITOR_VIEW_STATE({ sourceCode: true })
+          }
+        }
       } else {
         this.tabs.push(docState)
         this.updateTabIdToIndex()
@@ -1071,22 +1082,44 @@ export const useEditorStore = defineStore('editor', {
         this.toc = listToTree(toc)
       }
 
+      // Anchor on the first content change after file load (Muya normalization).
+      // This captures the normalized markdown as baseline so the file doesn't appear dirty.
+      if (tab.needsInitialAnchor) {
+        tab.needsInitialAnchor = false
+        tab.savedNormalizedMarkdown = markdown
+        if (tab.history.lastEditIndex >= 0) {
+          tab.lastSavedHistoryId = tab.history.stack[tab.history.lastEditIndex].id
+        } else if (tab.history.index >= 0 && tab.history.stack.length > 0) {
+          tab.lastSavedHistoryId = tab.history.stack[tab.history.index].id
+        }
+        tab.isSaved = true
+        return
+      }
+
+      // Enhanced dirty check with content-based fallback
       if (
         tab.history.lastEditIndex >= 0 &&
         tab.history.stack[tab.history.lastEditIndex].id !== tab.lastSavedHistoryId
       ) {
-        tab.isSaved = false
-        if (pathname && autoSave) {
-          const options = getOptionsFromState(tab)
-          this.HANDLE_AUTO_SAVE({
-            id,
-            filename,
-            pathname,
-            markdown,
-            options
-          })
+        // History says dirty — but check if content matches saved baseline (handles edit→undo)
+        if (markdown === tab.savedNormalizedMarkdown) {
+          tab.isSaved = true
+        } else {
+          tab.isSaved = false
+          if (pathname && autoSave) {
+            const options = getOptionsFromState(tab)
+            this.HANDLE_AUTO_SAVE({
+              id,
+              filename,
+              pathname,
+              markdown,
+              options
+            })
+          }
         }
-      } else tab.isSaved = true // An undo can trigger this
+      } else {
+        tab.isSaved = true
+      }
     },
 
     HANDLE_AUTO_SAVE({ id, filename, pathname, markdown, options }) {
@@ -1269,7 +1302,7 @@ export const useEditorStore = defineStore('editor', {
             }
             case 'add':
             case 'change': {
-              const { autoSave } = preferencesStore
+              const { autoSave, autoReloadUnmodifiedFiles } = preferencesStore
               if (autoSave) {
                 if (autoSaveTimers.has(id)) {
                   const timer = autoSaveTimers.get(id)
@@ -1281,6 +1314,20 @@ export const useEditorStore = defineStore('editor', {
                   this.loadChange(change)
                   return
                 }
+              }
+
+              // Auto-reload unmodified files when setting is enabled
+              if (autoReloadUnmodifiedFiles && isSaved) {
+                this.loadChange(change)
+                this.pushTabNotification({
+                  tabId: id,
+                  msg: i18n.global.t('store.editor.fileReloadedAutomatically', { name: filename }),
+                  showConfirm: false,
+                  style: 'success',
+                  exclusiveType: 'file_changed',
+                  autoHide: 5000
+                })
+                return
               }
 
               tab.isSaved = false

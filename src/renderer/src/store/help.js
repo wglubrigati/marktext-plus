@@ -37,7 +37,10 @@ export const defaultFileState = {
     value: ''
   },
   // Per tab notifications
-  notifications: []
+  notifications: [],
+  // Content-based dirty detection
+  savedNormalizedMarkdown: '',
+  needsInitialAnchor: false
 }
 
 export const getOptionsFromState = (file) => {
@@ -127,7 +130,8 @@ export const getSingleFileState = ({
     lineEnding,
     adjustLineEndingOnSave,
     trimTrailingNewline,
-    lastSavedHistoryId: -1
+    lastSavedHistoryId: -1,
+    needsInitialAnchor: true
   })
 }
 
@@ -161,6 +165,7 @@ export const createDocumentState = (markdownDocument, id = getUniqueId()) => {
     cursor,
     adjustLineEndingOnSave,
     trimTrailingNewline,
-    lastSavedHistoryId: -1
+    lastSavedHistoryId: -1,
+    needsInitialAnchor: true
   })
 }
