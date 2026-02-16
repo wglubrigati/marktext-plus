@@ -5,6 +5,7 @@ import ThemeIcon from '@/assets/icons/pref_theme.svg'
 import ImageIcon from '@/assets/icons/pref_image.svg'
 import SpellIcon from '@/assets/icons/pref_spellcheck.svg'
 import KeyBindingIcon from '@/assets/icons/pref_key_binding.svg'
+import ExperimentalIcon from '@/assets/icons/pref_experimental.svg'
 
 import preferences from '../../../../main/preferences/schema.json'
 import { t } from '../../i18n'
@@ -51,6 +52,12 @@ export const getCategory = () => [
     label: 'keybindings',
     icon: KeyBindingIcon,
     path: '/preference/keybindings'
+  },
+  {
+    name: t('preferences.categories.experimental'),
+    label: 'experimental',
+    icon: ExperimentalIcon,
+    path: '/preference/experimental'
   }
 ]
 
@@ -91,7 +98,8 @@ export const getTranslatedSearchContent = () => {
       'spelling',
       'theme',
       'image',
-      'keybindings'
+      'keybindings',
+      'experimental'
     ]
     if (!validRoutes.includes(routeCategory)) routeCategory = 'general'
 

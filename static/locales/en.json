@@ -409,7 +409,8 @@
         "searcher": "Searcher",
         "watcher": "Watcher",
         "spelling": "Spelling",
-        "custom css": "Custom CSS"
+        "custom css": "Custom CSS",
+        "experimental": "Experimental"
       },
       "items": {
         "autoSave": "Automatically save the content being edited",
@@ -476,7 +477,8 @@
         "searchIncludeHidden": "Whether to search in hidden files and directories",
         "searchNoIgnore": "Whether to ignore ignore files like .gitignore",
         "searchFollowSymlinks": "Whether symlinks should be followed",
-        "watcherUsePolling": "Whether to use polling. Polling may leads to high CPU utilization but is necessary to watch files over a network"
+        "watcherUsePolling": "Whether to use polling. Polling may leads to high CPU utilization but is necessary to watch files over a network",
+        "autoReloadUnmodifiedFiles": "Automatically reload unmodified files when they change on disk"
       }
     },
     "categories": {
@@ -486,7 +488,8 @@
       "spelling": "Spelling",
       "theme": "Theme",
       "image": "Image",
-      "keybindings": "Keybindings"
+      "keybindings": "Keybindings",
+      "experimental": "Experimental"
     },
     "general": {
       "title": "General",
@@ -902,6 +905,13 @@
       "enableSpellChecking": "Enable spell checking",
       "hideMarksForErrors": "Hide marks for spelling errors",
       "title": "Spell Checker"
+    },
+    "experimental": {
+      "title": "Experimental",
+      "fileReload": {
+        "title": "File Reload",
+        "description": "Automatically reload unmodified files when they change on disk"
+      }
     }
   },
   "edit": {
@@ -1134,7 +1144,8 @@
       "exportSuccessTitle": "Exported successfully",
       "exportSuccessMessage": "Exported \"{name}\" successfully!",
       "fileRemovedOnDisk": "\"{name}\" has been removed on disk.",
-      "fileChangedOnDisk": "\"{name}\" has been changed on disk. Do you want to reload it?"
+      "fileChangedOnDisk": "\"{name}\" has been changed on disk. Do you want to reload it?",
+      "fileReloadedAutomatically": "\"{name}\" was reloaded from disk."
     }
   },
   "spellchecker": {
