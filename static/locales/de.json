@@ -906,8 +906,8 @@
     }
   },
   "about": {
-    "copyright": "Copyright © Luo Ran 2017-{year}",
-    "copyrightContributors": "Urheberrecht Mitwirkende"
+    "copyright": "Forked with ❤️ by William Lubrigati",
+    "copyrightContributors": "Based on MarkText by Luo Ran & contributors"
   },
   "commands": {
     "mt": {

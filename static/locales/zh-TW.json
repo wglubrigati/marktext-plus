@@ -908,8 +908,8 @@
     }
   },
   "about": {
-    "copyright": "版權",
-    "copyrightContributors": "版權貢獻者"
+    "copyright": "Forked with ❤️ by William Lubrigati",
+    "copyrightContributors": "Based on MarkText by Luo Ran & contributors"
   },
   "commands": {
     "mt": {

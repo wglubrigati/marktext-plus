@@ -103,11 +103,11 @@ export const loadViewCommands = (commandManager) => {
 export const viewLayoutChanged = (applicationMenu, changes) => {
   const disableMenuByName = (id, value) => {
     const menuItem = applicationMenu.getMenuItemById(id)
-    menuItem.enabled = value
+    if (menuItem) menuItem.enabled = value
   }
   const changeMenuByName = (id, value) => {
     const menuItem = applicationMenu.getMenuItemById(id)
-    menuItem.checked = value
+    if (menuItem) menuItem.checked = value
   }
 
   for (const key in changes) {
