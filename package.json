@@ -97,6 +97,7 @@
     "@babel/eslint-parser": "^7.28.5",
     "@electron-toolkit/eslint-config": "^2.1.0",
     "@electron-toolkit/eslint-config-prettier": "^3.0.0",
+    "@electron/rebuild": "^4.0.3",
     "@vitejs/plugin-vue": "^6.0.3",
     "cross-env": "^10.1.0",
     "electron": "^39.2.7",
