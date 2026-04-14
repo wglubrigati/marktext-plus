@@ -50,6 +50,8 @@ jobs:
         run: npm install
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GYP_JOBS: 4
+          npm_config_jobs: 1
 
       - name: Set C++20 for MacOS
         if: runner.os == 'macOS'
@@ -58,6 +60,8 @@ jobs:
 
       - name: Build
         run: npm run ${{ matrix.script }}
+        env:
+          DEBUG: ${{ runner.os != 'Linux' && 'electron-rebuild:*' || '' }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
