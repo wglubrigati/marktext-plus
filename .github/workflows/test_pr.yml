@@ -47,21 +47,23 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y icnsutils graphicsmagick xz-utils libx11-dev libxkbfile-dev gnome-keyring libsecret-1-dev libfontconfig-dev rpm
 
       - name: Install Dependencies
-        run: npm install
+        run: npm install --ignore-scripts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GYP_JOBS: 4
-          npm_config_jobs: 1
 
-      - name: Set C++20 for MacOS
+      - name: Set C++20 compiler for macOS native modules
         if: runner.os == 'macOS'
         run: |
+          echo "CC=clang" >> $GITHUB_ENV
+          echo "CXX=clang++ -std=gnu++20 -stdlib=libc++" >> $GITHUB_ENV
           echo "CXXFLAGS=-std=gnu++20 -stdlib=libc++" >> $GITHUB_ENV
 
       - name: Build
         run: npm run ${{ matrix.script }}
         env:
           DEBUG: ${{ runner.os != 'Linux' && 'electron-rebuild:*' || '' }}
+          GYP_JOBS: 2
+          npm_config_jobs: 1
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
