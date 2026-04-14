@@ -249,10 +249,9 @@ class App {
     nativeTheme.themeSource = 'system'
 
     // Apply theme at startup if "Follow system theme" is enabled
-    const isDarkTheme = /dark/i.test(theme)
     const systemIsDark = nativeTheme.shouldUseDarkColors
 
-    if (followSystemTheme && isDarkTheme !== systemIsDark) {
+    if (followSystemTheme) {
       const newTheme = systemIsDark ? darkModeTheme : lightModeTheme
       log.info(
         `Following system theme at startup: ${newTheme} (system ${systemIsDark ? 'dark' : 'light'})`
