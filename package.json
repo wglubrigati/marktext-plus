@@ -1,6 +1,6 @@
 {
   "name": "marktext-plus",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "MarkText+",
   "main": "./out/main/index.js",
   "author": "William Lubrigati",
