@@ -1,6 +1,6 @@
 {
   "name": "marktext-plus",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "MarkText+",
   "main": "./out/main/index.js",
   "author": "William Lubrigati",
@@ -31,8 +31,11 @@
     "build": "electron-vite build",
     "build:unpack": "npm run minify-locales && npm run build",
     "build:win": "npm run minify-locales && npx @electron/rebuild && npm run build && electron-builder --win --publish never",
-    "build:mac": "npm run minify-locales && npx @electron/rebuild && npm run build && electron-builder --mac --publish never",
+    "build:mac:x64": "npm run minify-locales && npx @electron/rebuild -m . --arch x64 && npm run build && electron-builder --mac --x64 --publish never",
+    "build:mac:arm64": "npm run minify-locales && npx @electron/rebuild -m . --arch arm64 && npm run build && electron-builder --mac --arm64 --publish never",
+    "build:mac:universal": "npm run minify-locales && npx @electron/rebuild -m . --arch x64 && npx @electron/rebuild -m . --arch arm64 && npm run build && electron-builder --mac --universal --publish never",
     "build:linux": "npm run minify-locales && npx @electron/rebuild && npm run build && electron-builder --linux --publish never",
+    "build:mac": "npm run minify-locales && npx @electron/rebuild -m . --arch x64 && npx @electron/rebuild -m . --arch arm64 && npm run build && electron-builder --mac --publish never",
     "perf:inspect": "cross-env PERF_TESTING=true electron-vite preview -- --inspect=5858",
     "perf:inspect-brk": "cross-env PERF_TESTING=true electron-vite preview -- --inspect-brk=5858"
   },

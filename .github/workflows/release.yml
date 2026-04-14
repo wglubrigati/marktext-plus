@@ -14,7 +14,17 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            script: build:linux
+          - os: windows-latest
+            script: build:win
+          - os: macos-14
+            arch: arm64
+            script: build:mac:arm64
+          - os: macos-13
+            arch: x64
+            script: build:mac:x64
 
     steps:
       - name: Check out Git repository
@@ -39,30 +49,39 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Electron requires C++20 support for native modules after Electron 33
       - name: Set C++20 for MacOS
         if: runner.os == 'macOS'
         run: |
           echo "CXXFLAGS=-std=gnu++20 -stdlib=libc++" >> $GITHUB_ENV
 
-      - name: build-linux
-        if: runner.os == 'Linux'
-        run: npm run build:linux
+      - name: Build
+        run: npm run ${{ matrix.script }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          USE_ELECTRON_CLANG: '0'
+          USE_ELECTRON_CLANG: ${{ runner.os == 'Linux' && '0' || '' }}
 
-      - name: build-mac
-        if: runner.os == 'macOS'
-        run: npm run build:mac
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ matrix.os }}-${{ matrix.arch }}
+          path: dist/**
+          if-no-files-found: error
 
-      - name: build-win
-        if: runner.os == 'Windows'
-        run: npm run build:win
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: dist/
+
+      - name: Flatten artifacts
+        run: |
+          find dist/ -type f -exec mv {} dist/ \;
 
       - name: release
         uses: softprops/action-gh-release@v2
