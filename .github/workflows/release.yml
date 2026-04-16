@@ -49,6 +49,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Download ripgrep binary
+        run: npm run download-ripgrep
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Set C++20 compiler for macOS native modules
         if: runner.os == 'macOS'
         run: |

@@ -26,6 +26,7 @@
     "lint": "eslint --cache .",
     "minify-locales": "node scripts/minify-locales.mjs",
     "rebuild-native": "npx @electron/rebuild -f",
+    "download-ripgrep": "node node_modules/@vscode/ripgrep/lib/postinstall.js",
     "start": "cross-env PERF_TESTING=true electron-vite preview",
     "dev": "electron-vite dev",
     "build": "electron-vite build",
