@@ -132,8 +132,8 @@ class Muya {
     eventCenter.dispatch('change', { markdown, wordCount, cursor, muyaIndexCursor, history, toc })
   }
 
-  dispatchSelectionChange = () => {
-    const selectionChanges = this.contentState.selectionChange()
+  dispatchSelectionChange = (cursor) => {
+    const selectionChanges = this.contentState.selectionChange(cursor || this.contentState.cursor)
 
     this.eventCenter.dispatch('selectionChange', selectionChanges)
     this.eventCenter.dispatch('scroll', { scrollTop: this.container.scrollTop })
@@ -378,7 +378,7 @@ class Muya {
   undo() {
     this.contentState.history.undo()
 
-    this.dispatchSelectionChange()
+    this.dispatchSelectionChange(this.contentState.cursor)
     this.dispatchSelectionFormats()
     this.dispatchChange()
   }
@@ -386,7 +386,7 @@ class Muya {
   redo() {
     this.contentState.history.redo()
 
-    this.dispatchSelectionChange()
+    this.dispatchSelectionChange(this.contentState.cursor)
     this.dispatchSelectionFormats()
     this.dispatchChange()
   }
